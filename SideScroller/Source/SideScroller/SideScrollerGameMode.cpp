@@ -1,7 +1,7 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "SideScrollerGameMode.h"
-#include "Collectable.h"
+#include "Collectables/Collectable.h"
 #include "UObject/ConstructorHelpers.h"
 
 
@@ -12,5 +12,29 @@ ASideScrollerGameMode::ASideScrollerGameMode()
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
+	}
+}
+
+void ASideScrollerGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	ChangeMenuWidget(StartingWidgetClass);
+}
+
+void ASideScrollerGameMode::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
+{
+	if (CurrentWidget != nullptr)
+	{
+		CurrentWidget->RemoveFromViewport();
+		CurrentWidget = nullptr;
+	}
+	if (NewWidgetClass != nullptr)
+	{
+		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
+		if (CurrentWidget != nullptr)
+		{
+			CurrentWidget->AddToViewport();
+		}
 	}
 }
