@@ -4,7 +4,8 @@
 #include "SideScrollerDelegates.h"
 #include "Engine.h"
 #include "Weapon.h"
-#include "Collectable.h"
+#include "Powerups/Coin.h"
+#include "Collectables/Collectable.h"
 #include "SideScrollerStatics.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -106,15 +107,12 @@ void ASideScrollerCharacter::BeginPlay()
 
 	USideScrollerDelegates::OnCollectableAdded.AddUObject(this, &ASideScrollerCharacter::ReceiveOnCollectableAdded);
 	USideScrollerDelegates::OnCollectableWeaponAdded.AddUObject(this, &ASideScrollerCharacter::ReceiveOnCollectableWeaponAdded);
+	USideScrollerDelegates::OnCollectableCoinAdded.AddUObject(this, &ASideScrollerCharacter::ReceiveOnCollectableCoinAdded);
 }
 
 void ASideScrollerCharacter::ReceiveOnCollectableAdded(ACollectable* Collectable)
 {
-	if (!Collectable->IsValidLowLevel())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Collectable is null."));
-		return;
-	}
+	UE_LOG(LogTemp, Log, TEXT("Collectable %s added to %s"), *(Collectable->GetName()), *GetName());
 }
 
 void ASideScrollerCharacter::ReceiveOnCollectableWeaponAdded(AWeapon* Weapon)
@@ -123,5 +121,10 @@ void ASideScrollerCharacter::ReceiveOnCollectableWeaponAdded(AWeapon* Weapon)
 	Weapon->AttachToActor(this, Rules);
 	Weapon->SideScrollerCharacter = this;
 	Weapon->SetActorRelativeLocation(Weapon->Offset);
-	UE_LOG(LogTemp, Log, TEXT("CollectableWeapon %s added to %s"), *(Weapon->GetName()), *GetName());
+	UE_LOG(LogTemp, Log, TEXT("Collectable Weapon %s added to %s"), *(Weapon->GetName()), *GetName());
+}
+
+void ASideScrollerCharacter::ReceiveOnCollectableCoinAdded(int32 Amount)
+{
+	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), Amount, *GetName());
 }

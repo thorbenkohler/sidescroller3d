@@ -8,6 +8,7 @@
 
 class ACollectable;
 class AWeapon;
+class ACoin;
 
 // This struct covers all possible sideScroller input schemes.
 USTRUCT(BlueprintType)
@@ -80,5 +81,8 @@ public:
 
 	// To react to collisions with collectable weapons
 	virtual void ReceiveOnCollectableWeaponAdded(AWeapon* Weapon);
+
+	// To react to collisions with collectable coins
+	virtual void ReceiveOnCollectableCoinAdded(int32 Amount);
 
 };

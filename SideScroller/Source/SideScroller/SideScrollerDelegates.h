@@ -18,4 +18,7 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableWeaponAdded, AWeapon*);
 	static FOnCollectableWeaponAdded OnCollectableWeaponAdded;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableCoinAdded, int32);
+	static FOnCollectableCoinAdded OnCollectableCoinAdded;
 };
