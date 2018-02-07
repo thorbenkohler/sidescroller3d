@@ -33,14 +33,11 @@ public:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	/** Describes what this projectile hits. */
+	// Describes with what the collectable collides
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collectable")
 	FName CollisionProfile;
 
-	/** This projectile's size for collisions. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collectable")
-	float Size;
-
+	// Reference to the blueprint of the collectable
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collectable")
 	TSoftObjectPtr<UBlueprint> ReferencedCollectable;
 

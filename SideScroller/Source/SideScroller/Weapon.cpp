@@ -24,6 +24,7 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Loads a projectile blueprint as reference to spawn others
 	const FSoftObjectPath& AssetPath = ReferencedProjectile.ToSoftObjectPath();
 	UBlueprint* newBp = LoadObject<UBlueprint>(nullptr, *AssetPath.ToString());
 
@@ -46,6 +47,7 @@ void AWeapon::Tick(float DeltaTime)
 		return;
 	}
 
+	// Spawning projectiles depending on the player's input
 	FSideScrollerInput input = SideScrollerCharacter->GetCurrentInput();
 	if (input.bFire && FireButtonWasReleased)
 	{

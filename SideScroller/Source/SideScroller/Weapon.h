@@ -50,6 +50,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Projectile blueprint reference
 	TSubclassOf<class UObject> ReferencedProjectileClass;
 
 private:

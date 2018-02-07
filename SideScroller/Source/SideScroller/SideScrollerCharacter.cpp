@@ -115,27 +115,6 @@ void ASideScrollerCharacter::ReceiveOnCollectableAdded(ACollectable* Collectable
 		return;
 	}
 
-	//UObjectLibrary *pGameAssetLibrary = UObjectLibrary::CreateLibrary(AActor::StaticClass(), true, GIsEditor);
-	//pGameAssetLibrary->AddToRoot();
-
-	//TArray<FString> assetPaths;
-	//assetPaths.Add(TEXT("/Game/SideScrollerCPP/Blueprints/Weapons"));
-
-	//pGameAssetLibrary->LoadBlueprintAssetDataFromPaths(assetPaths);
-
-	//TArray<FAssetData> AssetDatas;
-	//pGameAssetLibrary->GetAssetDataList(AssetDatas);
-	//UE_LOG(LogTemp, Log, TEXT("AssetDatas.Num: %d"), AssetDatas.Num());
-
-	//FString AssetPath;
-	//for (int32 i = 0; i < AssetDatas.Num(); ++i)
-	//{
-	//	FAssetData &AssetData = AssetDatas[i];
-	//	// Print off the assets path so we can see what will be referenceable
-	//	AssetPath = AssetData.ObjectPath.ToString();
-	//	UE_LOG(LogTemp, Log, TEXT("Asset Path: %s"), *AssetData.ObjectPath.ToString());
-	//}
-
 	// TODO: Discuss asynchronous loading.
 	const FSoftObjectPath& AssetPath = Collectable->ReferencedCollectable.ToSoftObjectPath();
 	UBlueprint* newBp = LoadObject<UBlueprint>(nullptr, *AssetPath.ToString());
