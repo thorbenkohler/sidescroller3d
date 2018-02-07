@@ -4,3 +4,4 @@
 #include "Kismet/GameplayStatics.h"
 
 USideScrollerDelegates::FOnCollectableAdded USideScrollerDelegates::OnCollectableAdded;
+USideScrollerDelegates::FOnCollectableWeaponAdded USideScrollerDelegates::OnCollectableWeaponAdded;

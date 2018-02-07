@@ -105,6 +105,7 @@ void ASideScrollerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	USideScrollerDelegates::OnCollectableAdded.AddUObject(this, &ASideScrollerCharacter::ReceiveOnCollectableAdded);
+	USideScrollerDelegates::OnCollectableWeaponAdded.AddUObject(this, &ASideScrollerCharacter::ReceiveOnCollectableWeaponAdded);
 }
 
 void ASideScrollerCharacter::ReceiveOnCollectableAdded(ACollectable* Collectable)
@@ -114,23 +115,13 @@ void ASideScrollerCharacter::ReceiveOnCollectableAdded(ACollectable* Collectable
 		UE_LOG(LogTemp, Error, TEXT("Collectable is null."));
 		return;
 	}
+}
 
-	// TODO: Discuss asynchronous loading.
-	const FSoftObjectPath& AssetPath = Collectable->ReferencedCollectable.ToSoftObjectPath();
-	UBlueprint* newBp = LoadObject<UBlueprint>(nullptr, *AssetPath.ToString());
-
-	if (!newBp->IsValidLowLevel())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Failed to load Weapon."));
-		return;
-	}
-
-	FActorSpawnParameters SpawnParameters;
-	AWeapon* Weapon = GetWorld()->SpawnActor<AWeapon>(newBp->GeneratedClass, SpawnParameters);
-
+void ASideScrollerCharacter::ReceiveOnCollectableWeaponAdded(AWeapon* Weapon)
+{
 	FAttachmentTransformRules Rules(EAttachmentRule::KeepWorld, false);
 	Weapon->AttachToActor(this, Rules);
 	Weapon->SideScrollerCharacter = this;
 	Weapon->SetActorRelativeLocation(Weapon->Offset);
-	UE_LOG(LogTemp, Log, TEXT("Collectable %s added to %s"), *(Collectable->GetName()), *GetName());
+	UE_LOG(LogTemp, Log, TEXT("CollectableWeapon %s added to %s"), *(Weapon->GetName()), *GetName());
 }

@@ -2,8 +2,10 @@
 
 #pragma once
 
-#include "Collectable.h"
 #include "SideScrollerDelegates.generated.h"
+
+class ACollectable;
+class AWeapon;
 
 UCLASS()
 class SIDESCROLLER_API USideScrollerDelegates : public UObject
@@ -13,4 +15,7 @@ class SIDESCROLLER_API USideScrollerDelegates : public UObject
 public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableAdded, ACollectable*);
 	static FOnCollectableAdded OnCollectableAdded;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableWeaponAdded, AWeapon*);
+	static FOnCollectableWeaponAdded OnCollectableWeaponAdded;
 };

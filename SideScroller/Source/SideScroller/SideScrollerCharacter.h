@@ -7,6 +7,7 @@
 #include "SideScrollerCharacter.generated.h"
 
 class ACollectable;
+class AWeapon;
 
 // This struct covers all possible sideScroller input schemes.
 USTRUCT(BlueprintType)
@@ -60,9 +61,6 @@ protected:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	FSideScrollerInput SideScrollerInput;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-	TSubclassOf<AActor> SideScrollerGameMode;
-
 public:
 	ASideScrollerCharacter();
 
@@ -71,7 +69,7 @@ public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
-	UFUNCTION(BlueprintCallable, Category = "Input")
+	UFUNCTION(BlueprintCallable, Category = "SideScrollerCharacter")
 	const FSideScrollerInput& GetCurrentInput() { return SideScrollerInput; }
 
 	// Called when the game starts or when spawned
@@ -79,5 +77,8 @@ public:
 
 	// To react to collisions with collectables
 	virtual void ReceiveOnCollectableAdded(ACollectable* Collectable);
+
+	// To react to collisions with collectable weapons
+	virtual void ReceiveOnCollectableWeaponAdded(AWeapon* Weapon);
 
 };

@@ -9,6 +9,8 @@ AEnemy::AEnemy()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
+	SetRootComponent(StaticMeshComponent);
 }
 
 // Called when the game starts or when spawned
@@ -32,3 +34,21 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void AEnemy::ReceiveDamage(int32 IncomingDamage)
+{
+	if (IncomingDamage >= Health)
+	{
+		if (Health >= 0)
+		{
+			Health = -1;
+			Die();
+		}
+		return;
+	}
+	Health -= IncomingDamage;
+}
+
+int32 AEnemy::GetHealthRemaining()
+{
+	return Health;
+}

@@ -4,6 +4,7 @@
 #include "Runtime/Engine/Public/WorldCollision.h"
 #include "Kismet/GameplayStatics.h"
 #include "Weapon.h"
+#include "DamageInterface.h"
 #include "Components/ShapeComponent.h"
 
 
@@ -40,10 +41,10 @@ void AProjectile::Tick(float DeltaTime)
 		if (World->SweepSingleByProfile(OutHit, Loc, DesiredEndLoc, FQuat::Identity, CollisionProfile, CollisionShape))
 		{
 			SetActorLocation(OutHit.Location);
-			//if (IDamageInterface* DamageActor = Cast<IDamageInterface>(OutHit.Actor.Get()))
-			//{
-			//	DamageActor->ReceiveDamage(Damage);
-			//}
+			if (IDamageInterface* DamageActor = Cast<IDamageInterface>(OutHit.Actor.Get()))
+			{
+				DamageActor->ReceiveDamage(Damage);
+			}
 			Destroy();
 		}
 		else
