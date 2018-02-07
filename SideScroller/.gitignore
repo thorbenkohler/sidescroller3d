@@ -1,0 +1,16 @@
+*.suo
+*.sdf
+Saved
+Intermediate
+DerivedDataCache
+*.opensdf
+.vs
+*.opendb
+*.sln
+x64
+Debug
+SideScroller3DBP.VC.db
+Durango
+DerivedData
+SideScroller3DBP.uproject.bkp
+SideScroller3DBP.xcworkspace
