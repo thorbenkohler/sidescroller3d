@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CollectableWeapon.h"
-#include "Weapon.h"
-#include "SideScrollerStatics.h"
-#include "SideScrollerDelegates.h"
+#include "Weapons/Weapon.h"
+#include "Utilities/SideScrollerStatics.h"
+#include "Utilities/SideScrollerDelegates.h"
 #include "Runtime/Engine/Public/WorldCollision.h"
 
 

@@ -2,8 +2,8 @@
 
 #include "CollectableCoin.h"
 #include "Powerups/Coin.h"
-#include "SideScrollerStatics.h"
-#include "SideScrollerDelegates.h"
+#include "Utilities/SideScrollerStatics.h"
+#include "Utilities/SideScrollerDelegates.h"
 #include "Runtime/Engine/Public/WorldCollision.h"
 
 

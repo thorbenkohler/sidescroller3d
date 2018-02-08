@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Muzzle.h"
+#include "Weapons/Muzzle.h"
 #include "Coin.generated.h"
 
 class ASideScrollerCharacter;

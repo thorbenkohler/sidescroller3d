@@ -15,4 +15,11 @@ class SIDESCROLLER_API ASideScrollerPlayerController : public APlayerController
 
 public:
 	virtual void BeginPlay() override;
+
+	// Reference to the UMG Asset
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<class UUserWidget> MainMenu;
+
+	// Variable to hold the widget After Creating it.
+	UUserWidget* SideScrollerMainMenu;
 };

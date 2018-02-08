@@ -13,6 +13,7 @@ ASideScrollerGameMode::ASideScrollerGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+	//PlayerControllerClass = APlayerController::StaticClass();
 }
 
 void ASideScrollerGameMode::BeginPlay()
@@ -24,17 +25,20 @@ void ASideScrollerGameMode::BeginPlay()
 
 void ASideScrollerGameMode::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 {
-	if (CurrentWidget != nullptr)
+	if (CurrentWidget->IsValidLowLevel())
 	{
 		CurrentWidget->RemoveFromViewport();
 		CurrentWidget = nullptr;
 	}
-	if (NewWidgetClass != nullptr)
+
+	if (NewWidgetClass->IsValidLowLevel())
 	{
 		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
-		if (CurrentWidget != nullptr)
+		if (!CurrentWidget->IsValidLowLevel())
 		{
-			CurrentWidget->AddToViewport();
+			UE_LOG(LogTemp, Error, TEXT("Creating a new widget failed."));
+			return;
 		}
+		CurrentWidget->AddToViewport();
 	}
 }

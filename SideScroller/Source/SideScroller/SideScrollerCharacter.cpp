@@ -1,12 +1,12 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "SideScrollerCharacter.h"
-#include "SideScrollerDelegates.h"
+#include "Utilities/SideScrollerDelegates.h"
 #include "Engine.h"
-#include "Weapon.h"
+#include "Weapons/Weapon.h"
 #include "Powerups/Coin.h"
 #include "Collectables/Collectable.h"
-#include "SideScrollerStatics.h"
+#include "Utilities/SideScrollerStatics.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
