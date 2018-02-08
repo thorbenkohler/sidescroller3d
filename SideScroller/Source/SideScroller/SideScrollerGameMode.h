@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SideScrollerCharacter.h"
+#include "Character/SideScrollerCharacter.h"
 #include "Blueprint/UserWidget.h"
 #include "GameFramework/GameModeBase.h"
 #include "SideScrollerGameMode.generated.h"

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "SideScrollerCharacter.h"
 #include "Muzzle.h"
 #include "Weapon.generated.h"
 
