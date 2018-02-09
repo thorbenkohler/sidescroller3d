@@ -13,7 +13,6 @@ ASideScrollerGameMode::ASideScrollerGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
-	//PlayerControllerClass = APlayerController::StaticClass();
 }
 
 void ASideScrollerGameMode::BeginPlay()
