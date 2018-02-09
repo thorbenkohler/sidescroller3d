@@ -6,9 +6,11 @@
 #include "GameFramework/Character.h"
 #include "SideScrollerCharacter.generated.h"
 
+// TODO: Good or bad practice?
 class ACollectable;
 class AWeapon;
 class ACoin;
+class UCoinCollector;
 
 // This struct covers all possible sideScroller input schemes.
 USTRUCT(BlueprintType)
@@ -29,29 +31,41 @@ class ASideScrollerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	/** Side view camera */
+	// Side view camera 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* SideViewCameraComponent;
 
-	/** Camera boom positioning the camera beside the character */
+	// Camera boom positioning the camera beside the character
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+	// For general collecting purposes e.g. debug, achievements etc.
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UCollector* Collector;
+
+	// Collects and counts the coins of the player
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UCoinCollector* CoinCollector;
+
+	// Collects weapons
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UWeaponCollector* WeaponCollector;
+
 protected:
 
-	/** Called for side to side input */
+	// Called for side to side input
 	void MoveRight(float Val);
 
-	/** Called to spawn projectiles */
+	// Called to spawn projectiles
 	void Fire();
 
-	/** Called to stop spawning projectiles */
+	// Called to stop spawning projectiles
 	void StopFire();
 
-	/** Handle touch inputs. */
+	// Handle touch inputs.
 	void TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location);
 
-	/** Handle touch stop event. */
+	// Handle touch stop event.
 	void TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location);
 
 	// APawn interface
@@ -65,24 +79,13 @@ protected:
 public:
 	ASideScrollerCharacter();
 
-	/** Returns SideViewCameraComponent subobject **/
+	// Returns SideViewCameraComponent subobject
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
-	/** Returns CameraBoom subobject **/
+	// Returns CameraBoom subobject 
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	// Returns CoinCollector Actor Component
+	FORCEINLINE class UCoinCollector* GetCoinCollector() const { return CoinCollector; }
 
 	UFUNCTION(BlueprintCallable, Category = "SideScrollerCharacter")
 	const FSideScrollerInput& GetCurrentInput() { return SideScrollerInput; }
-
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	// To react to collisions with collectables
-	virtual void ReceiveOnCollectableAdded(ACollectable* Collectable);
-
-	// To react to collisions with collectable weapons
-	virtual void ReceiveOnCollectableWeaponAdded(AWeapon* Weapon);
-
-	// To react to collisions with collectable coins
-	virtual void ReceiveOnCollectableCoinAdded(int32 Amount);
-
 };

@@ -1,8 +1,11 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "SideScrollerCharacter.h"
-#include "Utilities/SideScrollerDelegates.h"
+#include "Collector.h"
+#include "CoinCollector.h"
+#include "WeaponCollector.h"
 #include "Engine.h"
+#include "Utilities/SideScrollerDelegates.h"
 #include "Weapons/Weapon.h"
 #include "Powerups/Coin.h"
 #include "Collectables/Collectable.h"
@@ -55,6 +58,14 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
+	UCollector* Collector = CreateAbstractDefaultSubobject<UCollector>(TEXT("Collector"));
+	AddInstanceComponent(Collector);
+
+	UCoinCollector* CoinCollector = CreateAbstractDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
+	AddInstanceComponent(CoinCollector);
+
+	UWeaponCollector* WeaponCollector = CreateAbstractDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
+	AddInstanceComponent(WeaponCollector);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -99,32 +110,4 @@ void ASideScrollerCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, c
 void ASideScrollerCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
 	StopJumping();
-}
-
-void ASideScrollerCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-
-	USideScrollerDelegates::OnCollectableAdded.AddUObject(this, &ASideScrollerCharacter::ReceiveOnCollectableAdded);
-	USideScrollerDelegates::OnCollectableWeaponAdded.AddUObject(this, &ASideScrollerCharacter::ReceiveOnCollectableWeaponAdded);
-	USideScrollerDelegates::OnCollectableCoinAdded.AddUObject(this, &ASideScrollerCharacter::ReceiveOnCollectableCoinAdded);
-}
-
-void ASideScrollerCharacter::ReceiveOnCollectableAdded(ACollectable* Collectable)
-{
-	UE_LOG(LogTemp, Log, TEXT("Collectable %s added to %s"), *(Collectable->GetName()), *GetName());
-}
-
-void ASideScrollerCharacter::ReceiveOnCollectableWeaponAdded(AWeapon* Weapon)
-{
-	FAttachmentTransformRules Rules(EAttachmentRule::KeepWorld, false);
-	Weapon->AttachToActor(this, Rules);
-	Weapon->SideScrollerCharacter = this;
-	Weapon->SetActorRelativeLocation(Weapon->Offset);
-	UE_LOG(LogTemp, Log, TEXT("Collectable Weapon %s added to %s"), *(Weapon->GetName()), *GetName());
-}
-
-void ASideScrollerCharacter::ReceiveOnCollectableCoinAdded(int32 Amount)
-{
-	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), Amount, *GetName());
 }

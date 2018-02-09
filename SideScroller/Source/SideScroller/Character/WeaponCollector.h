@@ -5,17 +5,17 @@
 #include "CoreMinimal.h"
 #include "Collector.h"
 #include "Components/ActorComponent.h"
-#include "CoinCollector.generated.h"
-
+#include "Weapons/Weapon.h"
+#include "WeaponCollector.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class SIDESCROLLER_API UCoinCollector : public UActorComponent
+class SIDESCROLLER_API UWeaponCollector : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UCoinCollector();
+	UWeaponCollector();
 
 protected:
 	// Called when the game starts
@@ -25,9 +25,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	// To react to collisions with collectable coins
-	virtual void ReceiveOnCollectableCoinAdded(int32 Amount);
-	
-	// Current amount of coins
-	int32 Amount;
+	// To react to collisions with collectable weapons
+	virtual void ReceiveOnCollectableWeaponAdded(AWeapon* Weapon);
 };

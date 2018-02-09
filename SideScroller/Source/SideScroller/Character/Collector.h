@@ -3,31 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Collector.h"
 #include "Components/ActorComponent.h"
-#include "CoinCollector.generated.h"
-
+#include "Collectables/Collectable.h"
+#include "Collector.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class SIDESCROLLER_API UCoinCollector : public UActorComponent
+class SIDESCROLLER_API UCollector : public UActorComponent
 {
 	GENERATED_BODY()
-
-public:	
-	// Sets default values for this component's properties
-	UCoinCollector();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:	
+	// Sets default values for this component's properties
+	UCollector();
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	// To react to collisions with collectable coins
-	virtual void ReceiveOnCollectableCoinAdded(int32 Amount);
-	
-	// Current amount of coins
-	int32 Amount;
+	virtual void ReceiveOnCollectableAdded(ACollectable* Collectable);
 };
