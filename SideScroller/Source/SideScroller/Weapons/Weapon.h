@@ -7,7 +7,9 @@
 #include "Muzzle.h"
 #include "Weapon.generated.h"
 
+// TODO: Good or bad practice?
 class ASideScrollerCharacter;
+class UProjectileSpawner;
 
 UCLASS()
 class SIDESCROLLER_API AWeapon : public AActor
@@ -44,6 +46,10 @@ public:
 	// Set the distance from weapon to character
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FVector Offset;
+
+	// Spawns projectiles
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	UProjectileSpawner* ProjectileSpawner;
 
 protected:
 	// Called when the game starts or when spawned

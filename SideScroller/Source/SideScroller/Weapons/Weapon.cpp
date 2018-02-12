@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Weapon.h"
+#include "ProjectileSpawner.h"
 #include "Character/SideScrollerCharacter.h"
 #include "Projectiles/Projectile.h"
 
@@ -18,6 +19,9 @@ AWeapon::AWeapon()
 	Muzzle->SetupAttachment(StaticMeshComponent);
 
 	FireButtonWasReleased = true;
+
+	ProjectileSpawner = CreateDefaultSubobject<UProjectileSpawner>(TEXT("ProjectileSpawner"));
+	AddInstanceComponent(ProjectileSpawner);
 }
 
 // Called when the game starts or when spawned
@@ -59,14 +63,7 @@ void AWeapon::Tick(float DeltaTime)
 		FActorSpawnParameters SpawnInfo;
 		SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ReferencedProjectileClass, SpawnLocation, ShooterRotation, SpawnInfo);
-
-		FRotator ProjectileRotation = Projectile->GetActorRotation();
-
-		// The character starts with a 90 degree offset
-		ProjectileRotation.Yaw = ShooterRotation.Yaw - 90.0f;
-		Projectile->SetActorRelativeRotation(ProjectileRotation);
-		Projectile->ShotDirection = ShotDirection;
+		ProjectileSpawner->Spawn(ReferencedProjectileClass, SpawnLocation, ShooterRotation, SpawnInfo, ShotDirection);
 	}
 
 	if (!input.bFire)
@@ -74,3 +71,4 @@ void AWeapon::Tick(float DeltaTime)
 		FireButtonWasReleased = true;
 	}
 }
+
