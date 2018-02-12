@@ -6,11 +6,6 @@
 #include "GameFramework/Character.h"
 #include "SideScrollerCharacter.generated.h"
 
-// TODO: Good or bad practice?
-class ACollectable;
-class AWeapon;
-class ACoin;
-class UCoinCollector;
 
 // This struct covers all possible sideScroller input schemes.
 USTRUCT(BlueprintType)
