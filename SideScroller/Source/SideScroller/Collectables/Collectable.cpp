@@ -25,7 +25,6 @@ void ACollectable::BeginPlay()
 		return;
 	}
 	PrimitiveComponent->SetCollisionProfileName(FName(TEXT("Collectable:General")));
-	PrimitiveComponent->OnComponentBeginOverlap.AddDynamic(this, &ACollectable::OnOverlapBegin);
 }
 
 // Called every frame
