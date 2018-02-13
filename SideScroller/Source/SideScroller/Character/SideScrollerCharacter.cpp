@@ -58,13 +58,13 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
-	UCollector* Collector = CreateAbstractDefaultSubobject<UCollector>(TEXT("Collector"));
+	UCollector* Collector = CreateDefaultSubobject<UCollector>(TEXT("Collector"));
 	AddInstanceComponent(Collector);
 
-	UCoinCollector* CoinCollector = CreateAbstractDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
+	UCoinCollector* CoinCollector = CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
 	AddInstanceComponent(CoinCollector);
 
-	UWeaponCollector* WeaponCollector = CreateAbstractDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
+	UWeaponCollector* WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
 	AddInstanceComponent(WeaponCollector);
 }
 

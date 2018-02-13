@@ -24,16 +24,20 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Sets the actual form for the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
 	UStaticMeshComponent* StaticMeshComponent;
 
 	// Sets the actual form for the weapon
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	ASideScrollerCharacter* SideScrollerCharacter;
+
+	// Sets the actual form for the weapon
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	AActor* OwningActor;
 
 	// Blueprint Asset which is spawned when shooting.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	TSoftObjectPtr<UBlueprint> ReferencedProjectile;
+	TSubclassOf<AActor> ReferencedProjectile;
 
 	// How fast the gun might shoot.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
@@ -54,9 +58,6 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	// Projectile blueprint reference
-	TSubclassOf<class UObject> ReferencedProjectileClass;
 
 private:
 	bool FireButtonWasReleased;

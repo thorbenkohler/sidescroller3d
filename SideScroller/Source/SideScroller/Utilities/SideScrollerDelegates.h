@@ -16,7 +16,7 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableAdded, ACollectable*);
 	static FOnCollectableAdded OnCollectableAdded;
 
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableWeaponAdded, AWeapon*);
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableWeaponAdded, TSubclassOf<AActor>);
 	static FOnCollectableWeaponAdded OnCollectableWeaponAdded;
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableCoinAdded, int32);

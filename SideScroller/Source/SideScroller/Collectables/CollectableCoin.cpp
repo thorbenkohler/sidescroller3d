@@ -38,16 +38,6 @@ void ACollectableCoin::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActo
 {
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
-	// TODO: Discuss asynchronous loading.
-	const FSoftObjectPath& AssetPath = ReferencedCollectable.ToSoftObjectPath();
-	UBlueprint* newBp = LoadObject<UBlueprint>(nullptr, *AssetPath.ToString());
-
-	if (!newBp->IsValidLowLevel())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Failed to load Coin."));
-		return;
-	}
-
 	USideScrollerDelegates::OnCollectableCoinAdded.Broadcast(Amount);
 	Destroy();
 }

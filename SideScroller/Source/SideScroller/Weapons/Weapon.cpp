@@ -29,17 +29,6 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Loads a projectile blueprint as reference to spawn others
-	const FSoftObjectPath& AssetPath = ReferencedProjectile.ToSoftObjectPath();
-	UBlueprint* newBp = LoadObject<UBlueprint>(nullptr, *AssetPath.ToString());
-
-	if (!newBp->IsValidLowLevel())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Loading projectile failed"));
-		return;
-	}
-
-	ReferencedProjectileClass = newBp->GeneratedClass;
 }
 
 // Called every frame
@@ -63,7 +52,7 @@ void AWeapon::Tick(float DeltaTime)
 		FActorSpawnParameters SpawnInfo;
 		SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-		ProjectileSpawner->Spawn(ReferencedProjectileClass, SpawnLocation, ShooterRotation, SpawnInfo, ShotDirection);
+		ProjectileSpawner->Spawn(ReferencedProjectile, SpawnLocation, ShooterRotation, SpawnInfo, ShotDirection);
 	}
 
 	if (!input.bFire)

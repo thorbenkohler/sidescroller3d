@@ -38,18 +38,6 @@ void ACollectableWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAc
 {
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
-	// TODO: Discuss asynchronous loading.
-	const FSoftObjectPath& AssetPath = ReferencedCollectable.ToSoftObjectPath();
-	UBlueprint* newBp = LoadObject<UBlueprint>(nullptr, *AssetPath.ToString());
-
-	if (!newBp->IsValidLowLevel())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Failed to load Weapon."));
-		return;
-	}
-
-	FActorSpawnParameters SpawnParameters;
-	AWeapon* Weapon = GetWorld()->SpawnActor<AWeapon>(newBp->GeneratedClass, SpawnParameters);
-	USideScrollerDelegates::OnCollectableWeaponAdded.Broadcast(Weapon);
+	USideScrollerDelegates::OnCollectableWeaponAdded.Broadcast(ReferencedCollectable);
 	Destroy();
 }

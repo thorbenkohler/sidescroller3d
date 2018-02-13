@@ -23,7 +23,7 @@ public:
 
 	// Reference to the blueprint of the collectable
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collectable")
-	TSoftObjectPtr<UBlueprint> ReferencedCollectable;
+	TSubclassOf<AActor> ReferencedCollectable;
 
 	// Gets triggered, when the actor collides with another actor
 	UFUNCTION()

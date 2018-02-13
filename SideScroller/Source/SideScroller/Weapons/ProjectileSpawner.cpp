@@ -25,7 +25,7 @@ void UProjectileSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UProjectileSpawner::Spawn(UClass* ReferencedProjectileClass, FVector &SpawnLocation, FRotator &ShooterRotation, FActorSpawnParameters &SpawnInfo, const FVector &ShotDirection)
+void UProjectileSpawner::Spawn(TSubclassOf<AActor> ReferencedProjectileClass, FVector &SpawnLocation, FRotator &ShooterRotation, FActorSpawnParameters &SpawnInfo, const FVector &ShotDirection)
 {
 	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ReferencedProjectileClass, SpawnLocation, ShooterRotation, SpawnInfo);
 

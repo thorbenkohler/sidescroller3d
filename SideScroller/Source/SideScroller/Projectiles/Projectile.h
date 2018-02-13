@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
-UCLASS()
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SIDESCROLLER_API AProjectile : public AActor
 {
 	GENERATED_BODY()

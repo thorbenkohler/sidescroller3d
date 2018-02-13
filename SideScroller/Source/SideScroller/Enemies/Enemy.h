@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Interfaces/DamageInterface.h"
+#include "Weapons/WeaponSpawner.h"
 #include "GameFramework/Pawn.h"
 #include "Enemy.generated.h"
 
@@ -35,8 +36,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* StaticMeshComponent;
 	 
+	// Reference to the blueprint of the weapon
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+	TSubclassOf<AActor> ReferencedWeapon;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UWeaponSpawner* WeaponSpawner;
+
 	// Current health value.
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy", meta = (ClampMin = "0.0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
 	float Health;
 
 protected:

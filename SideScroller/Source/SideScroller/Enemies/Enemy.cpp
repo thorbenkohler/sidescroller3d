@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Enemy.h"
+#include "Weapons/Weapon.h"
 
 
 // Sets default values
@@ -11,13 +12,22 @@ AEnemy::AEnemy()
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	SetRootComponent(StaticMeshComponent);
+
+	WeaponSpawner = CreateDefaultSubobject<UWeaponSpawner>(TEXT("WeaponSpawner"));
+	AddInstanceComponent(WeaponSpawner);
 }
 
 // Called when the game starts or when spawned
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	//if (!ReferencedWeapon->IsValidLowLevel())
+	//{
+	//	return;
+	//}
+
+	//WeaponSpawner->Spawn(ReferencedWeapon);
 }
 
 // Called every frame
