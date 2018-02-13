@@ -22,12 +22,12 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//if (!ReferencedWeapon->IsValidLowLevel())
-	//{
-	//	return;
-	//}
+	if (!ReferencedWeapon->IsValidLowLevel())
+	{
+		return;
+	}
 
-	//WeaponSpawner->Spawn(ReferencedWeapon);
+	WeaponSpawner->Spawn(ReferencedWeapon);
 }
 
 // Called every frame
