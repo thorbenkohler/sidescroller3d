@@ -23,7 +23,7 @@ void UWeaponCollector::BeginPlay()
 	Super::BeginPlay();
 
 	// Can't be in the constructor or the editor crashes
-	if (WeaponSpawner->IsValidLowLevel())
+	if (IsValid(WeaponSpawner))
 	{
 		GetOwner()->AddInstanceComponent(WeaponSpawner);
 	}
