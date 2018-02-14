@@ -2,6 +2,7 @@
 
 #include "Enemy.h"
 #include "Weapons/Weapon.h"
+#include "Weapons/WeaponSpawner.h"
 
 
 // Sets default values

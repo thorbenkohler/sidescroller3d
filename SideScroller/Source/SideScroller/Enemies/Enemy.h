@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Interfaces/DamageInterface.h"
-#include "Weapons/WeaponSpawner.h"
 #include "GameFramework/Pawn.h"
 #include "Enemy.generated.h"
 
@@ -41,7 +40,7 @@ public:
 	TSubclassOf<AActor> ReferencedWeapon;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	UWeaponSpawner* WeaponSpawner;
+	class UWeaponSpawner* WeaponSpawner;
 
 	// Current health value.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
