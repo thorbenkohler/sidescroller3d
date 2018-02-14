@@ -7,9 +7,6 @@
 #include "Muzzle.h"
 #include "Weapon.generated.h"
 
-// TODO: Good or bad practice?
-class ASideScrollerCharacter;
-class UProjectileSpawner;
 
 UCLASS()
 class SIDESCROLLER_API AWeapon : public AActor
@@ -26,14 +23,6 @@ public:
 	// Sets the actual form for the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
 	UStaticMeshComponent* StaticMeshComponent;
-
-	// Sets the actual form for the weapon
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-	ASideScrollerCharacter* SideScrollerCharacter;
-
-	// Sets the actual form for the weapon
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-	AActor* OwningActor;
 
 	// Blueprint Asset which is spawned when shooting.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
@@ -53,12 +42,16 @@ public:
 
 	// Spawns projectiles
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-	UProjectileSpawner* ProjectileSpawner;
+	class UProjectileSpawner* ProjectileSpawner;
+
+	// Used for shoot direction
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	AActor* WeaponOwner;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-private:
-	bool FireButtonWasReleased;
+	// Temporary value for the cooldown.
+	float DeltaCooldown;
 };

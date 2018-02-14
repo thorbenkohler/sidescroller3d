@@ -2,6 +2,7 @@
 
 #include "WeaponSpawner.h"
 #include "Weapons/Weapon.h"
+#include "Weapons/PlayerWeapon.h"
 #include "Enemies/Enemy.h"
 #include "Character/SideScrollerCharacter.h"
 #include "Projectiles/Projectile.h"
@@ -28,7 +29,6 @@ void UWeaponSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-
 void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 {
 	FActorSpawnParameters SpawnParameters;
@@ -39,15 +39,33 @@ void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 		return;
 	}
 
+	UE_LOG(LogTemp, Log, TEXT("Weapon %s spawned"), *(Weapon->GetName()));
+
 	FAttachmentTransformRules Rules(EAttachmentRule::KeepWorld, false);
 	AActor* Owner = GetOwner();
 	Weapon->AttachToActor(Owner, Rules);
-	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(Owner);
-	if (IsValid(SideScrollerCharacter))
-	{
-		Weapon->SideScrollerCharacter = SideScrollerCharacter;
-	}
 	Weapon->SetActorRelativeLocation(Weapon->Offset);
+	FRotator OwnerRotation = Owner->GetActorRotation();
 
-	UE_LOG(LogTemp, Log, TEXT("Weapon %s spawned"), *(Weapon->GetName()));
+	// If the weapon owner is rotated against the standard direction, adjust the weapon direction
+	if (OwnerRotation.Yaw > 0.0f)
+	{
+		FRotator NewRotation = Weapon->GetActorRotation();
+		NewRotation.Yaw = -90.0f;
+		Weapon->SetActorRelativeRotation(NewRotation);
+	}
+	Weapon->WeaponOwner = Owner;
+
+	APlayerWeapon* PlayerWeapon = Cast<APlayerWeapon>(Weapon);
+	if (!IsValid(PlayerWeapon))
+	{
+		return;
+	}
+	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(Owner);
+	if (!IsValid(SideScrollerCharacter))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Player Weapon %s without a valid owner was spawned."), *PlayerWeapon->GetName());
+		return;
+	}
+	PlayerWeapon->SideScrollerCharacter = SideScrollerCharacter;
 }

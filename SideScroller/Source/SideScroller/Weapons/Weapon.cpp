@@ -2,7 +2,6 @@
 
 #include "Weapon.h"
 #include "ProjectileSpawner.h"
-#include "Character/SideScrollerCharacter.h"
 #include "Projectiles/Projectile.h"
 
 
@@ -17,8 +16,6 @@ AWeapon::AWeapon()
 
 	Muzzle = CreateDefaultSubobject<USceneComponent>(TEXT("Muzzle"));
 	Muzzle->SetupAttachment(StaticMeshComponent);
-
-	FireButtonWasReleased = true;
 
 	ProjectileSpawner = CreateDefaultSubobject<UProjectileSpawner>(TEXT("ProjectileSpawner"));
 	AddInstanceComponent(ProjectileSpawner);
@@ -36,28 +33,5 @@ void AWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!IsValid(SideScrollerCharacter))
-	{
-		return;
-	}
-
-	// Spawning projectiles depending on the player's input
-	FSideScrollerInput input = SideScrollerCharacter->GetCurrentInput();
-	if (input.bFire && FireButtonWasReleased)
-	{
-		FireButtonWasReleased = false;
-		FVector SpawnLocation = Muzzle->GetComponentLocation();
-		FVector ShotDirection = SideScrollerCharacter->GetActorForwardVector();
-		FRotator ShooterRotation = SideScrollerCharacter->GetActorRotation();
-		FActorSpawnParameters SpawnInfo;
-		SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		ProjectileSpawner->Spawn(ReferencedProjectile, SpawnLocation, ShooterRotation, SpawnInfo, ShotDirection);
-	}
-
-	if (!input.bFire)
-	{
-		FireButtonWasReleased = true;
-	}
 }
 

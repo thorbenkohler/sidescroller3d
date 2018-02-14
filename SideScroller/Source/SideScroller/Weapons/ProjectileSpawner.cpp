@@ -25,14 +25,13 @@ void UProjectileSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UProjectileSpawner::Spawn(TSubclassOf<AActor> ReferencedProjectileClass, FVector &SpawnLocation, FRotator &ShooterRotation, FActorSpawnParameters &SpawnInfo, const FVector &ShotDirection)
+void UProjectileSpawner::Spawn(TSubclassOf<AActor> ReferencedProjectileClass, FVector& SpawnLocation, FRotator& ShooterRotation, FActorSpawnParameters& SpawnParameters, const FVector& ShotDirection)
 {
-	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ReferencedProjectileClass, SpawnLocation, ShooterRotation, SpawnInfo);
-
-	FRotator ProjectileRotation = Projectile->GetActorRotation();
-
-	// The character starts with a 90 degree offset
-	ProjectileRotation.Yaw = ShooterRotation.Yaw - 90.0f;
-	Projectile->SetActorRelativeRotation(ProjectileRotation);
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ReferencedProjectileClass, SpawnLocation, ShooterRotation, SpawnParameters);
+	if (!IsValid(Projectile))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Spawning projectile failed."));
+		return;
+	}
 	Projectile->ShotDirection = ShotDirection;
 }

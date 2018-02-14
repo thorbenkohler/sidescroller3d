@@ -41,6 +41,7 @@ void AProjectile::Tick(float DeltaTime)
 		if (World->SweepSingleByProfile(OutHit, Loc, DesiredEndLoc, FQuat::Identity, CollisionProfile, CollisionShape))
 		{
 			SetActorLocation(OutHit.Location);
+			UE_LOG(LogTemp, Log, TEXT("OutHit %s"), *OutHit.Actor->GetName())
 			if (IDamageInterface* DamageActor = Cast<IDamageInterface>(OutHit.Actor.Get()))
 			{
 				DamageActor->ReceiveDamage(Damage);

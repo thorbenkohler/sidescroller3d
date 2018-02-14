@@ -19,7 +19,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable, Category = "WeaponSpawner")
 	void Spawn(TSubclassOf<AActor> ReferencedClass);
 
 protected:
