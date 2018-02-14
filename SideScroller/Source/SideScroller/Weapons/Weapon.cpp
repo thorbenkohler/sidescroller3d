@@ -36,7 +36,7 @@ void AWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!SideScrollerCharacter->IsValidLowLevel())
+	if (!IsValid(SideScrollerCharacter))
 	{
 		return;
 	}

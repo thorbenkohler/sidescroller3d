@@ -22,11 +22,10 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!ReferencedWeapon->IsValidLowLevel())
+	if (!IsValid(ReferencedWeapon))
 	{
 		return;
 	}
-
 	WeaponSpawner->Spawn(ReferencedWeapon);
 }
 

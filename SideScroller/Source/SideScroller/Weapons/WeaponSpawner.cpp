@@ -6,7 +6,6 @@
 #include "Character/SideScrollerCharacter.h"
 #include "Projectiles/Projectile.h"
 #include "Utilities/SideScrollerDelegates.h"
-#include <Engine/World.h>
 
 
 // Sets default values for this component's properties
@@ -34,7 +33,7 @@ void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 {
 	FActorSpawnParameters SpawnParameters;
 	AWeapon* Weapon = GetWorld()->SpawnActor<AWeapon>(ReferencedClass, SpawnParameters);
-	if (!Weapon->IsValidLowLevel())
+	if (!IsValid(Weapon))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Spawning Weapon failed"));
 		return;
@@ -43,9 +42,8 @@ void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 	FAttachmentTransformRules Rules(EAttachmentRule::KeepWorld, false);
 	AActor* Owner = GetOwner();
 	Weapon->AttachToActor(Owner, Rules);
-	Weapon->OwningActor = Owner;
 	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(Owner);
-	if (SideScrollerCharacter->IsValidLowLevel())
+	if (IsValid(SideScrollerCharacter))
 	{
 		Weapon->SideScrollerCharacter = SideScrollerCharacter;
 	}
