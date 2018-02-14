@@ -18,11 +18,20 @@ public:
 	bool Initialize();
 
 	virtual void ReceiveOnCollectableCoinAdded(int32 Amount);
+	
+	virtual void ReceiveOnPlayerDamageReceived(int32 Amount);
 
 	// Can be used for Hud effects
 	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
 	void ChangeCoinAmount();
 
+	// Can be used for Hud effects
+	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
+	void ChangeHealthAmount();
+
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "SideScrollerHud")
 	int32 CoinAmount;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = "SideScrollerHud")
+	int32 HealthAmount;
 };

@@ -21,4 +21,7 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableCoinAdded, int32);
 	static FOnCollectableCoinAdded OnCollectableCoinAdded;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerDamageReceived, int32);
+	static FOnPlayerDamageReceived OnPlayerDamageReceived;
 };

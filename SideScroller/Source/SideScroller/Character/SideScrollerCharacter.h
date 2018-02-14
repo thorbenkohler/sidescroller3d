@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Interfaces/DamageInterface.h"
 #include "GameFramework/Character.h"
 #include "SideScrollerCharacter.generated.h"
 
@@ -22,7 +23,7 @@ public:
 
 
 UCLASS(config=Game)
-class ASideScrollerCharacter : public ACharacter
+class ASideScrollerCharacter : public ACharacter, public IDamageInterface
 {
 	GENERATED_BODY()
 
@@ -74,6 +75,11 @@ protected:
 public:
 	ASideScrollerCharacter();
 
+	//~ Begin IDamageInterface
+	virtual void ReceiveDamage(int32 IncomingDamage) override;
+	virtual int32 GetHealthRemaining() override;
+	//~ End IDamageInterface
+
 	// Returns SideViewCameraComponent subobject
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 	// Returns CameraBoom subobject 
@@ -83,4 +89,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "SideScrollerCharacter")
 	const FSideScrollerInput& GetCurrentInput() { return SideScrollerInput; }
+
+	// Destroys the enemy and can used for special effects
+	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerCharacter")
+	void Die();
+
+	// Current health value.
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter", meta = (ClampMin = "0.0"))
+	float Health;
 };

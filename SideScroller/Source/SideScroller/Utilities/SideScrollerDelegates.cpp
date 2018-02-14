@@ -6,3 +6,4 @@
 USideScrollerDelegates::FOnCollectableAdded USideScrollerDelegates::OnCollectableAdded;
 USideScrollerDelegates::FOnCollectableWeaponAdded USideScrollerDelegates::OnCollectableWeaponAdded;
 USideScrollerDelegates::FOnCollectableCoinAdded USideScrollerDelegates::OnCollectableCoinAdded;
+USideScrollerDelegates::FOnPlayerDamageReceived USideScrollerDelegates::OnPlayerDamageReceived;

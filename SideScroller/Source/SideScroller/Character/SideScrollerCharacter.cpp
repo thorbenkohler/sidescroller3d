@@ -111,3 +111,24 @@ void ASideScrollerCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, c
 {
 	StopJumping();
 }
+
+void ASideScrollerCharacter::ReceiveDamage(int32 IncomingDamage)
+{
+	UE_LOG(LogTemp, Log, TEXT("Incoming player damage %d"), IncomingDamage);
+	if (IncomingDamage >= Health)
+	{
+		if (Health >= 0)
+		{
+			Health = -1;
+			Die();
+		}
+		return;
+	}
+	USideScrollerDelegates::OnPlayerDamageReceived.Broadcast(IncomingDamage);
+	Health -= IncomingDamage;
+}
+
+int32 ASideScrollerCharacter::GetHealthRemaining()
+{
+	return Health;
+}
