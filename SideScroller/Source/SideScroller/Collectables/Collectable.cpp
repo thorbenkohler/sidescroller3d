@@ -19,7 +19,7 @@ void ACollectable::BeginPlay()
 	Super::BeginPlay();
 
 	UPrimitiveComponent* PrimitiveComponent = Cast<UPrimitiveComponent>(GetRootComponent());
-	if (!PrimitiveComponent->IsValidLowLevel())
+	if (!IsValid(PrimitiveComponent))
 	{
 		UE_LOG(LogTemp, Error, TEXT("No primitive component found in %p"), this);
 		return;
