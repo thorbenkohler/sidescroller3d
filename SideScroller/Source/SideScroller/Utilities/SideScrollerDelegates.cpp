@@ -6,7 +6,7 @@
 USideScrollerDelegates::FOnCollectableAdded USideScrollerDelegates::OnCollectableAdded;
 USideScrollerDelegates::FOnCollectableWeaponAdded USideScrollerDelegates::OnCollectableWeaponAdded;
 USideScrollerDelegates::FOnCollectableCoinAdded USideScrollerDelegates::OnCollectableCoinAdded;
-USideScrollerDelegates::FOnPlayerDamageReceived USideScrollerDelegates::OnPlayerDamageReceived;
+USideScrollerDelegates::FOnPlayerChangeHealth USideScrollerDelegates::OnPlayerChangeHealth;
 USideScrollerDelegates::FOnShowWidget USideScrollerDelegates::OnShowWidget;
 USideScrollerDelegates::FOnInitFirstWidget USideScrollerDelegates::OnInitFirstWidget;
 USideScrollerDelegates::FOnStartNewGame USideScrollerDelegates::OnStartNewGame;

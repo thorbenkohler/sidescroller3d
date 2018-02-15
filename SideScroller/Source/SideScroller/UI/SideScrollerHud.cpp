@@ -12,7 +12,7 @@ bool USideScrollerHud::Initialize()
 		return false;
 	}
 	USideScrollerDelegates::OnCollectableCoinAdded.AddUObject(this, &USideScrollerHud::ReceiveOnCollectableCoinAdded);
-	USideScrollerDelegates::OnPlayerDamageReceived.AddUObject(this, &USideScrollerHud::ReceiveOnPlayerDamageReceived);
+	USideScrollerDelegates::OnPlayerChangeHealth.AddUObject(this, &USideScrollerHud::ReceiveOnPlayerChangeHealth);
 	InitWidget();
 	return true;
 }
@@ -23,7 +23,7 @@ void USideScrollerHud::ReceiveOnCollectableCoinAdded(int32 Amount)
 	UE_LOG(LogTemp, Log, TEXT("%d Coin were added and result is %d"), Amount, CoinAmount);
 }
 
-void USideScrollerHud::ReceiveOnPlayerDamageReceived(int32 Amount)
+void USideScrollerHud::ReceiveOnPlayerChangeHealth(int32 Amount)
 {
 	HealthAmount -= Amount;
 	UE_LOG(LogTemp, Log, TEXT("%d damage done to player. Remaining Health %d"), Amount, HealthAmount);

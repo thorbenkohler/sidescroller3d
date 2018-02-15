@@ -19,7 +19,7 @@ public:
 
 	virtual void ReceiveOnCollectableCoinAdded(int32 Amount);
 	
-	virtual void ReceiveOnPlayerDamageReceived(int32 Amount);
+	virtual void ReceiveOnPlayerChangeHealth(int32 Amount);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
 	void InitWidget();

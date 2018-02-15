@@ -116,7 +116,7 @@ void ASideScrollerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	USideScrollerDelegates::OnPlayerDamageReceived.Broadcast(-Health);
+	USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(-Health);
 }
 
 void ASideScrollerCharacter::ReceiveDamage(int32 IncomingDamage)
@@ -129,14 +129,14 @@ void ASideScrollerCharacter::ReceiveDamage(int32 IncomingDamage)
 			// Show the remaining life as damage
 			if (Health != 0)
 			{
-				USideScrollerDelegates::OnPlayerDamageReceived.Broadcast(Health);
+				USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(Health);
 			}
 			Health = 0;
 			Die();
 		}
 		return;
 	}
-	USideScrollerDelegates::OnPlayerDamageReceived.Broadcast(IncomingDamage);
+	USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(IncomingDamage);
 	Health -= IncomingDamage;
 }
 

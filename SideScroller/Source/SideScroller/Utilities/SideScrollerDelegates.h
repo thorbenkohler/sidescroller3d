@@ -22,8 +22,8 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableCoinAdded, int32);
 	static FOnCollectableCoinAdded OnCollectableCoinAdded;
 
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerDamageReceived, int32);
-	static FOnPlayerDamageReceived OnPlayerDamageReceived;
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerChangeHealth, int32);
+	static FOnPlayerChangeHealth OnPlayerChangeHealth;
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnShowWidget, TSubclassOf<UUserWidget>);
 	static FOnShowWidget OnShowWidget;
