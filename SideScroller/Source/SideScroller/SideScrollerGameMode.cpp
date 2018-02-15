@@ -1,43 +1,34 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "SideScrollerGameMode.h"
-#include "Collectables/Collectable.h"
-#include "UObject/ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
+#include "Utilities/SideScrollerDelegates.h"
 
 
 ASideScrollerGameMode::ASideScrollerGameMode()
 {
-	// set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/SideScrollerCPP/Blueprints/SideScrollerCharacter"));
-	if (PlayerPawnBPClass.Class != NULL)
-	{
-		DefaultPawnClass = PlayerPawnBPClass.Class;
-	}
 }
 
 void ASideScrollerGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ChangeMenuWidget(StartingWidgetClass);
+	InitFirstWidget();
 }
 
-void ASideScrollerGameMode::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
+void ASideScrollerGameMode::InitFirstWidget()
 {
-	if (CurrentWidget->IsValidLowLevel())
+	if (!IsValid(FirstMenu))
 	{
-		CurrentWidget->RemoveFromViewport();
-		CurrentWidget = nullptr;
+		UE_LOG(LogTemp, Error, TEXT("First Menu is not valid."));
+		return;
 	}
-
-	if (NewWidgetClass->IsValidLowLevel())
+	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), FirstMenu);
+	if (!IsValid(Widget))
 	{
-		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
-		if (!CurrentWidget->IsValidLowLevel())
-		{
-			UE_LOG(LogTemp, Error, TEXT("Creating a new widget failed."));
-			return;
-		}
-		CurrentWidget->AddToViewport();
+		UE_LOG(LogTemp, Error, TEXT("Creating a new widget failed."));
+		return;
 	}
+	Widget->AddToViewport();
+	USideScrollerDelegates::OnInitFirstWidget.Broadcast(Widget);
 }

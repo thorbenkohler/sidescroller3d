@@ -21,6 +21,9 @@ public:
 	
 	virtual void ReceiveOnPlayerDamageReceived(int32 Amount);
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
+	void InitWidget();
+
 	// Can be used for Hud effects
 	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
 	void ChangeCoinAmount();
@@ -29,9 +32,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
 	void ChangeHealthAmount();
 
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "SideScrollerHud")
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "SideScrollerHud")
 	int32 CoinAmount;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = "SideScrollerHud")
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SideScrollerHud")
 	int32 HealthAmount;
 };

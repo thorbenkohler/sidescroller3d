@@ -13,13 +13,14 @@ bool USideScrollerHud::Initialize()
 	}
 	USideScrollerDelegates::OnCollectableCoinAdded.AddUObject(this, &USideScrollerHud::ReceiveOnCollectableCoinAdded);
 	USideScrollerDelegates::OnPlayerDamageReceived.AddUObject(this, &USideScrollerHud::ReceiveOnPlayerDamageReceived);
+	InitWidget();
 	return true;
 }
 
 void USideScrollerHud::ReceiveOnCollectableCoinAdded(int32 Amount)
 {
 	CoinAmount += Amount;
-	UE_LOG(LogTemp, Log, TEXT("%d were added and result is now %d to %p"), Amount, CoinAmount, this);
+	UE_LOG(LogTemp, Log, TEXT("%d Coin were added and result is %d"), Amount, CoinAmount);
 }
 
 void USideScrollerHud::ReceiveOnPlayerDamageReceived(int32 Amount)

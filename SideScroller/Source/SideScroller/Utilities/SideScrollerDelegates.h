@@ -24,4 +24,10 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerDamageReceived, int32);
 	static FOnPlayerDamageReceived OnPlayerDamageReceived;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnShowWidget, TSubclassOf<UUserWidget>);
+	static FOnShowWidget OnShowWidget;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnInitFirstWidget, UUserWidget*);
+	static FOnInitFirstWidget OnInitFirstWidget;
 };
