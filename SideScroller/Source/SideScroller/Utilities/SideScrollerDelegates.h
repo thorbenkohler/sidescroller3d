@@ -30,4 +30,7 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnInitFirstWidget, UUserWidget*);
 	static FOnInitFirstWidget OnInitFirstWidget;
+
+	DECLARE_MULTICAST_DELEGATE(FOnStartNewGame);
+	static FOnStartNewGame OnStartNewGame;
 };

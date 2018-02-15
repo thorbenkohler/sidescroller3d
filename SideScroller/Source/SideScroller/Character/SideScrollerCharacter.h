@@ -75,6 +75,8 @@ protected:
 public:
 	ASideScrollerCharacter();
 
+	virtual void BeginPlay();
+
 	//~ Begin IDamageInterface
 	virtual void ReceiveDamage(int32 IncomingDamage) override;
 	virtual int32 GetHealthRemaining() override;

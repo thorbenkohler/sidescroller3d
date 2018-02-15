@@ -9,3 +9,4 @@ USideScrollerDelegates::FOnCollectableCoinAdded USideScrollerDelegates::OnCollec
 USideScrollerDelegates::FOnPlayerDamageReceived USideScrollerDelegates::OnPlayerDamageReceived;
 USideScrollerDelegates::FOnShowWidget USideScrollerDelegates::OnShowWidget;
 USideScrollerDelegates::FOnInitFirstWidget USideScrollerDelegates::OnInitFirstWidget;
+USideScrollerDelegates::FOnStartNewGame USideScrollerDelegates::OnStartNewGame;

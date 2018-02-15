@@ -32,6 +32,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MainMenu")
 	void ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass);
 
+	UFUNCTION(BlueprintCallable, Category = "MainMenu")
+	void StartNewGame();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
 	TSubclassOf<UUserWidget> StartMenu;
 

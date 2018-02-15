@@ -57,3 +57,8 @@ void UMainMenu::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 	}
 	CurrentWidget->AddToViewport();
 }
+
+void UMainMenu::StartNewGame()
+{
+	USideScrollerDelegates::OnStartNewGame.Broadcast();
+}

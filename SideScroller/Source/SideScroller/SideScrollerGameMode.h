@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "SideScrollerGameMode.generated.h"
 
+class ASideScrollerCharacter;
+
 UCLASS(minimalapi)
 class ASideScrollerGameMode : public AGameModeBase
 {
@@ -21,5 +23,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	TSubclassOf<UUserWidget> FirstMenu;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
+	TSubclassOf<ASideScrollerCharacter> PlayerCharacter;
+
 	void InitFirstWidget();
+
+	void ReceiveOnStartNewGame();
 };

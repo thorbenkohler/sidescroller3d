@@ -2,7 +2,9 @@
 
 #include "SideScrollerGameMode.h"
 #include "Blueprint/UserWidget.h"
+#include "Character/SideScrollerCharacter.h"
 #include "Utilities/SideScrollerDelegates.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ASideScrollerGameMode::ASideScrollerGameMode()
@@ -14,6 +16,7 @@ void ASideScrollerGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	InitFirstWidget();
+	USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
 }
 
 void ASideScrollerGameMode::InitFirstWidget()
@@ -31,4 +34,16 @@ void ASideScrollerGameMode::InitFirstWidget()
 	}
 	Widget->AddToViewport();
 	USideScrollerDelegates::OnInitFirstWidget.Broadcast(Widget);
+}
+
+void ASideScrollerGameMode::ReceiveOnStartNewGame()
+{
+	if (!IsValid(PlayerCharacter))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No initial player asset was set"));
+		return;
+	}
+	ASideScrollerCharacter* SideScrollerCharacter = GetWorld()->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
+	SideScrollerCharacter->SetActorLocation(FVector(1200.0f, -470.0f, 230.0f));
+	GetWorld()->GetFirstPlayerController()->Possess((APawn*)SideScrollerCharacter);
 }
