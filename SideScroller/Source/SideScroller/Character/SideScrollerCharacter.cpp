@@ -61,7 +61,7 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	UCollector* Collector = CreateDefaultSubobject<UCollector>(TEXT("Collector"));
 	AddInstanceComponent(Collector);
 
-	UCoinCollector* CoinCollector = CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
+	CoinCollector = CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
 	AddInstanceComponent(CoinCollector);
 
 	UWeaponCollector* WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
@@ -133,6 +133,10 @@ void ASideScrollerCharacter::ReceiveDamage(int32 IncomingDamage)
 			}
 			Health = 0;
 			Die();
+			if (IsValid(CoinCollector))
+			{
+				USideScrollerDelegates::OnPlayerDied.Broadcast();
+			}
 		}
 		return;
 	}

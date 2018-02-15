@@ -19,6 +19,7 @@ void UCoinCollector::BeginPlay()
 	Super::BeginPlay();
 
 	USideScrollerDelegates::OnCollectableCoinAdded.AddUObject(this, &UCoinCollector::ReceiveOnCollectableCoinAdded);
+	USideScrollerDelegates::OnPlayerDied.AddUObject(this, &UCoinCollector::ReceiveOnPlayerDied);
 }
 
 
@@ -32,4 +33,9 @@ void UCoinCollector::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 Amount)
 {
 	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), Amount, *GetName());
+}
+
+void UCoinCollector::ReceiveOnPlayerDied()
+{
+	USideScrollerDelegates::OnSetHighscore.Broadcast(Amount);
 }

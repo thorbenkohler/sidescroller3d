@@ -10,3 +10,5 @@ USideScrollerDelegates::FOnPlayerChangeHealth USideScrollerDelegates::OnPlayerCh
 USideScrollerDelegates::FOnShowWidget USideScrollerDelegates::OnShowWidget;
 USideScrollerDelegates::FOnInitFirstWidget USideScrollerDelegates::OnInitFirstWidget;
 USideScrollerDelegates::FOnStartNewGame USideScrollerDelegates::OnStartNewGame;
+USideScrollerDelegates::FOnPlayerDied USideScrollerDelegates::OnPlayerDied;
+USideScrollerDelegates::FOnSetHighscore USideScrollerDelegates::OnSetHighscore;

@@ -33,4 +33,10 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE(FOnStartNewGame);
 	static FOnStartNewGame OnStartNewGame;
+
+	DECLARE_MULTICAST_DELEGATE(FOnPlayerDied);
+	static FOnPlayerDied OnPlayerDied;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnSetHighscore, int32);
+	static FOnSetHighscore OnSetHighscore;
 };
