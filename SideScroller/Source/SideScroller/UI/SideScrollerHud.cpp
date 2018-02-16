@@ -26,5 +26,5 @@ void USideScrollerHud::ReceiveOnCollectableCoinAdded(int32 Amount)
 void USideScrollerHud::ReceiveOnPlayerChangeHealth(int32 Amount)
 {
 	HealthAmount -= Amount;
-	UE_LOG(LogTemp, Log, TEXT("%d damage done to player. Remaining Health %d"), Amount, HealthAmount);
+	UE_LOG(LogTemp, Log, TEXT("%d Health of Player changed. Remaining Health %d"), Amount, HealthAmount);
 }

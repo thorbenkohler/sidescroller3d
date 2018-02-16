@@ -35,13 +35,13 @@ class ASideScrollerCharacter : public ACharacter, public IDamageInterface
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
-	// For general collecting purposes e.g. debug, achievements etc.
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCollector* Collector;
-
 	// Collects and counts the coins of the player
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCoinCollector* CoinCollector;
+
+	// Collects and counts the coins of the player
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UHealthCollector* HealthCollector;
 
 	// Collects weapons
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -82,21 +82,22 @@ public:
 	virtual int32 GetHealthRemaining() override;
 	//~ End IDamageInterface
 
-	// Returns SideViewCameraComponent subobject
-	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
-	// Returns CameraBoom subobject 
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	// Returns CoinCollector Actor Component
-	FORCEINLINE class UCoinCollector* GetCoinCollector() const { return CoinCollector; }
-
-	UFUNCTION(BlueprintCallable, Category = "SideScrollerCharacter")
 	const FSideScrollerInput& GetCurrentInput() { return SideScrollerInput; }
 
 	// Destroys the enemy and can used for special effects
-	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerCharacter")
-	void Die();
+	UFUNCTION(BlueprintNativeEvent, Category = "SideScrollerCharacter")
+	void OnDeath();
+	virtual void OnDeath_Implementation();
+
+
+	void ReceiveOnGameWon();
+
+	void AddHealth(int32 Amount);
 
 	// Current health value.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter", meta = (ClampMin = "0.0"))
-	float Health;
+	int32 Health;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter", meta = (ClampMin = "0.0"))
+	int32 MaxHealth;
 };

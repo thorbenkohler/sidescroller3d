@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PowerUp.h"
 #include "GameFramework/Actor.h"
-#include "Weapons/Muzzle.h"
 #include "Coin.generated.h"
 
 class ASideScrollerCharacter;
 
 UCLASS()
-class SIDESCROLLER_API ACoin : public AActor
+class SIDESCROLLER_API ACoin : public APowerUp
 {
 	GENERATED_BODY()
 	
@@ -20,10 +20,6 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Sets the actual form for the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Coin", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* StaticMeshComponent;
 
 protected:
 	// Called when the game starts or when spawned

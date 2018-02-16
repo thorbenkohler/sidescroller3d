@@ -6,6 +6,18 @@
 #include "Blueprint/UserWidget.h"
 #include "HighScoreWidget.generated.h"
 
+// Contains informations about the highscore screen
+USTRUCT()
+struct FHighScoreWidgetData
+{
+	GENERATED_BODY()
+
+public:
+	int32 CoinAmount;
+
+	uint32 bWonState:1;
+};
+
 /**
  * 
  */
@@ -20,9 +32,18 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
 	void InitWidget();
 
+	UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
+	void RestartLevel();
+
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
 	int32 CoinAmount;
 
-	UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
-	void RestartLevel();
+	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
+	uint32 bWonState:1;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HighScoreWidget")
+	FString GameOverPositive;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HighScoreWidget")
+	FString GameOverNegative;
 };

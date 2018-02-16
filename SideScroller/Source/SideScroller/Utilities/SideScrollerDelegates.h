@@ -6,6 +6,9 @@
 
 class ACollectable;
 class AWeapon;
+class ASideScrollerTriggerBox;
+
+struct FHighScoreWidgetData;
 
 UCLASS()
 class SIDESCROLLER_API USideScrollerDelegates : public UObject
@@ -22,6 +25,9 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableCoinAdded, int32);
 	static FOnCollectableCoinAdded OnCollectableCoinAdded;
 
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableHealthAdded, int32);
+	static FOnCollectableHealthAdded OnCollectableHealthAdded;
+
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerChangeHealth, int32);
 	static FOnPlayerChangeHealth OnPlayerChangeHealth;
 
@@ -37,7 +43,7 @@ public:
 	DECLARE_MULTICAST_DELEGATE(FOnPlayerDied);
 	static FOnPlayerDied OnPlayerDied;
 
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnShowHighscore, int32);
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnShowHighscore, FHighScoreWidgetData);
 	static FOnShowHighscore OnShowHighscore;
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnStartNewLevel, FName);
@@ -45,4 +51,10 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE(FOnRestartCurrentLevel);
 	static FOnRestartCurrentLevel OnRestartCurrentLevel;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnTriggerBoxEnter, ASideScrollerTriggerBox*);
+	static FOnTriggerBoxEnter OnTriggerBoxEnter;
+
+	DECLARE_MULTICAST_DELEGATE(FOnGameWon);
+	static FOnGameWon OnGameWon;
 };

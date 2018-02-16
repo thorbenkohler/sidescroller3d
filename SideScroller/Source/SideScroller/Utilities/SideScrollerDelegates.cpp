@@ -6,6 +6,7 @@
 USideScrollerDelegates::FOnCollectableAdded USideScrollerDelegates::OnCollectableAdded;
 USideScrollerDelegates::FOnCollectableWeaponAdded USideScrollerDelegates::OnCollectableWeaponAdded;
 USideScrollerDelegates::FOnCollectableCoinAdded USideScrollerDelegates::OnCollectableCoinAdded;
+USideScrollerDelegates::FOnCollectableHealthAdded USideScrollerDelegates::OnCollectableHealthAdded;
 USideScrollerDelegates::FOnPlayerChangeHealth USideScrollerDelegates::OnPlayerChangeHealth;
 USideScrollerDelegates::FOnShowWidget USideScrollerDelegates::OnShowWidget;
 USideScrollerDelegates::FOnInitFirstWidget USideScrollerDelegates::OnInitFirstWidget;
@@ -14,3 +15,5 @@ USideScrollerDelegates::FOnPlayerDied USideScrollerDelegates::OnPlayerDied;
 USideScrollerDelegates::FOnShowHighscore USideScrollerDelegates::OnShowHighscore;
 USideScrollerDelegates::FOnStartNewLevel USideScrollerDelegates::OnStartNewLevel;
 USideScrollerDelegates::FOnRestartCurrentLevel USideScrollerDelegates::OnRestartCurrentLevel;
+USideScrollerDelegates::FOnTriggerBoxEnter USideScrollerDelegates::OnTriggerBoxEnter;
+USideScrollerDelegates::FOnGameWon USideScrollerDelegates::OnGameWon;

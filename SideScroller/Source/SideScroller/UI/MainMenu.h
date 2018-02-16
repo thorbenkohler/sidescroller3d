@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "MainMenu.generated.h"
 
+struct FHighScoreWidgetData;
+
 /**
  * 
  */
@@ -26,7 +28,7 @@ public:
 	virtual void ReceiveOnInitFirstWidget(UUserWidget* Widget);
 
 	// Shows the highscore after the player's death
-	void ReceiveOnShowHighscore(int32 Amount);
+	void ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
 	void InitWidget();

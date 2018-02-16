@@ -37,7 +37,7 @@ void UMainMenu::ReceiveOnInitFirstWidget(UUserWidget* Widget)
 	CurrentWidget = Widget;
 }
 
-void UMainMenu::ReceiveOnShowHighscore(int32 Amount)
+void UMainMenu::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
 {
 	if (!IsValid(GameOverWidget))
 	{
@@ -61,8 +61,9 @@ void UMainMenu::ReceiveOnShowHighscore(int32 Amount)
 		return;
 	}
 	
-	UE_LOG(LogTemp, Log, TEXT("Successfully created Highscore Widget with %d Coins."), Amount);
-	HighScoreWidget->CoinAmount = Amount;
+	UE_LOG(LogTemp, Log, TEXT("Successfully created Highscore Widget with %d Coins."), HighScoreWidgetData.CoinAmount);
+	HighScoreWidget->CoinAmount = HighScoreWidgetData.CoinAmount;
+	HighScoreWidget->bWonState = HighScoreWidgetData.bWonState;
 }
 
 void UMainMenu::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)

@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/CapsuleComponent.h"
-#include "SideScrollerGameMode.h"
 #include "Collectables/Collectable.h"
 #include "CollectableCoin.generated.h"
 
