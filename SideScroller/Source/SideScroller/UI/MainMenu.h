@@ -25,6 +25,9 @@ public:
 	// Used as initial event coming from the game mode to show the first menu in the game
 	virtual void ReceiveOnInitFirstWidget(UUserWidget* Widget);
 
+	// Shows the highscore after the player's death
+	void ReceiveOnShowHighscore(int32 Amount);
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
 	void InitWidget();
 
@@ -37,6 +40,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
 	TSubclassOf<UUserWidget> StartMenu;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
+	TSubclassOf<UUserWidget> GameOverWidget;
 
 	// The widget instance that we are using as our menu.
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MainMenu")

@@ -15,15 +15,14 @@ class SIDESCROLLER_API UHighScoreWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	UHighScoreWidget(const FObjectInitializer& ObjectInitializer);
-
 	bool Initialize();
 
-	virtual void ReceiveOnSetHighscore(int32 Amount);
-	
 	UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
 	void InitWidget();
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
 	int32 CoinAmount;
+
+	UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
+	void RestartLevel();
 };

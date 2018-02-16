@@ -17,6 +17,8 @@ void ASideScrollerGameMode::BeginPlay()
 
 	InitFirstWidget();
 	USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
+	USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
+	USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnRestartCurrentLevel);
 }
 
 void ASideScrollerGameMode::InitFirstWidget()
@@ -43,7 +45,25 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 		UE_LOG(LogTemp, Error, TEXT("No initial player asset was set"));
 		return;
 	}
+	FString WorldName = GetWorld()->GetMapName();
+
+	// Removing level prefix
+	WorldName = WorldName.Replace(TEXT("UEDPIE_0_"), TEXT(""));
+	CurrentLevelName = (FName)*WorldName;
 	ASideScrollerCharacter* SideScrollerCharacter = GetWorld()->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
 	SideScrollerCharacter->SetActorLocation(FVector(1200.0f, -470.0f, 230.0f));
 	GetWorld()->GetFirstPlayerController()->Possess((APawn*)SideScrollerCharacter);
+}
+
+void ASideScrollerGameMode::ReceiveOnStartNewLevel(FName NewLevelName)
+{
+	UE_LOG(LogTemp, Log, TEXT("Starting Level %s"), *NewLevelName.ToString());
+	UGameplayStatics::OpenLevel(GetWorld(), NewLevelName);
+	CurrentLevelName = NewLevelName;
+}
+
+void ASideScrollerGameMode::ReceiveOnRestartCurrentLevel()
+{
+	UE_LOG(LogTemp, Log, TEXT("Restarting Level %s"), *CurrentLevelName.ToString());
+	UGameplayStatics::OpenLevel(GetWorld(), CurrentLevelName);
 }

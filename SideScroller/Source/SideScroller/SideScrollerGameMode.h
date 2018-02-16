@@ -29,4 +29,14 @@ protected:
 	void InitFirstWidget();
 
 	void ReceiveOnStartNewGame();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerGameMode")
+	FName CurrentLevelName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
+	FName LevelName;
+
+	void ReceiveOnStartNewLevel(FName LevelName);
+
+	void ReceiveOnRestartCurrentLevel();
 };

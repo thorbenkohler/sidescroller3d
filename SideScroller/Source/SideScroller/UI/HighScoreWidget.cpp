@@ -3,12 +3,6 @@
 #include "HighScoreWidget.h"
 #include "Utilities/SideScrollerDelegates.h"
 
-UHighScoreWidget::UHighScoreWidget(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-	USideScrollerDelegates::OnSetHighscore.AddUObject(this, &UHighScoreWidget::ReceiveOnSetHighscore);
-}
-
 bool UHighScoreWidget::Initialize()
 {
 	bool Succesful = Super::Initialize();
@@ -20,8 +14,7 @@ bool UHighScoreWidget::Initialize()
 	return true;
 }
 
-void UHighScoreWidget::ReceiveOnSetHighscore(int32 Amount)
+void UHighScoreWidget::RestartLevel()
 {
-	CoinAmount += Amount;
-	UE_LOG(LogTemp, Log, TEXT("%d Coin were added and result is %d"), Amount, CoinAmount);
+	USideScrollerDelegates::OnRestartCurrentLevel.Broadcast();
 }

@@ -30,12 +30,13 @@ void UCoinCollector::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 }
 
 
-void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 Amount)
+void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 AddedAmount)
 {
-	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), Amount, *GetName());
+	Amount += AddedAmount;
+	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), AddedAmount, *GetName());
 }
 
 void UCoinCollector::ReceiveOnPlayerDied()
 {
-	USideScrollerDelegates::OnSetHighscore.Broadcast(Amount);
+	USideScrollerDelegates::OnShowHighscore.Broadcast(Amount);
 }

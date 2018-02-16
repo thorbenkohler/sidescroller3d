@@ -37,6 +37,12 @@ public:
 	DECLARE_MULTICAST_DELEGATE(FOnPlayerDied);
 	static FOnPlayerDied OnPlayerDied;
 
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnSetHighscore, int32);
-	static FOnSetHighscore OnSetHighscore;
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnShowHighscore, int32);
+	static FOnShowHighscore OnShowHighscore;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnStartNewLevel, FName);
+	static FOnStartNewLevel OnStartNewLevel;
+
+	DECLARE_MULTICAST_DELEGATE(FOnRestartCurrentLevel);
+	static FOnRestartCurrentLevel OnRestartCurrentLevel;
 };

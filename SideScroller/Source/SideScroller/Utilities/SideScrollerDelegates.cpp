@@ -11,4 +11,6 @@ USideScrollerDelegates::FOnShowWidget USideScrollerDelegates::OnShowWidget;
 USideScrollerDelegates::FOnInitFirstWidget USideScrollerDelegates::OnInitFirstWidget;
 USideScrollerDelegates::FOnStartNewGame USideScrollerDelegates::OnStartNewGame;
 USideScrollerDelegates::FOnPlayerDied USideScrollerDelegates::OnPlayerDied;
-USideScrollerDelegates::FOnSetHighscore USideScrollerDelegates::OnSetHighscore;
+USideScrollerDelegates::FOnShowHighscore USideScrollerDelegates::OnShowHighscore;
+USideScrollerDelegates::FOnStartNewLevel USideScrollerDelegates::OnStartNewLevel;
+USideScrollerDelegates::FOnRestartCurrentLevel USideScrollerDelegates::OnRestartCurrentLevel;
