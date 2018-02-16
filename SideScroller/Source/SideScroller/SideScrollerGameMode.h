@@ -20,23 +20,23 @@ protected:
 	// Called when the game starts.
 	virtual void BeginPlay() override;
 
+	void InitFirstWidget();
+
+	void ReceiveOnStartNewGame();
+
+	void ReceiveOnStartNewLevel(FName LevelName);
+
+	void ReceiveOnRestartCurrentLevel();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	TSubclassOf<UUserWidget> FirstMenu;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	TSubclassOf<ASideScrollerCharacter> PlayerCharacter;
 
-	void InitFirstWidget();
-
-	void ReceiveOnStartNewGame();
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerGameMode")
 	FName CurrentLevelName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	FName LevelName;
-
-	void ReceiveOnStartNewLevel(FName LevelName);
-
-	void ReceiveOnRestartCurrentLevel();
 };
