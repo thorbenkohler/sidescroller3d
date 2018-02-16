@@ -29,6 +29,8 @@ public:
 	virtual void ReceiveOnCollectableCoinAdded(int32 Amount);
 
 	virtual void ReceiveOnPlayerDied();
+
+	virtual void ReceiveOnGameWon();
 	
 	// Current amount of coins
 	int32 Amount;

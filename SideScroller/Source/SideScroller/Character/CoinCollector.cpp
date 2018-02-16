@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CoinCollector.h"
+#include "UI/HighScoreWidget.h"
 #include "Utilities/SideScrollerDelegates.h"
 
 
@@ -12,7 +13,6 @@ UCoinCollector::UCoinCollector()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-
 // Called when the game starts
 void UCoinCollector::BeginPlay()
 {
@@ -20,15 +20,14 @@ void UCoinCollector::BeginPlay()
 
 	USideScrollerDelegates::OnCollectableCoinAdded.AddUObject(this, &UCoinCollector::ReceiveOnCollectableCoinAdded);
 	USideScrollerDelegates::OnPlayerDied.AddUObject(this, &UCoinCollector::ReceiveOnPlayerDied);
+	USideScrollerDelegates::OnGameWon.AddUObject(this, &UCoinCollector::ReceiveOnGameWon);
 }
-
 
 // Called every frame
 void UCoinCollector::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
-
 
 void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 AddedAmount)
 {
@@ -38,5 +37,16 @@ void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 AddedAmount)
 
 void UCoinCollector::ReceiveOnPlayerDied()
 {
-	USideScrollerDelegates::OnShowHighscore.Broadcast(Amount);
+	FHighScoreWidgetData HighScoreWidgetData;
+	HighScoreWidgetData.CoinAmount = Amount;
+	HighScoreWidgetData.bWonState = false;
+	USideScrollerDelegates::OnShowHighscore.Broadcast(HighScoreWidgetData);
+}
+
+void UCoinCollector::ReceiveOnGameWon()
+{
+	FHighScoreWidgetData HighScoreWidgetData;
+	HighScoreWidgetData.CoinAmount = Amount;
+	HighScoreWidgetData.bWonState = true;
+	USideScrollerDelegates::OnShowHighscore.Broadcast(HighScoreWidgetData);
 }
