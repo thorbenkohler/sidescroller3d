@@ -52,7 +52,7 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 	CurrentLevelName = (FName)*WorldName;
 	ASideScrollerCharacter* SideScrollerCharacter = GetWorld()->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
 	SideScrollerCharacter->SetActorLocation(FVector(1200.0f, -470.0f, 230.0f));
-	GetWorld()->GetFirstPlayerController()->Possess((APawn*)SideScrollerCharacter);
+	GetWorld()->GetFirstPlayerController()->Possess(SideScrollerCharacter);
 }
 
 void ASideScrollerGameMode::ReceiveOnStartNewLevel(FName NewLevelName)
