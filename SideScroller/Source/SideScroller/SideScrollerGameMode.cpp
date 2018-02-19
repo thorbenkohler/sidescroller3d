@@ -5,6 +5,7 @@
 #include "Character/SideScrollerCharacter.h"
 #include "Utilities/SideScrollerDelegates.h"
 #include "Kismet/GameplayStatics.h"
+#include "EngineUtils.h"
 
 
 ASideScrollerGameMode::ASideScrollerGameMode()
@@ -28,12 +29,15 @@ void ASideScrollerGameMode::InitFirstWidget()
 		UE_LOG(LogTemp, Error, TEXT("First Menu is not valid."));
 		return;
 	}
+
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), FirstMenu);
+
 	if (!IsValid(Widget))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Creating a new widget failed."));
 		return;
 	}
+
 	Widget->AddToViewport();
 	USideScrollerDelegates::OnInitFirstWidget.Broadcast(Widget);
 }
@@ -51,7 +55,26 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 	WorldName = WorldName.Replace(TEXT("UEDPIE_0_"), TEXT(""));
 	CurrentLevelName = (FName)*WorldName;
 	ASideScrollerCharacter* SideScrollerCharacter = GetWorld()->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
-	SideScrollerCharacter->SetActorLocation(FVector(1200.0f, -470.0f, 230.0f));
+
+	FVector SpawnPosition = FVector::ZeroVector;
+	bool CheckSpawnFound = false;
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		if (ActorItr->GetName() == TEXT("NetworkPlayerStart"))
+		{
+			CheckSpawnFound = true;
+			SpawnPosition = ActorItr->GetActorLocation();
+			break;
+		}
+	}
+
+	if (!CheckSpawnFound)
+	{
+		UE_LOG(LogTemp, Error, TEXT("A problem appeared finding the correct spawn position."));
+		return;
+	}
+
+	SideScrollerCharacter->SetActorLocation(SpawnPosition);
 	GetWorld()->GetFirstPlayerController()->Possess(SideScrollerCharacter);
 }
 
