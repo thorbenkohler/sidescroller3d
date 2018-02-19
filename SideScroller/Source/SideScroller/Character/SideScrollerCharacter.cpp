@@ -134,15 +134,6 @@ void ASideScrollerCharacter::ReceiveDamage(int32 IncomingDamage)
 		if (Health >= 0)
 		{
 			OnDeath();
-			// Show the remaining life as damage
-			if (Health != 0)
-			{
-				USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(Health);
-			}
-			Health = 0;
-			DisableInput(GetWorld()->GetFirstPlayerController());
-			SetActorEnableCollision(false);
-			USideScrollerDelegates::OnPlayerDied.Broadcast();
 		}
 		return;
 	}
@@ -169,7 +160,15 @@ void ASideScrollerCharacter::ReceiveOnGameWon()
 	
 void ASideScrollerCharacter::OnDeath_Implementation()
 {
-	UE_LOG(LogTemp, Log, TEXT("OnDeath Implementation called"));
+	// Show the remaining life as damage
+	if (Health != 0)
+	{
+		USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(Health);
+	}
+	Health = 0;
+	DisableInput(GetWorld()->GetFirstPlayerController());
+	SetActorEnableCollision(false);
+	USideScrollerDelegates::OnPlayerDied.Broadcast();
 }
 
 void ASideScrollerCharacter::AddHealth(int32 Amount)
