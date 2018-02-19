@@ -70,8 +70,6 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 
 	UPlayerEnemyCollision* PlayerEnemeyCollision = CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
 	AddInstanceComponent(PlayerEnemeyCollision);
-
-	USideScrollerDelegates::OnGameWon.AddUObject(this, &ASideScrollerCharacter::ReceiveOnGameWon);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -121,6 +119,8 @@ void ASideScrollerCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, c
 void ASideScrollerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	USideScrollerDelegates::OnGameWon.AddUObject(this, &ASideScrollerCharacter::ReceiveOnGameWon);
 
 	Health = MaxHealth;
 	USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(-MaxHealth);
