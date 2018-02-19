@@ -17,8 +17,6 @@ UCollector::UCollector()
 void UCollector::BeginPlay()
 {
 	Super::BeginPlay();
-
-	USideScrollerDelegates::OnCollectableAdded.AddUObject(this, &UCollector::ReceiveOnCollectableAdded);
 }
 
 
@@ -28,7 +26,3 @@ void UCollector::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UCollector::ReceiveOnCollectableAdded(ACollectable* Collectable)
-{
-	UE_LOG(LogTemp, Log, TEXT("Collectable %s collected"), *(Collectable->GetName()));
-}

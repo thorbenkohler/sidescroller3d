@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Collectables/Collectable.h"
 #include "Collector.generated.h"
+
+class ACollectable;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SIDESCROLLER_API UCollector : public UActorComponent
@@ -23,5 +24,4 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	virtual void ReceiveOnCollectableAdded(ACollectable* Collectable);
 };

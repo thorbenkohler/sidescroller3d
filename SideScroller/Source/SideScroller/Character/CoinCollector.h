@@ -9,7 +9,7 @@
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class SIDESCROLLER_API UCoinCollector : public UActorComponent
+class SIDESCROLLER_API UCoinCollector : public UCollector
 {
 	GENERATED_BODY()
 

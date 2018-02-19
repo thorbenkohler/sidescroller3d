@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Collector.h"
 #include "Components/ActorComponent.h"
 #include "WeaponCollector.generated.h"
 
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class SIDESCROLLER_API UWeaponCollector : public UActorComponent
+class SIDESCROLLER_API UWeaponCollector : public UCollector
 {
 	GENERATED_BODY()
 
