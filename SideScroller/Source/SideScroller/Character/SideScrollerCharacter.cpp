@@ -68,6 +68,9 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	UWeaponCollector* WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
 	AddInstanceComponent(WeaponCollector);
 
+	UPlayerEnemyCollision* PlayerEnemeyCollision = CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
+	AddInstanceComponent(PlayerEnemeyCollision);
+
 	USideScrollerDelegates::OnGameWon.AddUObject(this, &ASideScrollerCharacter::ReceiveOnGameWon);
 }
 

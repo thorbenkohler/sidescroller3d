@@ -47,6 +47,10 @@ class ASideScrollerCharacter : public ACharacter, public IDamageInterface
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UWeaponCollector* WeaponCollector;
 
+	// Handles player collision with enemies
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UPlayerEnemyCollision* PlayerEnemyCollision;
+
 protected:
 
 	// Called for side to side input
@@ -89,6 +93,8 @@ public:
 	void OnDeath();
 	virtual void OnDeath_Implementation();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerCharacter")
+	void EnemyCollidedWithPlayer();
 
 	void ReceiveOnGameWon();
 

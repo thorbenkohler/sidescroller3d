@@ -44,7 +44,10 @@ public:
 
 	// Current health value.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
-	float Health;
+	int32 Health;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
+	int32 DamageOnTouch;
 
 protected:
 	// Called when the game starts or when spawned
