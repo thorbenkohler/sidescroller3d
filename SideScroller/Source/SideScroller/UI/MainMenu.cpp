@@ -39,12 +39,14 @@ void UMainMenu::ReceiveOnInitFirstWidget(UUserWidget* Widget)
 
 void UMainMenu::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
 {
+	// Checking the referenced Widget
 	if (!IsValid(GameOverWidget))
 	{
 		UE_LOG(LogTemp, Error, TEXT("No game over widget was set."));
 		return;
 	}
 
+	// Setting the Referenced Widget as CurrentWidget
 	ChangeMenuWidget(GameOverWidget);
 
 	if (!IsValid(CurrentWidget))
@@ -61,7 +63,6 @@ void UMainMenu::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
 		return;
 	}
 	
-	UE_LOG(LogTemp, Log, TEXT("Successfully created Highscore Widget with %d Coins."), HighScoreWidgetData.CoinAmount);
 	HighScoreWidget->CoinAmount = HighScoreWidgetData.CoinAmount;
 	HighScoreWidget->bWonState = HighScoreWidgetData.bWonState;
 }
@@ -81,11 +82,13 @@ void UMainMenu::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 	}
 
 	CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
+
 	if (!IsValid(CurrentWidget))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Creating a new widget failed."));
 		return;
 	}
+
 	CurrentWidget->AddToViewport();
 }
 

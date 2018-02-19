@@ -19,6 +19,7 @@ class SIDESCROLLER_API UMainMenu : public UUserWidget
 public:
 	UMainMenu(const FObjectInitializer& ObjectInitializer);
 
+	// Used as BeginPlay replacement
 	bool Initialize();
 
 	// Switch between widgets
@@ -30,19 +31,19 @@ public:
 	// Shows the highscore after the player's death
 	void ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
-	void InitWidget();
-
 	// Remove the current menu widget and create a new one from the specified class, if provided.
 	UFUNCTION(BlueprintCallable, Category = "MainMenu")
 	void ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass);
 
+	// Executes when the play game button in the menu was pressed
 	UFUNCTION(BlueprintCallable, Category = "MainMenu")
 	void StartNewGame();
 
+	// Gets shown right after initial game startup
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
 	TSubclassOf<UUserWidget> StartMenu;
 
+	// Used to display the highscore and respawn button
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
 	TSubclassOf<UUserWidget> GameOverWidget;
 
