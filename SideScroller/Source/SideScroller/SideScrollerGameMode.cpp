@@ -5,6 +5,7 @@
 #include "Character/SideScrollerCharacter.h"
 #include "Utilities/SideScrollerDelegates.h"
 #include "Kismet/GameplayStatics.h"
+#include "SideScroller.h"
 #include "EngineUtils.h"
 
 
@@ -49,33 +50,43 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 		UE_LOG(LogTemp, Error, TEXT("No initial player asset was set"));
 		return;
 	}
-	FString WorldName = GetWorld()->GetMapName();
 
-	// Removing level prefix
-	WorldName = WorldName.Replace(TEXT("UEDPIE_0_"), TEXT(""));
-	CurrentLevelName = (FName)*WorldName;
-	ASideScrollerCharacter* SideScrollerCharacter = GetWorld()->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
+	UWorld* World = GetWorld();
 
-	FVector SpawnPosition = FVector::ZeroVector;
-	bool CheckSpawnFound = false;
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	if (!IsValid(World))
 	{
-		if (ActorItr->GetName() == TEXT("NetworkPlayerStart"))
-		{
-			CheckSpawnFound = true;
-			SpawnPosition = ActorItr->GetActorLocation();
-			break;
-		}
-	}
-
-	if (!CheckSpawnFound)
-	{
-		UE_LOG(LogTemp, Error, TEXT("A problem appeared finding the correct spawn position."));
+		UE_LOG(LogTemp, Error, TEXT("World not found."));
 		return;
 	}
 
-	SideScrollerCharacter->SetActorLocation(SpawnPosition);
-	GetWorld()->GetFirstPlayerController()->Possess(SideScrollerCharacter);
+	CurrentLevelName = FirstLevelName;
+
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+
+	if (!IsValid(PlayerController))
+	{
+		UE_LOG(LogTemp, Error, TEXT("PlayerController is not valid."));
+		return;
+	}
+
+	AActor* PlayerStart = ChoosePlayerStart(PlayerController);
+
+	if (!IsValid(PlayerStart))
+	{
+		UE_LOG(LogTemp, Log, TEXT("PlayerStart not found"));
+		return;
+	}
+
+	ASideScrollerCharacter* SideScrollerCharacter = World->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
+
+	if (!IsValid(SideScrollerCharacter))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Spawning SideScrollerCharacter failed."));
+		return;
+	}
+
+	SideScrollerCharacter->SetActorLocation(PlayerStart->GetActorLocation());
+	PlayerController->Possess(SideScrollerCharacter);
 }
 
 void ASideScrollerGameMode::ReceiveOnStartNewLevel(FName NewLevelName)

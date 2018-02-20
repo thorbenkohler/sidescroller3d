@@ -38,5 +38,5 @@ protected:
 	FName CurrentLevelName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
-	FName LevelName;
+	FName FirstLevelName;
 };
