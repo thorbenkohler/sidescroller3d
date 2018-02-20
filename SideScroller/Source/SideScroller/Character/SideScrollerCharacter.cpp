@@ -1,15 +1,8 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "SideScrollerCharacter.h"
-#include "Collector.h"
-#include "CoinCollector.h"
-#include "WeaponCollector.h"
-#include "HealthCollector.h"
 #include "Engine.h"
 #include "Utilities/SideScrollerDelegates.h"
-#include "Weapons/Weapon.h"
-#include "Powerups/Coin.h"
-#include "Collectables/Collectable.h"
 #include "Utilities/SideScrollerStatics.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -59,17 +52,10 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
-	UCoinCollector* CoinCollector = CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
-	AddInstanceComponent(CoinCollector);
-
-	UHealthCollector* HealthCollector = CreateDefaultSubobject<UHealthCollector>(TEXT("HealthCollector"));
-	AddInstanceComponent(HealthCollector);
-
-	UWeaponCollector* WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
-	AddInstanceComponent(WeaponCollector);
-
-	UPlayerEnemyCollision* PlayerEnemeyCollision = CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
-	AddInstanceComponent(PlayerEnemeyCollision);
+	CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
+	CreateDefaultSubobject<UHealthCollector>(TEXT("HealthCollector"));
+	CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
+	CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
 }
 
 //////////////////////////////////////////////////////////////////////////
