@@ -11,11 +11,8 @@ AEnemy::AEnemy()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
-	SetRootComponent(StaticMeshComponent);
-
+	CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	WeaponSpawner = CreateDefaultSubobject<UWeaponSpawner>(TEXT("WeaponSpawner"));
-	AddInstanceComponent(WeaponSpawner);
 }
 
 // Called when the game starts or when spawned

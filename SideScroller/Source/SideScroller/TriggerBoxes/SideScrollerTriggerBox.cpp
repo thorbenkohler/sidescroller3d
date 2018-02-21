@@ -18,13 +18,15 @@ void ASideScrollerTriggerBox::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UPrimitiveComponent* PrimitiveComponent = Cast<UPrimitiveComponent>(GetRootComponent());
-	if (!IsValid(PrimitiveComponent))
+	UShapeComponent* ShapeComponent = GetCollisionComponent();
+
+	if (!IsValid(ShapeComponent))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No primitive component found in %p"), this);
+		UE_LOG(LogTemp, Error, TEXT("Not valid ShapeComponent."));
 		return;
 	}
-	PrimitiveComponent->SetCollisionProfileName(FName(TEXT("TriggerBox:General")));
+
+	ShapeComponent->OnComponentBeginOverlap.AddDynamic(this, &ASideScrollerTriggerBox::OnOverlapBegin);
 }
 
 // Called every frame
@@ -33,9 +35,7 @@ void ASideScrollerTriggerBox::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-// TODO Not working
 void ASideScrollerTriggerBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Log, TEXT("SideScrollerTriggerBox %s collided with %s"), *GetName(), *(OtherActor->GetName()));
-	USideScrollerDelegates::OnTriggerBoxEnter.Broadcast(this);
 }

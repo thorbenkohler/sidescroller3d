@@ -19,7 +19,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Sets the actual form for the weapon
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerWeapon")
 	class ASideScrollerCharacter* SideScrollerCharacter;
 
 protected:
@@ -27,5 +27,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	// Used to force the player to press the button anew
 	bool FireButtonWasReleased;
 };

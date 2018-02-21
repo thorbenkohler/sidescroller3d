@@ -2,7 +2,6 @@
 
 #include "ProjectileSpawner.h"
 #include "Projectiles/Projectile.h"
-#include "Utilities/SideScrollerDelegates.h"
 
 
 // Sets default values for this component's properties
@@ -28,10 +27,12 @@ void UProjectileSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 void UProjectileSpawner::Spawn(TSubclassOf<AActor> ReferencedProjectileClass, FVector& SpawnLocation, FRotator& ShooterRotation, FActorSpawnParameters& SpawnParameters, const FVector& ShotDirection)
 {
 	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ReferencedProjectileClass, SpawnLocation, ShooterRotation, SpawnParameters);
+
 	if (!IsValid(Projectile))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Spawning projectile failed."));
 		return;
 	}
+
 	Projectile->ShotDirection = ShotDirection;
 }

@@ -3,7 +3,6 @@
 #include "Projectile.h"
 #include "Runtime/Engine/Public/WorldCollision.h"
 #include "Kismet/GameplayStatics.h"
-#include "Weapons/Weapon.h"
 #include "Interfaces/DamageInterface.h"
 #include "Components/ShapeComponent.h"
 

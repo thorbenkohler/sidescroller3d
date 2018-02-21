@@ -22,11 +22,6 @@ void UWeaponCollector::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Can't be in the constructor or the editor crashes
-	if (IsValid(WeaponSpawner))
-	{
-		GetOwner()->AddInstanceComponent(WeaponSpawner);
-	}
 	USideScrollerDelegates::OnCollectableWeaponAdded.AddUObject(this, &UWeaponCollector::ReceiveOnCollectableWeaponAdded);
 }
 
@@ -38,5 +33,11 @@ void UWeaponCollector::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UWeaponCollector::ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> WeaponReference)
 {
+	if (!IsValid(WeaponSpawner))
+	{
+		UE_LOG(LogTemp, Error, TEXT("WeaponSpawner is not valid."));
+		return;
+	}
+
 	WeaponSpawner->Spawn(WeaponReference);
 }

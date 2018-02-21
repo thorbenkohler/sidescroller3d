@@ -25,10 +25,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	// Gets called when the player dies
-	virtual void ReceiveOnPlayerDied();
+	void ReceiveOnPlayerDied();
 
 	// Get called when the game was finished succesful
-	virtual void ReceiveOnGameWon();
+	void ReceiveOnGameWon();
 	
 	// Stores the amount of health
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerHighscore")

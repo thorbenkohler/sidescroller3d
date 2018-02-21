@@ -28,8 +28,10 @@ public:
 	// To react to collisions with collectable health
 	void ReceiveOnCollectableHealthAdded(int32 Amount);
 
+	// Sets the health
 	void ReceiveOnPlayerChangeHealth(int32 Amount);
 
+	// Calculates if damage was taken and sets health
 	void DamageTaken(int32 Amount);
 
 	// Current amount of Health

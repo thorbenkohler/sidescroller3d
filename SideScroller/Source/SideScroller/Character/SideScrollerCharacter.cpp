@@ -1,7 +1,6 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "SideScrollerCharacter.h"
-#include "Engine.h"
 #include "Utilities/SideScrollerDelegates.h"
 #include "Utilities/SideScrollerStatics.h"
 #include "Camera/CameraComponent.h"

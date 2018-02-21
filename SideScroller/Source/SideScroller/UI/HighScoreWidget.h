@@ -29,28 +29,37 @@ class SIDESCROLLER_API UHighScoreWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	// Widget replacement for BeginPlay()
 	bool Initialize();
 
+	// Can be used for spawning effects
 	UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
 	void InitWidget();
 
+	// Restarts the current level
 	UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
 	void RestartLevel();
 
+	// The data which is shown on the score board
 	void SetData(FHighScoreWidgetData& HighScoreWidgetData);
 
+	// Amount of coins
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
 	int32 CoinAmount;
 
+	// Amount of remaining health
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
 	int32 HealthAmount;
 
+	// If the game was finished by dying or winning
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
 	uint32 bWonState:1;
 
+	// localized text for positive game end
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HighScoreWidget")
 	FString GameOverPositive;
 
+	// localized text for negative game end
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HighScoreWidget")
 	FString GameOverNegative;
 };

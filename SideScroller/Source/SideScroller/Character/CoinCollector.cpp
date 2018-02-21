@@ -27,8 +27,9 @@ void UCoinCollector::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 AddedAmount)
+void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 Amount)
 {
-	Amount += AddedAmount;
-	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), AddedAmount, *GetName());
+	Coins += Amount;
+	USideScrollerDelegates::OnPlayerChangeCoins.Broadcast(Coins);
+	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), Amount, *GetName());
 }

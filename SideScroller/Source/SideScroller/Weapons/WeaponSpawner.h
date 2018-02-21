@@ -19,6 +19,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	// Spawns the referenced weapon
 	void Spawn(TSubclassOf<AActor> ReferencedClass);
 
 protected:

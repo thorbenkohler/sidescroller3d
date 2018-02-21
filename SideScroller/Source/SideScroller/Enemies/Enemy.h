@@ -31,20 +31,22 @@ public:
 	void Die();
 
 	// Sets the actual form for the enemy
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy")
 	UStaticMeshComponent* StaticMeshComponent;
 	 
 	// Reference to the blueprint of the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 	TSubclassOf<AActor> ReferencedWeapon;
 
+	// Spawns a weapon if one is referenced
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
 	class UWeaponSpawner* WeaponSpawner;
 
-	// Current health value.
+	// Current health value
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
 	int32 Health;
 
+	// The amount of damage that is dealt on touch
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
 	int32 DamageOnTouch;
 

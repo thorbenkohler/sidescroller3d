@@ -3,7 +3,6 @@
 #include "PlayerWeapon.h"
 #include "ProjectileSpawner.h"
 #include "Character/SideScrollerCharacter.h"
-#include "Projectiles/Projectile.h"
 
 
 // Sets default values

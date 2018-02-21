@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "HealthCollector.h"
-#include "UI/HighScoreWidget.h"
 #include "Character/SideScrollerCharacter.h"
 #include "Utilities/SideScrollerDelegates.h"
 

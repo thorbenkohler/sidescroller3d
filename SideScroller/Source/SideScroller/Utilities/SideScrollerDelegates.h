@@ -25,6 +25,9 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableCoinAdded, int32);
 	static FOnCollectableCoinAdded OnCollectableCoinAdded;
 
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerChangeCoins, int32);
+	static FOnPlayerChangeCoins OnPlayerChangeCoins;
+
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableHealthAdded, int32);
 	static FOnCollectableHealthAdded OnCollectableHealthAdded;
 
@@ -51,9 +54,6 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE(FOnRestartCurrentLevel);
 	static FOnRestartCurrentLevel OnRestartCurrentLevel;
-
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnTriggerBoxEnter, ASideScrollerTriggerBox*);
-	static FOnTriggerBoxEnter OnTriggerBoxEnter;
 
 	DECLARE_MULTICAST_DELEGATE(FOnGameWon);
 	static FOnGameWon OnGameWon;

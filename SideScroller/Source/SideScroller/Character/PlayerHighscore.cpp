@@ -39,7 +39,7 @@ void UPlayerHighscore::ReceiveOnPlayerDied()
 	
 	if (IsValid(CoinCollector))
 	{
-		HighScoreWidgetData.CoinAmount = CoinCollector->Amount;
+		HighScoreWidgetData.CoinAmount = CoinCollector->Coins;
 	}
 	else
 	{
@@ -67,7 +67,7 @@ void UPlayerHighscore::ReceiveOnGameWon()
 
 	if (IsValid(CoinCollector))
 	{
-		HighScoreWidgetData.CoinAmount = CoinCollector->Amount;
+		HighScoreWidgetData.CoinAmount = CoinCollector->Coins;
 	}
 	else
 	{

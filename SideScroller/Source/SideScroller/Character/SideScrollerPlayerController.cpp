@@ -7,7 +7,6 @@
 void ASideScrollerPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	SetInputMode(FInputModeGameAndUI());
 
 	USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnStartNewGame);
 	USideScrollerDelegates::OnInitFirstWidget.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnInitFirstWidget);
@@ -17,7 +16,7 @@ void ASideScrollerPlayerController::BeginPlay()
 
 void ASideScrollerPlayerController::ReceiveOnStartNewGame()
 {
-	bShowMouseCursor = false;
+	bShowMouseCursor = 0;
 	SetInputMode(FInputModeGameOnly());
 }
 

@@ -24,5 +24,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	// Used to spawn projectiles
 	void Spawn(TSubclassOf<AActor> ReferencedProjectileClass, FVector &SpawnLocation, FRotator &ShooterRotation, FActorSpawnParameters &SpawnParameters, const FVector &ShotDirection);
 };

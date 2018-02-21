@@ -20,11 +20,13 @@ void UPlayerEnemyCollision::BeginPlay()
 	Super::BeginPlay();
 
 	UPrimitiveComponent* PrimitiveComponent = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+
 	if (!IsValid(PrimitiveComponent))
 	{
 		UE_LOG(LogTemp, Error, TEXT("No primitive component found in %p"), this);
 		return;
 	}
+
 	PrimitiveComponent->OnComponentBeginOverlap.AddDynamic(this, &UPlayerEnemyCollision::OnOverlapBegin);
 }
 
@@ -39,12 +41,20 @@ void UPlayerEnemyCollision::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, 
 {
 	// Check if the colliding actor was an enemy
 	AEnemy* Enemy = Cast<AEnemy>(OtherActor);
+
 	if (!IsValid(Enemy))
 	{
 		return;
 	}
 
-	ASideScrollerCharacter* SideScrollerCharacter = (ASideScrollerCharacter*) GetOwner();
+	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(GetOwner());
+
+	if (!IsValid(SideScrollerCharacter))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cast to SideScrollerCharacter failed."));
+		return;
+	}
+
 	SideScrollerCharacter->DamageTaken(Enemy->DamageOnTouch);
 	SideScrollerCharacter->EnemyCollidedWithPlayer();
 }

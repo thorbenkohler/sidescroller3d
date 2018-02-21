@@ -16,11 +16,15 @@ class SIDESCROLLER_API ASideScrollerPlayerController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 
+	// Handles the cursor and sets the according input mode
 	void ReceiveOnStartNewGame();
 
+	// Handles the cursor and sets the according input mode
 	void ReceiveOnInitFirstWidget(UUserWidget* Widget);
 
+	// Handles the cursor and sets the according input mode
 	void ReceiveOnPlayerDied();
 
+	// Handles the cursor and sets the according input mode
 	void ReceiveOnGameWon();
 };

@@ -3,9 +3,7 @@
 #include "WeaponSpawner.h"
 #include "Weapons/Weapon.h"
 #include "Weapons/PlayerWeapon.h"
-#include "Enemies/Enemy.h"
 #include "Character/SideScrollerCharacter.h"
-#include "Projectiles/Projectile.h"
 #include "Utilities/SideScrollerDelegates.h"
 
 
@@ -33,13 +31,12 @@ void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 {
 	FActorSpawnParameters SpawnParameters;
 	AWeapon* Weapon = GetWorld()->SpawnActor<AWeapon>(ReferencedClass, SpawnParameters);
+
 	if (!IsValid(Weapon))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Spawning Weapon failed"));
 		return;
 	}
-
-	UE_LOG(LogTemp, Log, TEXT("Weapon %s spawned"), *(Weapon->GetName()));
 
 	FAttachmentTransformRules Rules(EAttachmentRule::KeepWorld, false);
 	AActor* Owner = GetOwner();
@@ -57,15 +54,19 @@ void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 	Weapon->WeaponOwner = Owner;
 
 	APlayerWeapon* PlayerWeapon = Cast<APlayerWeapon>(Weapon);
+
 	if (!IsValid(PlayerWeapon))
 	{
 		return;
 	}
+
 	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(Owner);
+
 	if (!IsValid(SideScrollerCharacter))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Player Weapon %s without a valid owner was spawned."), *PlayerWeapon->GetName());
 		return;
 	}
+
 	PlayerWeapon->SideScrollerCharacter = SideScrollerCharacter;
 }

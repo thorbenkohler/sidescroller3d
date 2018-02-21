@@ -21,8 +21,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	// To react to collisions with collectable weapons
-	virtual void ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> WeaponReference);
+	void ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> WeaponReference);
 
+	// Spawns the referenced weapon
 	void SpawnWeapon(UClass* ReferencedClass, FActorSpawnParameters SpawnParameters);
 
 	// Spawns Weapons

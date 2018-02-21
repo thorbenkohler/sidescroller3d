@@ -19,11 +19,13 @@ void ACollectable::BeginPlay()
 	Super::BeginPlay();
 
 	UPrimitiveComponent* PrimitiveComponent = Cast<UPrimitiveComponent>(GetRootComponent());
+	
 	if (!IsValid(PrimitiveComponent))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No primitive component found in %p"), this);
+		UE_LOG(LogTemp, Error, TEXT("No primitive component found in %s"), *GetName());
 		return;
 	}
+
 	PrimitiveComponent->SetCollisionProfileName(FName(TEXT("Collectable:General")));
 }
 
