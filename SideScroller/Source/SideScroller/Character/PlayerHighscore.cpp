@@ -21,7 +21,7 @@ void UPlayerHighscore::BeginPlay()
 	Super::BeginPlay();
 
 	CoinCollector = GetOwner()->FindComponentByClass<UCoinCollector>();
-	HealthCollector = GetOwner()->FindComponentByClass<UHealthCollector>();
+	HealthComponent = GetOwner()->FindComponentByClass<UHealthComponent>();
 
 	USideScrollerDelegates::OnPlayerDied.AddUObject(this, &UPlayerHighscore::ReceiveOnPlayerDied);
 	USideScrollerDelegates::OnGameWon.AddUObject(this, &UPlayerHighscore::ReceiveOnGameWon);
@@ -47,9 +47,9 @@ void UPlayerHighscore::ReceiveOnPlayerDied()
 		HighScoreWidgetData.CoinAmount = 0;
 	}
 
-	if (IsValid(HealthCollector))
+	if (IsValid(HealthComponent))
 	{
-		HighScoreWidgetData.HealthAmount = HealthCollector->Health;
+		HighScoreWidgetData.HealthAmount = HealthComponent->Health;
 	}
 	else
 	{
@@ -75,13 +75,13 @@ void UPlayerHighscore::ReceiveOnGameWon()
 		HighScoreWidgetData.CoinAmount = 0;
 	}
 
-	if (IsValid(HealthCollector))
+	if (IsValid(HealthComponent))
 	{
-		HighScoreWidgetData.HealthAmount = HealthCollector->Health;
+		HighScoreWidgetData.HealthAmount = HealthComponent->Health;
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No Health collector was found"));
+		UE_LOG(LogTemp, Error, TEXT("No Health component was found"));
 		HighScoreWidgetData.HealthAmount = 0;
 	}
 

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Collector.h"
-#include "Components/ActorComponent.h"
 #include "HealthCollector.generated.h"
 
 
@@ -27,18 +26,4 @@ public:
 
 	// To react to collisions with collectable health
 	void ReceiveOnCollectableHealthAdded(int32 Amount);
-
-	// Sets the health
-	void ReceiveOnPlayerChangeHealth(int32 Amount);
-
-	// Calculates if damage was taken and sets health
-	void DamageTaken(int32 Amount);
-
-	// Current amount of Health
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "HealthCollector")
-	int32 Health;
-
-	// Maximum health of the player
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthCollector")
-	int32 MaxHealth;
 };

@@ -31,6 +31,9 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnCollectableHealthAdded, int32);
 	static FOnCollectableHealthAdded OnCollectableHealthAdded;
 
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerAddHealth, int32);
+	static FOnPlayerAddHealth OnPlayerAddHealth;
+
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerChangeHealth, int32);
 	static FOnPlayerChangeHealth OnPlayerChangeHealth;
 

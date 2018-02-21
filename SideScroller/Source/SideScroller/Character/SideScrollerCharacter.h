@@ -103,4 +103,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	class UPlayerHighscore* PlayerHighscore;
 
+	// Manages damage and adding health
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	class UHealthComponent* HealthComponent;
+
 };

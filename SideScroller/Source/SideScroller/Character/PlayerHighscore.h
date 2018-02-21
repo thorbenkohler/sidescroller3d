@@ -32,7 +32,7 @@ public:
 	
 	// Stores the amount of health
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerHighscore")
-	class UHealthCollector* HealthCollector;
+	class UHealthComponent* HealthComponent;
 
 	// Stores the amount of coins
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerHighscore")

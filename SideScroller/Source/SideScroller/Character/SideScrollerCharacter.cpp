@@ -51,11 +51,12 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
-	HealthCollector = CreateDefaultSubobject<UHealthCollector>(TEXT("HealthCollector"));
+	CreateDefaultSubobject<UHealthCollector>(TEXT("HealthCollector"));
 	CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
 	CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
 	CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
 	CreateDefaultSubobject<UPlayerHighscore>(TEXT("PlayerHighscore"));
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -111,12 +112,12 @@ void ASideScrollerCharacter::BeginPlay()
 
 void ASideScrollerCharacter::DamageTaken(int32 IncomingDamage)
 {
-	if (!IsValid(HealthCollector))
+	if (!IsValid(HealthComponent))
 	{
 		UE_LOG(LogTemp, Error, TEXT("No valid HealthCollector found."));
 		return;
 	}
-	HealthCollector->DamageTaken(IncomingDamage);
+	HealthComponent->DamageTaken(IncomingDamage);
 }
 
 void ASideScrollerCharacter::ReceiveOnGameWon()
