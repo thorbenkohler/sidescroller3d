@@ -52,10 +52,11 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
+	HealthCollector = CreateDefaultSubobject<UHealthCollector>(TEXT("HealthCollector"));
 	CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
-	CreateDefaultSubobject<UHealthCollector>(TEXT("HealthCollector"));
 	CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
 	CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
+	CreateDefaultSubobject<UPlayerHighscore>(TEXT("PlayerHighscore"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -107,68 +108,27 @@ void ASideScrollerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	USideScrollerDelegates::OnGameWon.AddUObject(this, &ASideScrollerCharacter::ReceiveOnGameWon);
-
-	Health = MaxHealth;
-	USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(-MaxHealth);
 }
 
-void ASideScrollerCharacter::ReceiveDamage(int32 IncomingDamage)
+void ASideScrollerCharacter::DamageTaken(int32 IncomingDamage)
 {
-	UE_LOG(LogTemp, Log, TEXT("Incoming player damage %d"), IncomingDamage);
-	if (IncomingDamage >= Health)
+	if (!IsValid(HealthCollector))
 	{
-		if (Health >= 0)
-		{
-			OnDeath();
-		}
+		UE_LOG(LogTemp, Error, TEXT("No valid HealthCollector found."));
 		return;
 	}
-	USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(IncomingDamage);
-	Health -= IncomingDamage;
-}
-
-int32 ASideScrollerCharacter::GetHealthRemaining()
-{
-	return Health;
+	HealthCollector->DamageTaken(IncomingDamage);
 }
 
 void ASideScrollerCharacter::ReceiveOnGameWon()
 {
-	UWorld* World = GetWorld();
-	if (!IsValid(World))
-	{
-		UE_LOG(LogTemp, Error, TEXT("The world isn't valid."));
-		return;
-	}
-	DisableInput(World->GetFirstPlayerController());
+	DisableInput((APlayerController*)GetController());
 	SetActorEnableCollision(false);
 }
 	
 void ASideScrollerCharacter::OnDeath_Implementation()
 {
-	// Show the remaining life as damage
-	if (Health != 0)
-	{
-		USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(Health);
-	}
-	Health = 0;
-	DisableInput(GetWorld()->GetFirstPlayerController());
+	DisableInput((APlayerController*)GetController());
 	SetActorEnableCollision(false);
 	USideScrollerDelegates::OnPlayerDied.Broadcast();
 }
-
-void ASideScrollerCharacter::AddHealth(int32 Amount)
-{
-	if (Health >= MaxHealth)
-	{
-		return;
-	}
-	USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(-Amount);
-	if ((Amount + Health) >= MaxHealth)
-	{
-		Health = MaxHealth;
-		return;
-	}
-	Health += Amount;
-}
-

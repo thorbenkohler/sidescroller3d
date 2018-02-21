@@ -18,3 +18,10 @@ void UHighScoreWidget::RestartLevel()
 {
 	USideScrollerDelegates::OnRestartCurrentLevel.Broadcast();
 }
+
+void UHighScoreWidget::SetData(FHighScoreWidgetData& HighScoreWidgetData)
+{
+	CoinAmount = HighScoreWidgetData.CoinAmount;
+	HealthAmount = HighScoreWidgetData.HealthAmount;
+	bWonState = HighScoreWidgetData.bWonState;
+}

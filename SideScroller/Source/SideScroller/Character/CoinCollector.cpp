@@ -19,8 +19,6 @@ void UCoinCollector::BeginPlay()
 	Super::BeginPlay();
 
 	USideScrollerDelegates::OnCollectableCoinAdded.AddUObject(this, &UCoinCollector::ReceiveOnCollectableCoinAdded);
-	USideScrollerDelegates::OnPlayerDied.AddUObject(this, &UCoinCollector::ReceiveOnPlayerDied);
-	USideScrollerDelegates::OnGameWon.AddUObject(this, &UCoinCollector::ReceiveOnGameWon);
 }
 
 // Called every frame
@@ -33,20 +31,4 @@ void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 AddedAmount)
 {
 	Amount += AddedAmount;
 	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), AddedAmount, *GetName());
-}
-
-void UCoinCollector::ReceiveOnPlayerDied()
-{
-	FHighScoreWidgetData HighScoreWidgetData;
-	HighScoreWidgetData.CoinAmount = Amount;
-	HighScoreWidgetData.bWonState = false;
-	USideScrollerDelegates::OnShowHighscore.Broadcast(HighScoreWidgetData);
-}
-
-void UCoinCollector::ReceiveOnGameWon()
-{
-	FHighScoreWidgetData HighScoreWidgetData;
-	HighScoreWidgetData.CoinAmount = Amount;
-	HighScoreWidgetData.bWonState = true;
-	USideScrollerDelegates::OnShowHighscore.Broadcast(HighScoreWidgetData);
 }

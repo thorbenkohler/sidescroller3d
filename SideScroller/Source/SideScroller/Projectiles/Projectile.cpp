@@ -43,7 +43,7 @@ void AProjectile::Tick(float DeltaTime)
 			//UE_LOG(LogTemp, Log, TEXT("OutHit %s"), *OutHit.Actor->GetName())
 			if (IDamageInterface* DamageActor = Cast<IDamageInterface>(OutHit.Actor.Get()))
 			{
-				DamageActor->ReceiveDamage(Damage);
+				DamageActor->DamageTaken(Damage);
 			}
 			Destroy();
 		}

@@ -44,7 +44,7 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void AEnemy::ReceiveDamage(int32 IncomingDamage)
+void AEnemy::DamageTaken(int32 IncomingDamage)
 {
 	if (IncomingDamage >= Health)
 	{
@@ -56,9 +56,4 @@ void AEnemy::ReceiveDamage(int32 IncomingDamage)
 		return;
 	}
 	Health -= IncomingDamage;
-}
-
-int32 AEnemy::GetHealthRemaining()
-{
-	return Health;
 }

@@ -45,6 +45,6 @@ void UPlayerEnemyCollision::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, 
 	}
 
 	ASideScrollerCharacter* SideScrollerCharacter = (ASideScrollerCharacter*) GetOwner();
-	SideScrollerCharacter->ReceiveDamage(Enemy->DamageOnTouch);
+	SideScrollerCharacter->DamageTaken(Enemy->DamageOnTouch);
 	SideScrollerCharacter->EnemyCollidedWithPlayer();
 }

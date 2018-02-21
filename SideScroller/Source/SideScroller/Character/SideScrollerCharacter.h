@@ -35,22 +35,6 @@ class ASideScrollerCharacter : public ACharacter, public IDamageInterface
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
-	// Collects and counts the coins of the player
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCoinCollector* CoinCollector;
-
-	// Collects and counts the coins of the player
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UHealthCollector* HealthCollector;
-
-	// Collects weapons
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UWeaponCollector* WeaponCollector;
-
-	// Handles player collision with enemies
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UPlayerEnemyCollision* PlayerEnemyCollision;
-
 protected:
 
 	// Called for side to side input
@@ -82,28 +66,41 @@ public:
 	virtual void BeginPlay();
 
 	//~ Begin IDamageInterface
-	virtual void ReceiveDamage(int32 IncomingDamage) override;
-	virtual int32 GetHealthRemaining() override;
+	virtual void DamageTaken(int32 IncomingDamage) override;
 	//~ End IDamageInterface
 
 	const FSideScrollerInput& GetCurrentInput() { return SideScrollerInput; }
 
-	// Destroys the enemy and can used for special effects
+	// Can be used for effects and disables input and collision
 	UFUNCTION(BlueprintNativeEvent, Category = "SideScrollerCharacter")
 	void OnDeath();
 	virtual void OnDeath_Implementation();
 
+	// Handles player-enemy collision
 	UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerCharacter")
 	void EnemyCollidedWithPlayer();
 
+	// Handles the player input and collision
 	void ReceiveOnGameWon();
 
-	void AddHealth(int32 Amount);
+	// Collects and counts the coins of the player
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	class UCoinCollector* CoinCollector;
 
-	// Current health value.
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter", meta = (ClampMin = "0.0"))
-	int32 Health;
+	// Collects and counts the health of the player
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	class UHealthCollector* HealthCollector;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter", meta = (ClampMin = "0.0"))
-	int32 MaxHealth;
+	// Collects weapons
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	class UWeaponCollector* WeaponCollector;
+
+	// Handles player collision with enemies
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	class UPlayerEnemyCollision* PlayerEnemyCollision;
+
+	// Manages data that is needed at the highscore
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	class UPlayerHighscore* PlayerHighscore;
+
 };

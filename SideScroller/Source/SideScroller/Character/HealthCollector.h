@@ -26,8 +26,17 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	// To react to collisions with collectable health
-	virtual void ReceiveOnCollectableHealthAdded(int32 Amount);
+	void ReceiveOnCollectableHealthAdded(int32 Amount);
+
+	void ReceiveOnPlayerChangeHealth(int32 Amount);
+
+	void DamageTaken(int32 Amount);
 
 	// Current amount of Health
-	int32 Amount;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "HealthCollector")
+	int32 Health;
+
+	// Maximum health of the player
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HealthCollector")
+	int32 MaxHealth;
 };

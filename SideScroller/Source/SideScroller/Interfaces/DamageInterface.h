@@ -22,6 +22,5 @@ class SIDESCROLLER_API IDamageInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	
-	virtual void ReceiveDamage(int32 IncomingDamage) = 0;
-	virtual int32 GetHealthRemaining() = 0;
+	virtual void DamageTaken(int32 IncomingDamage) = 0;
 };

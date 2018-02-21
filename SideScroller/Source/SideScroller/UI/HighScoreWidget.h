@@ -15,6 +15,8 @@ struct FHighScoreWidgetData
 public:
 	int32 CoinAmount;
 
+	int32 HealthAmount;
+
 	uint32 bWonState:1;
 };
 
@@ -35,8 +37,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
 	void RestartLevel();
 
+	void SetData(FHighScoreWidgetData& HighScoreWidgetData);
+
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
 	int32 CoinAmount;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
+	int32 HealthAmount;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
 	uint32 bWonState:1;

@@ -23,8 +23,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	//~ Begin IDamageInterface
-	virtual void ReceiveDamage(int32 IncomingDamage) override;
-	virtual int32 GetHealthRemaining() override;
+	virtual void DamageTaken(int32 IncomingDamage) override;
 	//~ End IDamageInterface
 
 	// Destroys the enemy and can used for special effects

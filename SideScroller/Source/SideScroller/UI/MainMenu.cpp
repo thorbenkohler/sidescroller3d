@@ -63,8 +63,7 @@ void UMainMenu::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
 		return;
 	}
 	
-	HighScoreWidget->CoinAmount = HighScoreWidgetData.CoinAmount;
-	HighScoreWidget->bWonState = HighScoreWidgetData.bWonState;
+	HighScoreWidget->SetData(HighScoreWidgetData);
 }
 
 void UMainMenu::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
