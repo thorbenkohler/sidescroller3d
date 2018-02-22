@@ -18,6 +18,7 @@ void UHealthCollector::BeginPlay()
 {
 	Super::BeginPlay();
 
+	USideScrollerDelegates::OnCollectableHealthAdded.AddUObject(this, &UHealthCollector::ReceiveOnCollectableHealthAdded);
 }
 
 // Called every frame
