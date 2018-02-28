@@ -3,35 +3,28 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Components/CapsuleComponent.h"
-#include "Collectable.h"
 #include "CollectableWeapon.generated.h"
 
 
-UCLASS()
-class SIDESCROLLER_API ACollectableWeapon : public ACollectable
+UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+class SIDESCROLLER_API UCollectableWeapon : public UActorComponent
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACollectableWeapon();
+	UCollectableWeapon();
 
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Sets the actual form for the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collectable", meta = (AllowPrivateAccess = "true"))
-	UCapsuleComponent* CapsuleComponent;
-
-	// Sets the actual form for the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collectable", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* StaticMeshComponent;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	// Gets triggered, when the actor collides with another actor
 	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor);
+
+	// Reference to the blueprint of the collectable
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CollectableWeapon")
+	TSubclassOf<AActor> ReferencedCollectable;
 
 protected:
 	// Called when the game starts or when spawned

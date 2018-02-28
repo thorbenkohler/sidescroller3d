@@ -1,43 +1,33 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CollectableHealth.h"
-#include "Powerups/Health.h"
-#include "Utilities/SideScrollerStatics.h"
 #include "Utilities/SideScrollerDelegates.h"
-#include "Runtime/Engine/Public/WorldCollision.h"
 
 
-// Sets default values
-ACollectableHealth::ACollectableHealth()
+// Sets default values for this component's properties
+UCollectableHealth::UCollectableHealth()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
-	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
-	SetRootComponent(CapsuleComponent);
-
-	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
-	StaticMeshComponent->SetupAttachment(CapsuleComponent);
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
-void ACollectableHealth::BeginPlay()
+// Called when the game starts
+void UCollectableHealth::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &ACollectableHealth::OnOverlapBegin);
+	GetOwner()->OnActorBeginOverlap.AddDynamic(this, &UCollectableHealth::OnOverlap);
 }
 
 // Called every frame
-void ACollectableHealth::Tick(float DeltaTime)
+void UCollectableHealth::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::Tick(DeltaTime);
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void ACollectableHealth::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void UCollectableHealth::OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor)
 {
-	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-
 	USideScrollerDelegates::OnCollectableHealthAdded.Broadcast(Amount);
-	Destroy();
+	GetOwner()->Destroy();
 }

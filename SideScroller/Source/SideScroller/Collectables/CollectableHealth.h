@@ -3,41 +3,33 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Components/CapsuleComponent.h"
-#include "Collectables/Collectable.h"
+#include "Components/ActorComponent.h"
 #include "CollectableHealth.generated.h"
 
 
-UCLASS()
-class SIDESCROLLER_API ACollectableHealth : public ACollectable
+UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+class SIDESCROLLER_API UCollectableHealth : public UActorComponent
 {
 	GENERATED_BODY()
-	
+
 public:	
-	// Sets default values for this actor's properties
-	ACollectableHealth();
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Sets the actual form for the coin
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Coin", meta = (AllowPrivateAccess = "true"))
-	UCapsuleComponent* CapsuleComponent;
-
-	// Sets the actual form for the coin
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Coin", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* StaticMeshComponent;
+	// Sets default values for this component's properties
+	UCollectableHealth();
 
 	// Gets triggered, when the actor collides with another actor
-	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION() 
+	void OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor);
 
 	// Gets added to the Players score
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Coin", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "CollectableHealth", meta = (AllowPrivateAccess = "true"))
 	int32 Amount;
 
 protected:
-	// Called when the game starts or when spawned
+	// Called when the game starts
 	virtual void BeginPlay() override;
+
+public:	
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 };
