@@ -30,6 +30,10 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
 	void Die();
 
+	// Destroys the enemy and can used for special effects
+	UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
+	void Impact();
+
 	// Sets the actual form for the enemy
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy")
 	UStaticMeshComponent* StaticMeshComponent;

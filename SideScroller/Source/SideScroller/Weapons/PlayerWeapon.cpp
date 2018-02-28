@@ -43,6 +43,7 @@ void APlayerWeapon::Tick(float DeltaTime)
 		SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 		ProjectileSpawner->Spawn(ReferencedProjectile, SpawnLocation, ShooterRotation, SpawnInfo, ShotDirection);
+		ShotFired();
 	}
 
 	if (!input.bFire)

@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Enemy.h"
-#include "Weapons/Weapon.h"
 #include "Weapons/WeaponSpawner.h"
 
 
@@ -53,4 +52,5 @@ void AEnemy::DamageTaken(int32 IncomingDamage)
 		return;
 	}
 	Health -= IncomingDamage;
+	Impact();
 }
