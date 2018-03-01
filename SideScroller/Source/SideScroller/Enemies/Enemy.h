@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Interfaces/DamageInterface.h"
-#include "GameFramework/Pawn.h"
 #include "Enemy.generated.h"
 
 UCLASS()
@@ -35,7 +34,7 @@ public:
 	void Impact();
 
 	// Sets the actual form for the enemy
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 	UStaticMeshComponent* StaticMeshComponent;
 	 
 	// Reference to the blueprint of the weapon
