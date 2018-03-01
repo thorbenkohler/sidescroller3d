@@ -22,6 +22,13 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (Speed <= 0)
+	{
+		TimeUntilDestruction = 0;
+		UE_LOG(LogTemp, Warning, TEXT("Projectile has no speed and gets therefore desytroyed immediately"));
+		return;
+	}
+	TimeUntilDestruction = TravelDistance / Speed;
 }
 
 // Called every frame
@@ -31,6 +38,12 @@ void AProjectile::Tick(float DeltaTime)
 
 	FVector Loc = GetActorLocation();
 	FVector DesiredEndLoc = Loc + ((DeltaTime * Speed) * ShotDirection);
+	TimeTraveled += DeltaTime;
+	if (TimeTraveled > TimeUntilDestruction)
+	{
+		Destroy();
+		return;
+	}
 
 	FHitResult OutHit;
 	if (UWorld* World = GetWorld())

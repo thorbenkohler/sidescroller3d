@@ -26,7 +26,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
 	FName CollisionProfile;
 
-	// How fast the projectile files.
+	// How fast the projectile files. In Vector units per Second.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
 	float Speed;
 
@@ -38,8 +38,18 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile")
 	FVector ShotDirection;
 
+	// The time until the projectile gets destroyed
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile")
+	float TimeUntilDestruction;
+
+	// How far the projectile flies
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
+	float TravelDistance;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Used to decide when the projectile can be destroyed.
+	float TimeTraveled;
 };
