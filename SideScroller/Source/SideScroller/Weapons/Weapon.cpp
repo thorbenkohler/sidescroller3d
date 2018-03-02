@@ -34,3 +34,6 @@ void AWeapon::Tick(float DeltaTime)
 
 }
 
+void AWeapon::BindDelegates()
+{
+}

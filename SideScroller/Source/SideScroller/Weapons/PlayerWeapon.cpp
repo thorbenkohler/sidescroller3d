@@ -52,3 +52,14 @@ void APlayerWeapon::Tick(float DeltaTime)
 	}
 }
 
+void APlayerWeapon::OnDestroyedOwner(AActor* DestroyedActor)
+{
+	Destroy();
+}
+
+void APlayerWeapon::BindDelegates()
+{
+	Super::BindDelegates();
+
+	WeaponOwner->OnDestroyed.AddDynamic(this, &APlayerWeapon::OnDestroyedOwner);
+}

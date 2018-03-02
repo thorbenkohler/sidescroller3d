@@ -52,6 +52,7 @@ void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 		Weapon->SetActorRelativeRotation(NewRotation);
 	}
 	Weapon->WeaponOwner = Owner;
+	Weapon->BindDelegates();
 
 	APlayerWeapon* PlayerWeapon = Cast<APlayerWeapon>(Weapon);
 

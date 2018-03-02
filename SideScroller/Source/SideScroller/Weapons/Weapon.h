@@ -48,6 +48,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	AActor* WeaponOwner;
 
+	// Binds delegates, depending on the ParentActor
+	virtual void BindDelegates();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

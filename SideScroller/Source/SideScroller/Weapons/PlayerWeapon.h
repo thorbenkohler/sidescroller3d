@@ -26,6 +26,13 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "PlayerWeapon")
 	void ShotFired();
 
+	// Destroys the weapon if its owner gets destroyed
+	UFUNCTION()
+	void OnDestroyedOwner(AActor* DestroyedActor);
+
+	// Binds delegates, depending on the ParentActor
+	virtual void BindDelegates() override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

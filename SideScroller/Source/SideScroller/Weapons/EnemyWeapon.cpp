@@ -2,7 +2,6 @@
 
 #include "EnemyWeapon.h"
 #include "ProjectileSpawner.h"
-#include "Projectiles/Projectile.h"
 #include "Enemies/Enemy.h"
 
 
@@ -47,3 +46,14 @@ void AEnemyWeapon::Tick(float DeltaTime)
 	ProjectileSpawner->Spawn(ReferencedProjectile, SpawnLocation, ShooterRotation, SpawnParameters, ShotDirection);
 }
 
+void AEnemyWeapon::OnDestroyedOwner(AActor* DestroyedActor)
+{
+	Destroy();
+}
+
+void AEnemyWeapon::BindDelegates()
+{
+	Super::BindDelegates();
+
+	WeaponOwner->OnDestroyed.AddDynamic(this, &AEnemyWeapon::OnDestroyedOwner);
+}
