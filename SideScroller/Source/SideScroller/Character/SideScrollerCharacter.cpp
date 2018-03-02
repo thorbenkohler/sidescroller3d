@@ -114,7 +114,7 @@ void ASideScrollerCharacter::DamageTaken(int32 IncomingDamage)
 {
 	if (!IsValid(HealthComponent))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No valid HealthCollector found."));
+		UE_LOG(LogTemp, Error, TEXT("No valid HealthComponent found."));
 		return;
 	}
 	HealthComponent->DamageTaken(IncomingDamage);
