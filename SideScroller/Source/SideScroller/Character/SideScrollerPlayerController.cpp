@@ -37,3 +37,8 @@ void ASideScrollerPlayerController::ReceiveOnGameWon()
 	bShowMouseCursor = 1;
 	SetInputMode(FInputModeGameAndUI());
 }
+
+void ASideScrollerPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+}

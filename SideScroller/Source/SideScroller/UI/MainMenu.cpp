@@ -3,6 +3,8 @@
 #include "MainMenu.h"
 #include "HighScoreWidget.h"
 #include "Utilities/SideScrollerDelegates.h"
+#include "Blueprint/WidgetTree.h"
+
 
 UMainMenu::UMainMenu(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -35,6 +37,40 @@ void UMainMenu::ReceiveOnInitFirstWidget(UUserWidget* Widget)
 		return;
 	}
 	CurrentWidget = Widget;
+
+	UWidgetTree* WidgetTree = CurrentWidget->WidgetTree;
+
+	//TArray<UWidget*> Widgets;
+	//WidgetTree->GetAllWidgets(Widgets);
+	//for (UWidget* TempWidget : Widgets)
+	//{
+	//	UE_LOG(LogTemp, Log, TEXT("Widget %s"), *TempWidget->GetName());
+	//}
+	UWidget* PlayGameButton = WidgetTree->FindWidget(FName("PlayGameButton"));
+
+	if (!IsValid(PlayGameButton))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No valid Widget found."));
+		return;
+	}
+
+	UWorld* World = CurrentWidget->GetWorld();
+
+	if (!IsValid(World))
+	{
+		UE_LOG(LogTemp, Error, TEXT("The world is invalid."));
+		return;
+	}
+
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+
+	if (!IsValid(PlayerController))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No valid PlayerController found."));
+		return;
+	}
+
+	PlayGameButton->SetUserFocus(PlayerController);
 }
 
 void UMainMenu::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
