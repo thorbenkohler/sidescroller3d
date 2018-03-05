@@ -5,8 +5,6 @@
 #include "SideScrollerDelegates.generated.h"
 
 class ACollectable;
-class AWeapon;
-class ASideScrollerTriggerBox;
 
 struct FHighScoreWidgetData;
 
