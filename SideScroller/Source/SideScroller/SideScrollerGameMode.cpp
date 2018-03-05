@@ -7,11 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "SideScroller.h"
 #include "EngineUtils.h"
+#include "UI/MainMenu.h"
 
-
-ASideScrollerGameMode::ASideScrollerGameMode()
-{
-}
 
 void ASideScrollerGameMode::BeginPlay()
 {
@@ -40,6 +37,16 @@ void ASideScrollerGameMode::InitFirstWidget()
 	}
 
 	Widget->AddToViewport();
+	UMainMenu* MainMenu = Cast<UMainMenu>(Widget);
+
+	if (!IsValid(MainMenu))
+	{
+		UE_LOG(LogTemp, Error, TEXT("First Menu not valid."));
+		return;
+	}
+
+	//TODO: redundant to Initialize in class, but necessary. Reconsider.
+	MainMenu->BindDelegates();
 	USideScrollerDelegates::OnInitFirstWidget.Broadcast(Widget);
 }
 

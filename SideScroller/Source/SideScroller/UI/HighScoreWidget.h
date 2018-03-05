@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "SideScrollerWidget.h"
 #include "HighScoreWidget.generated.h"
 
 // Contains informations about the highscore screen
@@ -24,7 +24,7 @@ public:
  * 
  */
 UCLASS()
-class SIDESCROLLER_API UHighScoreWidget : public UUserWidget
+class SIDESCROLLER_API UHighScoreWidget : public USideScrollerWidget
 {
 	GENERATED_BODY()
 

@@ -6,12 +6,6 @@
 #include "Blueprint/WidgetTree.h"
 
 
-UMainMenu::UMainMenu(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-	USideScrollerDelegates::OnInitFirstWidget.AddUObject(this, &UMainMenu::ReceiveOnInitFirstWidget);
-}
-
 bool UMainMenu::Initialize()
 {
 	bool Succesful = Super::Initialize();
@@ -19,9 +13,16 @@ bool UMainMenu::Initialize()
 	{
 		return false;
 	}
+
+	USideScrollerDelegates::OnInitFirstWidget.AddUObject(this, &UMainMenu::ReceiveOnInitFirstWidget);
 	USideScrollerDelegates::OnShowWidget.AddUObject(this, &UMainMenu::ReceiveOnShowWidget);
 	USideScrollerDelegates::OnShowHighscore.AddUObject(this, &UMainMenu::ReceiveOnShowHighscore);
 	return true;
+}
+
+void UMainMenu::BindDelegates()
+{
+	USideScrollerDelegates::OnInitFirstWidget.AddUObject(this, &UMainMenu::ReceiveOnInitFirstWidget);
 }
 
 void UMainMenu::ReceiveOnShowWidget(TSubclassOf<UUserWidget> Widget)
@@ -38,39 +39,8 @@ void UMainMenu::ReceiveOnInitFirstWidget(UUserWidget* Widget)
 	}
 	CurrentWidget = Widget;
 
-	UWidgetTree* WidgetTree = CurrentWidget->WidgetTree;
-
-	//TArray<UWidget*> Widgets;
-	//WidgetTree->GetAllWidgets(Widgets);
-	//for (UWidget* TempWidget : Widgets)
-	//{
-	//	UE_LOG(LogTemp, Log, TEXT("Widget %s"), *TempWidget->GetName());
-	//}
-	UWidget* PlayGameButton = WidgetTree->FindWidget(FName("PlayGameButton"));
-
-	if (!IsValid(PlayGameButton))
-	{
-		UE_LOG(LogTemp, Error, TEXT("No valid Widget found."));
-		return;
-	}
-
-	UWorld* World = CurrentWidget->GetWorld();
-
-	if (!IsValid(World))
-	{
-		UE_LOG(LogTemp, Error, TEXT("The world is invalid."));
-		return;
-	}
-
-	APlayerController* PlayerController = World->GetFirstPlayerController();
-
-	if (!IsValid(PlayerController))
-	{
-		UE_LOG(LogTemp, Error, TEXT("No valid PlayerController found."));
-		return;
-	}
-
-	PlayGameButton->SetUserFocus(PlayerController);
+	FocusFirstWidget();
+	return;
 }
 
 void UMainMenu::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
@@ -100,6 +70,8 @@ void UMainMenu::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
 	}
 	
 	HighScoreWidget->SetData(HighScoreWidgetData);
+
+	FocusFirstWidget();
 }
 
 void UMainMenu::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
@@ -131,3 +103,48 @@ void UMainMenu::StartNewGame()
 {
 	USideScrollerDelegates::OnStartNewGame.Broadcast();
 }
+
+void UMainMenu::FocusFirstWidget()
+{
+	if (!IsValid(CurrentWidget))
+	{
+		UE_LOG(LogTemp, Error, TEXT("CurrentWidget is not valid."));
+		return;
+	}
+
+	UWidgetTree* WidgetTree = CurrentWidget->WidgetTree;
+	USideScrollerWidget* SideScrollerWidget = Cast<USideScrollerWidget>(CurrentWidget);
+
+	if (!IsValid(SideScrollerWidget))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cast failed. Current Widget is no SideScrollerWidget. Widget is %s"), *CurrentWidget->GetName());
+		return;
+	}
+
+	UWidget* FirstSelected = WidgetTree->FindWidget(SideScrollerWidget->FirstSelectedWidget);
+
+	if (!IsValid(FirstSelected))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No valid Widget found."));
+		return;
+	}
+
+	UWorld* World = CurrentWidget->GetWorld();
+
+	if (!IsValid(World))
+	{
+		UE_LOG(LogTemp, Error, TEXT("The world is invalid."));
+		return;
+	}
+
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+
+	if (!IsValid(PlayerController))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No valid PlayerController found."));
+		return;
+	}
+
+	FirstSelected->SetUserFocus(PlayerController);
+}
+

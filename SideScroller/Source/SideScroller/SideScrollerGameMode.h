@@ -13,9 +13,6 @@ class ASideScrollerGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
-public:
-	ASideScrollerGameMode();
-
 protected:
 	// Called when the game starts.
 	virtual void BeginPlay() override;

@@ -3,7 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "SideScrollerWidget.h"
+#include "Components/Button.h"
 #include "MainMenu.generated.h"
 
 struct FHighScoreWidgetData;
@@ -12,13 +13,11 @@ struct FHighScoreWidgetData;
  * 
  */
 UCLASS()
-class SIDESCROLLER_API UMainMenu : public UUserWidget
+class SIDESCROLLER_API UMainMenu : public USideScrollerWidget
 {
 	GENERATED_BODY()
 
 public:
-	UMainMenu(const FObjectInitializer& ObjectInitializer);
-
 	// Used as BeginPlay replacement
 	bool Initialize();
 
@@ -39,6 +38,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MainMenu")
 	void StartNewGame();
 
+	UFUNCTION()
+	void FocusFirstWidget();
+
+	void BindDelegates();
+
 	// Gets shown right after initial game startup
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
 	TSubclassOf<UUserWidget> StartMenu;
@@ -47,7 +51,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
 	TSubclassOf<UUserWidget> GameOverWidget;
 
-	// The widget instance that we are using as our menu.
+	// The current active menu
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MainMenu")
 	UUserWidget* CurrentWidget;
+
 };
