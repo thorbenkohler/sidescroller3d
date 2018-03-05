@@ -4,14 +4,19 @@
 #include "Blueprint/UserWidget.h"
 #include "Utilities/SideScrollerDelegates.h"
 
-void ASideScrollerPlayerController::BeginPlay()
-{
-	Super::BeginPlay();
 
+ASideScrollerPlayerController::ASideScrollerPlayerController()
+{
 	USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnStartNewGame);
 	USideScrollerDelegates::OnInitFirstWidget.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnInitFirstWidget);
 	USideScrollerDelegates::OnPlayerDied.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnPlayerDied);
 	USideScrollerDelegates::OnGameWon.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnGameWon);
+}
+
+void ASideScrollerPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
 }
 
 void ASideScrollerPlayerController::ReceiveOnStartNewGame()

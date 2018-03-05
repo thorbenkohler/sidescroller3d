@@ -14,6 +14,8 @@ class SIDESCROLLER_API ASideScrollerPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	ASideScrollerPlayerController();
+
 	virtual void BeginPlay() override;
 
 	// Handles the cursor and sets the according input mode
