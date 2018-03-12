@@ -21,25 +21,21 @@ void ASideScrollerPlayerController::BeginPlay()
 
 void ASideScrollerPlayerController::ReceiveOnStartNewGame()
 {
-	bShowMouseCursor = 0;
 	SetInputMode(FInputModeGameOnly());
 }
 
 void ASideScrollerPlayerController::ReceiveOnInitFirstWidget(UUserWidget* Widget)
 {
-	bShowMouseCursor = 1;
 	SetInputMode(FInputModeGameAndUI());
 }
 
 void ASideScrollerPlayerController::ReceiveOnPlayerDied()
 {
-	bShowMouseCursor = 1;
 	SetInputMode(FInputModeGameAndUI());
 }
 
 void ASideScrollerPlayerController::ReceiveOnGameWon()
 {
-	bShowMouseCursor = 1;
 	SetInputMode(FInputModeGameAndUI());
 }
 
