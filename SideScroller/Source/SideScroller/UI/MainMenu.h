@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "SideScrollerWidget.h"
-#include "Components/Button.h"
+#include "Engine/DataTable.h"
 #include "MainMenu.generated.h"
 
 struct FHighScoreWidgetData;
@@ -24,9 +24,6 @@ public:
 	// Switch between widgets
 	virtual void ReceiveOnShowWidget(TSubclassOf<UUserWidget> Widget);
 
-	// Used as initial event coming from the game mode to show the first menu in the game
-	virtual void ReceiveOnInitFirstWidget(UUserWidget* Widget);
-
 	// Shows the highscore after the player's death
 	void ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData);
 
@@ -38,14 +35,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MainMenu")
 	void StartNewGame();
 
-	UFUNCTION()
-	void FocusFirstWidget();
-
-	void BindDelegates();
-
-	// Gets shown right after initial game startup
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
-	TSubclassOf<UUserWidget> StartMenu;
+	// Used for custom initialziing in start up menu
+	void InitializeMenu(UUserWidget* Widget);
 
 	// Used to display the highscore and respawn button
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainMenu")
@@ -54,5 +45,4 @@ public:
 	// The current active menu
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MainMenu")
 	UUserWidget* CurrentWidget;
-
 };

@@ -14,10 +14,11 @@ void ASideScrollerGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitFirstWidget();
 	USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
 	USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
 	USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnRestartCurrentLevel);
+
+	InitFirstWidget();
 }
 
 void ASideScrollerGameMode::InitFirstWidget()
@@ -36,18 +37,15 @@ void ASideScrollerGameMode::InitFirstWidget()
 		return;
 	}
 
-	Widget->AddToViewport();
 	UMainMenu* MainMenu = Cast<UMainMenu>(Widget);
 
 	if (!IsValid(MainMenu))
 	{
-		UE_LOG(LogTemp, Error, TEXT("First Menu not valid."));
+		UE_LOG(LogTemp, Error, TEXT("Cast failed. FirstMenu was not type of UMainMenu."));
 		return;
 	}
 
-	//TODO: redundant to Initialize in class, but necessary. Reconsider.
-	MainMenu->BindDelegates();
-	USideScrollerDelegates::OnInitFirstWidget.Broadcast(Widget);
+	MainMenu->InitializeMenu(Widget);
 }
 
 void ASideScrollerGameMode::ReceiveOnStartNewGame()

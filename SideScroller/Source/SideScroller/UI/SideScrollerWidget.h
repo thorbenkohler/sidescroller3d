@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "SideScrollerWidget.generated.h"
 
+class USideScrollerButton;
+
 /**
  * 
  */
@@ -18,7 +20,14 @@ public:
 	// Widget replacement for BeginPlay()
 	bool Initialize();
 
-	// Name of the first selected Widget
+	// Gets called in Blueprint by the Tick() event
+	UFUNCTION(BlueprintCallable, Category = "SideScrollerWidget")
+	virtual void WidgetTick(FGeometry MyGeometry, float InDeltaTime);
+
+	// Caches of SideScroller Buttons
+	TArray<USideScrollerButton*> AllButtons;
+
+	// Used to define a style for all buttons in this menu
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerWidget")
-	FName FirstSelectedWidget;
+	FButtonStyle ButtonStyle;
 };
