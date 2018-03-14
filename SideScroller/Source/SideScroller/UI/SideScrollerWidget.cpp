@@ -2,6 +2,7 @@
 
 #include "SideScrollerWidget.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Blueprint/WidgetTree.h"
 #include "Utilities/SideScrollerDelegates.h"
 
 bool USideScrollerWidget::Initialize()
