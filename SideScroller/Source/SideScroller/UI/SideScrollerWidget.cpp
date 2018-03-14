@@ -43,8 +43,11 @@ bool USideScrollerWidget::InitializeMenu()
 	return true;
 }
 
-void USideScrollerWidget::WidgetTick(FGeometry MyGeometry, float InDeltaTime)
+
+void USideScrollerWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
+	Super::NativeTick(MyGeometry, InDeltaTime);
+
 	for (USideScrollerButton* SideScrollerButton : AllButtons)
 	{
 		if (SideScrollerButton->HasKeyboardFocus())

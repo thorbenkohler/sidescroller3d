@@ -23,9 +23,8 @@ public:
 	// Used to initialize elements after menu is shown
 	virtual bool InitializeMenu();
 
-	// Gets called in Blueprint by the Tick() event
-	UFUNCTION(BlueprintCallable, Category = "SideScrollerWidget")
-	virtual void WidgetTick(FGeometry MyGeometry, float InDeltaTime);
+	// Controls hovering
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 	// Remove the current menu widget and create a new one from the specified class, if provided.
 	UFUNCTION(BlueprintCallable, Category = "SideScrollerWidget")
