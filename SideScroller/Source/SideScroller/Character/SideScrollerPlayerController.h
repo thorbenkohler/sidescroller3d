@@ -22,7 +22,7 @@ public:
 	void ReceiveOnStartNewGame();
 
 	// Handles the cursor and sets the according input mode
-	void ReceiveOnInitFirstWidget(UUserWidget* Widget);
+	void ReceiveOnInitFirstWidget();
 
 	// Handles the cursor and sets the according input mode
 	void ReceiveOnPlayerDied();
@@ -30,7 +30,12 @@ public:
 	// Handles the cursor and sets the according input mode
 	void ReceiveOnGameWon();
 
+	// Handles the cursor and sets the according input mode
+	void ReceiveOnOpenIngameMenu();
+
+	// Handles the cursor and sets the according input mode
+	void ReceiveOnCloseIngameMenu();
+
 	// Used for Ui controlling
 	void SetupInputComponent();
-
 };

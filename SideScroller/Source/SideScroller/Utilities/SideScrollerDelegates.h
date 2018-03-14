@@ -38,7 +38,7 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnShowWidget, TSubclassOf<UUserWidget>);
 	static FOnShowWidget OnShowWidget;
 
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnInitFirstWidget, UUserWidget*);
+	DECLARE_MULTICAST_DELEGATE(FOnInitFirstWidget);
 	static FOnInitFirstWidget OnInitFirstWidget;
 
 	DECLARE_MULTICAST_DELEGATE(FOnStartNewGame);
@@ -58,4 +58,10 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE(FOnGameWon);
 	static FOnGameWon OnGameWon;
+
+	DECLARE_MULTICAST_DELEGATE(FOnOpenIngameMenu);
+	static FOnOpenIngameMenu OnOpenIngameMenu;
+
+	DECLARE_MULTICAST_DELEGATE(FOnCloseIngameMenu);
+	static FOnCloseIngameMenu OnCloseIngameMenu;
 };

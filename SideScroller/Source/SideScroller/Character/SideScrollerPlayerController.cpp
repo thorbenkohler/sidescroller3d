@@ -11,12 +11,13 @@ ASideScrollerPlayerController::ASideScrollerPlayerController()
 	USideScrollerDelegates::OnInitFirstWidget.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnInitFirstWidget);
 	USideScrollerDelegates::OnPlayerDied.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnPlayerDied);
 	USideScrollerDelegates::OnGameWon.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnGameWon);
+	USideScrollerDelegates::OnOpenIngameMenu.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnOpenIngameMenu);
+	USideScrollerDelegates::OnCloseIngameMenu.AddUObject(this, &ASideScrollerPlayerController::ReceiveOnCloseIngameMenu);
 }
 
 void ASideScrollerPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void ASideScrollerPlayerController::ReceiveOnStartNewGame()
@@ -24,7 +25,7 @@ void ASideScrollerPlayerController::ReceiveOnStartNewGame()
 	SetInputMode(FInputModeGameOnly());
 }
 
-void ASideScrollerPlayerController::ReceiveOnInitFirstWidget(UUserWidget* Widget)
+void ASideScrollerPlayerController::ReceiveOnInitFirstWidget()
 {
 	SetInputMode(FInputModeGameAndUI());
 }
@@ -37,6 +38,16 @@ void ASideScrollerPlayerController::ReceiveOnPlayerDied()
 void ASideScrollerPlayerController::ReceiveOnGameWon()
 {
 	SetInputMode(FInputModeGameAndUI());
+}
+
+void ASideScrollerPlayerController::ReceiveOnOpenIngameMenu()
+{
+	SetInputMode(FInputModeUIOnly());
+}
+
+void ASideScrollerPlayerController::ReceiveOnCloseIngameMenu()
+{
+	SetInputMode(FInputModeGameOnly());
 }
 
 void ASideScrollerPlayerController::SetupInputComponent()

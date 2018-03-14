@@ -20,9 +20,16 @@ public:
 	// Widget replacement for BeginPlay()
 	bool Initialize();
 
+	// Used to initialize elements after menu is shown
+	virtual bool InitializeMenu();
+
 	// Gets called in Blueprint by the Tick() event
 	UFUNCTION(BlueprintCallable, Category = "SideScrollerWidget")
 	virtual void WidgetTick(FGeometry MyGeometry, float InDeltaTime);
+
+	// Remove the current menu widget and create a new one from the specified class, if provided.
+	UFUNCTION(BlueprintCallable, Category = "SideScrollerWidget")
+	void ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass);
 
 	// Caches of SideScroller Buttons
 	TArray<USideScrollerButton*> AllButtons;
@@ -30,4 +37,8 @@ public:
 	// Used to define a style for all buttons in this menu
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerWidget")
 	FButtonStyle ButtonStyle;
+
+	// The current active menu
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerWidget")
+	UUserWidget* CurrentWidget;
 };

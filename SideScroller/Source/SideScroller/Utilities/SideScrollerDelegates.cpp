@@ -18,3 +18,5 @@ USideScrollerDelegates::FOnShowHighscore USideScrollerDelegates::OnShowHighscore
 USideScrollerDelegates::FOnStartNewLevel USideScrollerDelegates::OnStartNewLevel;
 USideScrollerDelegates::FOnRestartCurrentLevel USideScrollerDelegates::OnRestartCurrentLevel;
 USideScrollerDelegates::FOnGameWon USideScrollerDelegates::OnGameWon;
+USideScrollerDelegates::FOnOpenIngameMenu USideScrollerDelegates::OnOpenIngameMenu;
+USideScrollerDelegates::FOnCloseIngameMenu USideScrollerDelegates::OnCloseIngameMenu;

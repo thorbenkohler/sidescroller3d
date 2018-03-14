@@ -46,6 +46,9 @@ protected:
 	// Called to stop spawning projectiles
 	void StopFire();
 
+	// Opens the ingame menu
+	void OpenIngameMenu();
+
 	// Handle touch inputs.
 	void TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location);
 

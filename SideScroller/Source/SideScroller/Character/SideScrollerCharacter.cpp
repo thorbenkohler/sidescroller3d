@@ -69,6 +69,7 @@ void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASideScrollerCharacter::Fire);
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ASideScrollerCharacter::StopFire);
+	PlayerInputComponent->BindAction("OpenMenu", IE_Released, this, &ASideScrollerCharacter::OpenIngameMenu);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASideScrollerCharacter::MoveRight);
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ASideScrollerCharacter::TouchStarted);
@@ -83,6 +84,11 @@ void ASideScrollerCharacter::Fire()
 void ASideScrollerCharacter::StopFire()
 {
 	SideScrollerInput.bFire = false;
+}
+
+void ASideScrollerCharacter::OpenIngameMenu()
+{
+	USideScrollerDelegates::OnOpenIngameMenu.Broadcast();
 }
 
 void ASideScrollerCharacter::MoveRight(float Value)

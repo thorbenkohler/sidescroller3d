@@ -8,6 +8,9 @@
 
 class ASideScrollerCharacter;
 
+struct FHighScoreWidgetData;
+
+
 UCLASS(minimalapi)
 class ASideScrollerGameMode : public AGameModeBase
 {
@@ -29,9 +32,23 @@ protected:
 	// Restarts the current level
 	void ReceiveOnRestartCurrentLevel();
 
+	// Shows the ingame menu
+	void ReceiveOnOpenIngameMenu();
+
+	// Shows the highscore after the player's death
+	void ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData);
+
 	// The menu which gets shown after game start up
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	TSubclassOf<UUserWidget> FirstMenu;
+
+	// A menu which is displayed after the game was started
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
+	TSubclassOf<UUserWidget> IngameMenu;
+
+	// Used to display the highscore and respawn button
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
+	TSubclassOf<UUserWidget> GameOverWidget;
 
 	// The character of the game
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")

@@ -17,6 +17,8 @@ void ASideScrollerGameMode::BeginPlay()
 	USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
 	USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
 	USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnRestartCurrentLevel);
+	USideScrollerDelegates::OnOpenIngameMenu.AddUObject(this, &ASideScrollerGameMode::ReceiveOnOpenIngameMenu);
+	USideScrollerDelegates::OnShowHighscore.AddUObject(this, &ASideScrollerGameMode::ReceiveOnShowHighscore);
 
 	InitFirstWidget();
 }
@@ -29,23 +31,20 @@ void ASideScrollerGameMode::InitFirstWidget()
 		return;
 	}
 
-	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), FirstMenu);
+	USideScrollerWidget* SideScrollerWidget = CreateWidget<USideScrollerWidget>(GetWorld(), FirstMenu);
 
-	if (!IsValid(Widget))
+	if (!IsValid(SideScrollerWidget))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Creating a new widget failed."));
 		return;
 	}
 
-	UMainMenu* MainMenu = Cast<UMainMenu>(Widget);
-
-	if (!IsValid(MainMenu))
+	if (!SideScrollerWidget->InitializeMenu())
 	{
-		UE_LOG(LogTemp, Error, TEXT("Cast failed. FirstMenu was not type of UMainMenu."));
 		return;
 	}
 
-	MainMenu->InitializeMenu(Widget);
+	USideScrollerDelegates::OnInitFirstWidget.Broadcast();
 }
 
 void ASideScrollerGameMode::ReceiveOnStartNewGame()
@@ -105,4 +104,55 @@ void ASideScrollerGameMode::ReceiveOnRestartCurrentLevel()
 {
 	UE_LOG(LogTemp, Log, TEXT("Restarting Level %s"), *CurrentLevelName.ToString());
 	UGameplayStatics::OpenLevel(GetWorld(), CurrentLevelName);
+}
+
+void ASideScrollerGameMode::ReceiveOnOpenIngameMenu()
+{
+	if (!IsValid(IngameMenu))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No valid Ingame Menu is referenced."));
+		return;
+	}
+
+	USideScrollerWidget* SideScrollerWidget = CreateWidget<USideScrollerWidget>(GetWorld(), IngameMenu);
+
+	if (!IsValid(SideScrollerWidget))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Creating Widget failed, when opening IngameMenu."));
+		return;
+	}
+
+	SideScrollerWidget->InitializeMenu();
+}
+
+void ASideScrollerGameMode::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
+{
+	if (!IsValid(GameOverWidget))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No game over widget was set."));
+		return;
+	}
+
+	USideScrollerWidget* SideScrollerWidget = CreateWidget<USideScrollerWidget>(GetWorld(), GameOverWidget);
+
+	if (!IsValid(SideScrollerWidget))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Creating Widget failed, when showing highscore."));
+		return;
+	}
+
+	if (!SideScrollerWidget->InitializeMenu())
+	{
+		return;
+	}
+
+	UHighScoreWidget* HighScoreWidget = Cast<UHighScoreWidget>(SideScrollerWidget);
+	
+	if (!IsValid(HighScoreWidget))
+	{
+		UE_LOG(LogTemp, Error, TEXT("SideScrollerWidget is not a HighScoreWidget."));
+		return;
+	}
+	
+	HighScoreWidget->SetData(HighScoreWidgetData);
 }
