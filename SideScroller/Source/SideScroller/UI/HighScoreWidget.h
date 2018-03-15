@@ -40,6 +40,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
 	void RestartLevel();
 
+	// Can be used as post-construct method for effects and sound according to data
+	UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
+	void DataSet();
+
 	// The data which is shown on the score board
 	void SetData(FHighScoreWidgetData& HighScoreWidgetData);
 

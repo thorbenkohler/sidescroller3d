@@ -24,4 +24,5 @@ void UHighScoreWidget::SetData(FHighScoreWidgetData& HighScoreWidgetData)
 	CoinAmount = HighScoreWidgetData.CoinAmount;
 	HealthAmount = HighScoreWidgetData.HealthAmount;
 	bWonState = HighScoreWidgetData.bWonState;
+	DataSet();
 }
