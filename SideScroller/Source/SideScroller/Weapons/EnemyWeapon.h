@@ -18,12 +18,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Destroys the weapon if its owner gets destroyed
-	UFUNCTION()
-	void OnDestroyedOwner(AActor* DestroyedActor);
-
 	// Binds delegates, depending on the ParentActor
 	virtual void BindDelegates() override;
+
+	// Can be used to assign visual effects and sounds
+	UFUNCTION(BlueprintImplementableEvent, Category = "PlayerWeapon")
+	void ShotFired();
 
 protected:
 	// Called when the game starts or when spawned

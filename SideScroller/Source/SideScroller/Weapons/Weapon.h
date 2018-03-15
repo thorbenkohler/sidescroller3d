@@ -20,6 +20,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Binds delegates, depending on the ParentActor
+	virtual void BindDelegates();
+
+	// Destroys the weapon if its owner gets destroyed
+	UFUNCTION()
+	virtual void OnDestroyedOwner(AActor* DestroyedActor);
+
 	// Sets the actual form for the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
 	UStaticMeshComponent* StaticMeshComponent;
@@ -47,9 +54,6 @@ public:
 	// Used for shoot direction
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	AActor* WeaponOwner;
-
-	// Binds delegates, depending on the ParentActor
-	virtual void BindDelegates();
 
 protected:
 	// Called when the game starts or when spawned

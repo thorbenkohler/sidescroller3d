@@ -24,16 +24,20 @@ AWeapon::AWeapon()
 void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 // Called every frame
 void AWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
+void AWeapon::OnDestroyedOwner(AActor* DestroyedActor)
+{
+	Destroy();
 }
 
 void AWeapon::BindDelegates()
 {
+	WeaponOwner->OnDestroyed.AddDynamic(this, &AWeapon::OnDestroyedOwner);
 }
