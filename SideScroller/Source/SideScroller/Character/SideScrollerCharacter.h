@@ -5,8 +5,20 @@
 #include "CoreMinimal.h"
 #include "Interfaces/DamageInterface.h"
 #include "GameFramework/Character.h"
+#include "AbilitySystemInterface.h"
 #include "SideScrollerCharacter.generated.h"
 
+
+//Example for an enum the FGameplayAbiliyInputBinds may use to map input to ability slots.
+UENUM(BlueprintType)
+enum class AbilityInput : uint8
+{
+	UseAbility1 UMETA(DisplayName = "Use Spell 1"),
+	UseAbility2 UMETA(DisplayName = "Use Spell 2"),
+	UseAbility3 UMETA(DisplayName = "Use Spell 3"),
+	UseAbility4 UMETA(DisplayName = "Use Spell 4"),
+	WeaponAbility UMETA(DisplayName = "Use Weapon"),
+};
 
 // This struct covers all possible sideScroller input schemes.
 USTRUCT(BlueprintType)
@@ -23,7 +35,7 @@ public:
 
 
 UCLASS(config=Game)
-class ASideScrollerCharacter : public ACharacter, public IDamageInterface
+class ASideScrollerCharacter : public ACharacter, public IDamageInterface, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -86,6 +98,8 @@ public:
 	// Handles the player input and collision
 	void ReceiveOnGameWon();
 
+	UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystem; };
+
 	// Collects and counts the coins of the player
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	class UCoinCollector* CoinCollector;
@@ -110,4 +124,17 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	class UHealthComponent* HealthComponent;
 
+	// Ability System
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+	class UAbilitySystemComponent* AbilitySystem;
+
+	// One single ability
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
+	TSubclassOf<class UGameplayAbility> Ability;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Abilities)
+	UDataTable* AttributeDataTable;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Abilities)
+	const USideScrollerAttributeSet* SideScrollerAttributeSet;
 };

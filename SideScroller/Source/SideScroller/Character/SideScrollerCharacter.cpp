@@ -8,6 +8,8 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Abilities/AttributeSets/SideScrollerAttributeSet.h"
+#include "AbilitySystemComponent.h"
 
 void FSideScrollerInput::Fire(bool bPressed)
 {
@@ -57,6 +59,38 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
 	CreateDefaultSubobject<UPlayerHighscore>(TEXT("PlayerHighscore"));
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+
+	AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
+	SideScrollerAttributeSet = CreateDefaultSubobject<USideScrollerAttributeSet>(TEXT("AttributeSet"));
+
+	if (!IsValid(AbilitySystem))
+	{
+		UE_LOG(LogTemp, Error, TEXT("AbilitySystem was not valid."));
+		return;
+	}
+
+	if (!IsValid(SideScrollerAttributeSet))
+	{
+		UE_LOG(LogTemp, Error, TEXT("SideScrollerAttributeSet was not valid."));
+		return;
+	}
+
+	if (!IsValid(AttributeDataTable))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No valid AttributeDataTable was set."));
+		return;
+	}
+
+	const UAttributeSet* AttributeSet = AbilitySystem->InitStats(USideScrollerAttributeSet::StaticClass(), AttributeDataTable);
+	SideScrollerAttributeSet = Cast<USideScrollerAttributeSet>(AttributeSet);
+
+	if (!IsValid(SideScrollerAttributeSet))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cast failed. AttributeSet is not of type USideScrollerAttributeSet"))
+		return;
+	}
+
+	UE_LOG(LogTemp, Log, TEXT("%f max: %f"), SideScrollerAttributeSet->Health.GetCurrentValue(), SideScrollerAttributeSet->MaxHealth.GetCurrentValue());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -74,6 +108,8 @@ void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &ASideScrollerCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &ASideScrollerCharacter::TouchStopped);
+
+	AbilitySystem->BindAbilityActivationToInputComponent(PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "AbilityInput"));
 }
 
 void ASideScrollerCharacter::Fire()
@@ -114,6 +150,25 @@ void ASideScrollerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	USideScrollerDelegates::OnGameWon.AddUObject(this, &ASideScrollerCharacter::ReceiveOnGameWon);
+
+	if (!IsValid(AbilitySystem))
+	{
+		UE_LOG(LogTemp, Error, TEXT("AbilitySystem was not valid."));
+		return;
+	}
+
+	if (!IsValid(Ability))
+	{
+		UE_LOG(LogTemp, Error, TEXT("The Ability is not valid."));
+		return;
+	}
+
+	if (HasAuthority())
+	{
+		AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, 0));
+	}
+	AbilitySystem->InitAbilityActorInfo(this, this);
+
 }
 
 void ASideScrollerCharacter::DamageTaken(int32 IncomingDamage)
