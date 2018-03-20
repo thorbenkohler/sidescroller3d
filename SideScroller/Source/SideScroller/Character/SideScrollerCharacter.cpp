@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Abilities/AttributeSets/SideScrollerAttributeSet.h"
+#include "AbilitySystemGlobals.h"
 #include "AbilitySystemComponent.h"
 
 void FSideScrollerInput::Fire(bool bPressed)
@@ -63,34 +64,6 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
 	SideScrollerAttributeSet = CreateDefaultSubobject<USideScrollerAttributeSet>(TEXT("AttributeSet"));
 
-	if (!IsValid(AbilitySystem))
-	{
-		UE_LOG(LogTemp, Error, TEXT("AbilitySystem was not valid."));
-		return;
-	}
-
-	if (!IsValid(SideScrollerAttributeSet))
-	{
-		UE_LOG(LogTemp, Error, TEXT("SideScrollerAttributeSet was not valid."));
-		return;
-	}
-
-	if (!IsValid(AttributeDataTable))
-	{
-		UE_LOG(LogTemp, Error, TEXT("No valid AttributeDataTable was set."));
-		return;
-	}
-
-	const UAttributeSet* AttributeSet = AbilitySystem->InitStats(USideScrollerAttributeSet::StaticClass(), AttributeDataTable);
-	SideScrollerAttributeSet = Cast<USideScrollerAttributeSet>(AttributeSet);
-
-	if (!IsValid(SideScrollerAttributeSet))
-	{
-		UE_LOG(LogTemp, Error, TEXT("Cast failed. AttributeSet is not of type USideScrollerAttributeSet"))
-		return;
-	}
-
-	UE_LOG(LogTemp, Log, TEXT("%f max: %f"), SideScrollerAttributeSet->Health.GetCurrentValue(), SideScrollerAttributeSet->MaxHealth.GetCurrentValue());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -157,7 +130,13 @@ void ASideScrollerCharacter::BeginPlay()
 		return;
 	}
 
-	if (!IsValid(Ability))
+	if (!IsValid(UseAbility))
+	{
+		UE_LOG(LogTemp, Error, TEXT("The Ability is not valid."));
+		return;
+	}
+
+	if (!IsValid(FireWeaponAbility))
 	{
 		UE_LOG(LogTemp, Error, TEXT("The Ability is not valid."));
 		return;
@@ -165,9 +144,33 @@ void ASideScrollerCharacter::BeginPlay()
 
 	if (HasAuthority())
 	{
-		AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, 0));
+		AbilitySystem->GiveAbility(FGameplayAbilitySpec(UseAbility.GetDefaultObject(), 1, (uint32) AbilityInput::UseAbility1));
+		AbilitySystem->GiveAbility(FGameplayAbilitySpec(FireWeaponAbility.GetDefaultObject(), 1, (uint32) AbilityInput::FireWeapon));
 	}
 	AbilitySystem->InitAbilityActorInfo(this, this);
+
+	if (!IsValid(SideScrollerAttributeSet))
+	{
+		UE_LOG(LogTemp, Error, TEXT("SideScrollerAttributeSet was not valid."));
+		return;
+	}
+
+	if (!IsValid(AttributeDataTable))
+	{
+		UE_LOG(LogTemp, Error, TEXT("No valid AttributeDataTable was set."));
+		return;
+	}
+
+	const UAttributeSet* AttributeSet = AbilitySystem->InitStats(USideScrollerAttributeSet::StaticClass(), AttributeDataTable);
+	SideScrollerAttributeSet = Cast<USideScrollerAttributeSet>(AttributeSet);
+
+	if (!IsValid(SideScrollerAttributeSet))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cast failed. AttributeSet is not of type USideScrollerAttributeSet"))
+		return;
+	}
+
+	UE_LOG(LogTemp, Log, TEXT("%f max: %f"), SideScrollerAttributeSet->Health.GetCurrentValue(), SideScrollerAttributeSet->MaxHealth.GetCurrentValue());
 
 }
 
