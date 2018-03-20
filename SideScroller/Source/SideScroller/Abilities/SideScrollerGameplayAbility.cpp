@@ -2,8 +2,3 @@
 
 #include "SideScrollerGameplayAbility.h"
 
-
-USideScrollerGameplayAbility::USideScrollerGameplayAbility(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-}

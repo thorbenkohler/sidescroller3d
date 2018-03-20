@@ -9,7 +9,7 @@
 UCLASS()
 class USideScrollerAttributeSet : public UAttributeSet
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerCharacter Attributes | Health")

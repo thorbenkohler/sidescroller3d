@@ -7,11 +7,6 @@
 
 
    
-USideScrollerAttributeSet::USideScrollerAttributeSet(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-}
-
 FGameplayAttribute USideScrollerAttributeSet::HealthAttribute()
 {
 	static UProperty* Property = FindFieldChecked<UProperty>(USideScrollerAttributeSet::StaticClass(), GET_MEMBER_NAME_CHECKED(USideScrollerAttributeSet, Health));

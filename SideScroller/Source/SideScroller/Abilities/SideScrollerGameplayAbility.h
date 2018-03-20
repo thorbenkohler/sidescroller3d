@@ -12,6 +12,6 @@
 UCLASS()
 class SIDESCROLLER_API USideScrollerGameplayAbility : public UGameplayAbility
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 	
 };

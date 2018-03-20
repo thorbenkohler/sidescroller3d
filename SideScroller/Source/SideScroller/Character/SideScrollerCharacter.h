@@ -17,7 +17,7 @@ enum class AbilityInput : uint8
 	UseAbility2 UMETA(DisplayName = "Use Spell 2"),
 	UseAbility3 UMETA(DisplayName = "Use Spell 3"),
 	UseAbility4 UMETA(DisplayName = "Use Spell 4"),
-	WeaponAbility UMETA(DisplayName = "Use Weapon"),
+	FireWeapon UMETA(DisplayName = "Fire Weapon"),
 };
 
 // This struct covers all possible sideScroller input schemes.
@@ -72,7 +72,7 @@ protected:
 	// End of APawn interface
 
 	// Side scroller input structure.
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	FSideScrollerInput SideScrollerInput;
 
 public:
@@ -130,9 +130,13 @@ public:
 
 	// One single ability
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
-	TSubclassOf<class UGameplayAbility> Ability;
+	TSubclassOf<class UGameplayAbility> UseAbility;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Abilities)
+	// Fire Weapon Ability
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
+	TSubclassOf<class UGameplayAbility> FireWeaponAbility;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
 	UDataTable* AttributeDataTable;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Abilities)
