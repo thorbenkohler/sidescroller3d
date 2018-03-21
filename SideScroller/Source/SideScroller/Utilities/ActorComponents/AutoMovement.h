@@ -25,13 +25,13 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, Category = "AutoMovement")
-	void Move(float TimeEllapsed);
+	void Move(float TimeEllapsed, UStaticMeshComponent* StaticMeshComponent);
 
 	UFUNCTION(BlueprintCallable, Category = "AutoMovement")
 	void MoveFinished();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "AutoMovement")
-	void OnMove(float TimeEllapsed);
+	void OnMove(float TimeEllapsed, UStaticMeshComponent* StaticMeshComponent);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "AutoMovement")
 	void OnMoveFinished();

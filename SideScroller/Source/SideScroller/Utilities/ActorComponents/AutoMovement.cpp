@@ -26,9 +26,9 @@ void UAutoMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UAutoMovement::Move(float TimeEllapsed)
+void UAutoMovement::Move(float TimeEllapsed, UStaticMeshComponent* StaticMeshComponent)
 {
-	OnMove(TimeEllapsed);
+	OnMove(TimeEllapsed, StaticMeshComponent);
 }
 
 void UAutoMovement::MoveFinished()
