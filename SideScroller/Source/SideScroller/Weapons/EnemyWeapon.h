@@ -18,9 +18,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Binds delegates, depending on the ParentActor
-	virtual void BindDelegates() override;
-
 	// Can be used to assign visual effects and sounds
 	UFUNCTION(BlueprintImplementableEvent, Category = "PlayerWeapon")
 	void ShotFired();

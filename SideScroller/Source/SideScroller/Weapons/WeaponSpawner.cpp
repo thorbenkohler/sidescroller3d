@@ -69,5 +69,5 @@ void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 		return;
 	}
 
-	PlayerWeapon->SideScrollerCharacter = SideScrollerCharacter;
+	SideScrollerCharacter->AbilitySystem->GiveAbility(FGameplayAbilitySpec(SideScrollerCharacter->FireWeaponAbility.GetDefaultObject(), 1, (uint32) AbilityInput::FireWeapon));
 }

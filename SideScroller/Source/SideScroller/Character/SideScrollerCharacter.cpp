@@ -145,7 +145,6 @@ void ASideScrollerCharacter::BeginPlay()
 	if (HasAuthority())
 	{
 		AbilitySystem->GiveAbility(FGameplayAbilitySpec(UseAbility.GetDefaultObject(), 1, (uint32) AbilityInput::UseAbility1));
-		AbilitySystem->GiveAbility(FGameplayAbilitySpec(FireWeaponAbility.GetDefaultObject(), 1, (uint32) AbilityInput::FireWeapon));
 	}
 	AbilitySystem->InitAbilityActorInfo(this, this);
 

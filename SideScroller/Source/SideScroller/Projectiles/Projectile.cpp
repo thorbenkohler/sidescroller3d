@@ -14,7 +14,6 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
-	SetRootComponent(StaticMeshComponent);
 }
 
 // Called when the game starts or when spawned
@@ -29,6 +28,7 @@ void AProjectile::BeginPlay()
 		return;
 	}
 	TimeUntilDestruction = TravelDistance / Speed;
+	ShotDirection = GetActorForwardVector().RotateAngleAxis(-90.0f, FVector::UpVector);
 }
 
 // Called every frame
@@ -37,6 +37,7 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	FVector Loc = GetActorLocation();
+
 	FVector DesiredEndLoc = Loc + ((DeltaTime * Speed) * ShotDirection);
 	TimeTraveled += DeltaTime;
 	if (TimeTraveled > TimeUntilDestruction)

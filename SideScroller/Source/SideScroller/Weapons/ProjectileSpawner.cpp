@@ -33,6 +33,4 @@ void UProjectileSpawner::Spawn(TSubclassOf<AActor> ReferencedProjectileClass, FV
 		UE_LOG(LogTemp, Error, TEXT("Spawning projectile failed."));
 		return;
 	}
-
-	Projectile->ShotDirection = ShotDirection;
 }

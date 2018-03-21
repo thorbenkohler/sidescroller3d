@@ -18,22 +18,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Sets the actual form for the weapon
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerWeapon")
-	class ASideScrollerCharacter* SideScrollerCharacter;
-
 	// Can be used to assign visual effects and sounds
 	UFUNCTION(BlueprintImplementableEvent, Category = "PlayerWeapon")
 	void ShotFired();
 
-	// Binds delegates, depending on the ParentActor
-	virtual void BindDelegates() override;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-private:
-	// Used to force the player to press the button anew
-	bool FireButtonWasReleased;
 };

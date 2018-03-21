@@ -45,8 +45,3 @@ void AEnemyWeapon::Tick(float DeltaTime)
 
 	ProjectileSpawner->Spawn(ReferencedProjectile, SpawnLocation, ShooterRotation, SpawnParameters, ShotDirection);
 }
-
-void AEnemyWeapon::BindDelegates()
-{
-	Super::BindDelegates();
-}

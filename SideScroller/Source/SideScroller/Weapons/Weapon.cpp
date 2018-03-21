@@ -39,5 +39,6 @@ void AWeapon::OnDestroyedOwner(AActor* DestroyedActor)
 
 void AWeapon::BindDelegates()
 {
+	// crashes in BeginPlay()
 	WeaponOwner->OnDestroyed.AddDynamic(this, &AWeapon::OnDestroyedOwner);
 }
