@@ -27,7 +27,7 @@ void ASideScrollerGameMode::InitFirstWidget()
 {
 	if (!IsValid(FirstMenu))
 	{
-		UE_LOG(LogTemp, Error, TEXT("First Menu is not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("First Menu is not valid."));
 		return;
 	}
 
@@ -35,7 +35,7 @@ void ASideScrollerGameMode::InitFirstWidget()
 
 	if (!IsValid(SideScrollerWidget))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Creating a new widget failed."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Creating a new widget failed."));
 		return;
 	}
 
@@ -51,7 +51,7 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 {
 	if (!IsValid(PlayerCharacter))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No initial player asset was set"));
+		UE_LOG(SideScrollerLog, Error, TEXT("No initial player asset was set"));
 		return;
 	}
 
@@ -59,7 +59,7 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 
 	if (!IsValid(World))
 	{
-		UE_LOG(LogTemp, Error, TEXT("World not found."));
+		UE_LOG(SideScrollerLog, Error, TEXT("World not found."));
 		return;
 	}
 
@@ -69,7 +69,7 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 
 	if (!IsValid(PlayerController))
 	{
-		UE_LOG(LogTemp, Error, TEXT("PlayerController is not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("PlayerController is not valid."));
 		return;
 	}
 
@@ -77,7 +77,7 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 
 	if (!IsValid(PlayerStart))
 	{
-		UE_LOG(LogTemp, Log, TEXT("PlayerStart not found"));
+		UE_LOG(SideScrollerLog, Log, TEXT("PlayerStart not found"));
 		return;
 	}
 
@@ -85,7 +85,7 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 
 	if (!IsValid(SideScrollerCharacter))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Spawning SideScrollerCharacter failed."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Spawning SideScrollerCharacter failed."));
 		return;
 	}
 
@@ -95,14 +95,14 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 
 void ASideScrollerGameMode::ReceiveOnStartNewLevel(FName NewLevelName)
 {
-	UE_LOG(LogTemp, Log, TEXT("Starting Level %s"), *NewLevelName.ToString());
+	UE_LOG(SideScrollerLog, Log, TEXT("Starting Level %s"), *NewLevelName.ToString());
 	UGameplayStatics::OpenLevel(GetWorld(), NewLevelName);
 	CurrentLevelName = NewLevelName;
 }
 
 void ASideScrollerGameMode::ReceiveOnRestartCurrentLevel()
 {
-	UE_LOG(LogTemp, Log, TEXT("Restarting Level %s"), *CurrentLevelName.ToString());
+	UE_LOG(SideScrollerLog, Log, TEXT("Restarting Level %s"), *CurrentLevelName.ToString());
 	UGameplayStatics::OpenLevel(GetWorld(), CurrentLevelName);
 }
 
@@ -110,7 +110,7 @@ void ASideScrollerGameMode::ReceiveOnOpenIngameMenu()
 {
 	if (!IsValid(IngameMenu))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No valid Ingame Menu is referenced."));
+		UE_LOG(SideScrollerLog, Error, TEXT("No valid Ingame Menu is referenced."));
 		return;
 	}
 
@@ -118,7 +118,7 @@ void ASideScrollerGameMode::ReceiveOnOpenIngameMenu()
 
 	if (!IsValid(SideScrollerWidget))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Creating Widget failed, when opening IngameMenu."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Creating Widget failed, when opening IngameMenu."));
 		return;
 	}
 
@@ -129,7 +129,7 @@ void ASideScrollerGameMode::ReceiveOnShowHighscore(FHighScoreWidgetData HighScor
 {
 	if (!IsValid(GameOverWidget))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No game over widget was set."));
+		UE_LOG(SideScrollerLog, Error, TEXT("No game over widget was set."));
 		return;
 	}
 
@@ -137,7 +137,7 @@ void ASideScrollerGameMode::ReceiveOnShowHighscore(FHighScoreWidgetData HighScor
 
 	if (!IsValid(SideScrollerWidget))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Creating Widget failed, when showing highscore."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Creating Widget failed, when showing highscore."));
 		return;
 	}
 
@@ -150,7 +150,7 @@ void ASideScrollerGameMode::ReceiveOnShowHighscore(FHighScoreWidgetData HighScor
 	
 	if (!IsValid(HighScoreWidget))
 	{
-		UE_LOG(LogTemp, Error, TEXT("SideScrollerWidget is not a HighScoreWidget."));
+		UE_LOG(SideScrollerLog, Error, TEXT("SideScrollerWidget is not a HighScoreWidget."));
 		return;
 	}
 	

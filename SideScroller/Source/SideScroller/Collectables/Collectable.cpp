@@ -28,6 +28,6 @@ void ACollectable::Tick(float DeltaTime)
 
 void ACollectable::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("Collectable %s collided with %s"), *GetName(), *(OtherActor->GetName()));
+	UE_LOG(SideScrollerLog, Log, TEXT("Collectable %s collided with %s"), *GetName(), *(OtherActor->GetName()));
 	USideScrollerDelegates::OnCollectableAdded.Broadcast(this);
 }

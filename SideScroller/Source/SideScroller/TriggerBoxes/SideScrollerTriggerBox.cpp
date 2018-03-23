@@ -22,7 +22,7 @@ void ASideScrollerTriggerBox::BeginPlay()
 
 	if (!IsValid(ShapeComponent))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Not valid ShapeComponent."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Not valid ShapeComponent."));
 		return;
 	}
 
@@ -37,5 +37,5 @@ void ASideScrollerTriggerBox::Tick(float DeltaTime)
 
 void ASideScrollerTriggerBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("SideScrollerTriggerBox %s collided with %s"), *GetName(), *(OtherActor->GetName()));
+	UE_LOG(SideScrollerLog, Log, TEXT("SideScrollerTriggerBox %s collided with %s"), *GetName(), *(OtherActor->GetName()));
 }

@@ -30,7 +30,7 @@ void UProjectileSpawner::Spawn(TSubclassOf<AActor> ReferencedProjectileClass, FV
 
 	if (!IsValid(Projectile))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Spawning projectile failed."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Spawning projectile failed."));
 		return;
 	}
 }

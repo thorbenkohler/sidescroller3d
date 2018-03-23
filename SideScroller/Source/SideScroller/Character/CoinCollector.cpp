@@ -2,6 +2,7 @@
 
 #include "CoinCollector.h"
 #include "UI/HighScoreWidget.h"
+#include "SideScroller.h"
 #include "Utilities/SideScrollerDelegates.h"
 
 
@@ -31,5 +32,5 @@ void UCoinCollector::ReceiveOnCollectableCoinAdded(int32 Amount)
 {
 	Coins += Amount;
 	USideScrollerDelegates::OnPlayerChangeCoins.Broadcast(Coins);
-	UE_LOG(LogTemp, Log, TEXT("Collectable Coins %d added to %s"), Amount, *GetName());
+	UE_LOG(SideScrollerLog, Log, TEXT("Collectable Coins %d added to %s"), Amount, *GetName());
 }
