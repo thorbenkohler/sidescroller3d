@@ -48,5 +48,4 @@ void UWeaponCollector::ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> Weapo
 	}
 
 	LastSpawnedWeapon = SpawnedWeapon;
-	UE_LOG(SideScrollerLog, Log, TEXT("Weapon spawned %s to owner %p and WeaponCollector %p"), *LastSpawnedWeapon->GetName(), GetOwner(), this);
 }
