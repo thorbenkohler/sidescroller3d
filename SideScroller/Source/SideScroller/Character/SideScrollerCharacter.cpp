@@ -56,9 +56,10 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 
 	CreateDefaultSubobject<UHealthCollector>(TEXT("HealthCollector"));
 	CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
-	CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
 	CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
 	CreateDefaultSubobject<UPlayerHighscore>(TEXT("PlayerHighscore"));
+
+	WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 
 	AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
@@ -126,19 +127,19 @@ void ASideScrollerCharacter::BeginPlay()
 
 	if (!IsValid(AbilitySystem))
 	{
-		UE_LOG(LogTemp, Error, TEXT("AbilitySystem was not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("AbilitySystem was not valid."));
 		return;
 	}
 
 	if (!IsValid(UseAbility))
 	{
-		UE_LOG(LogTemp, Error, TEXT("The Ability is not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("The Ability is not valid."));
 		return;
 	}
 
 	if (!IsValid(FireWeaponAbility))
 	{
-		UE_LOG(LogTemp, Error, TEXT("The Ability is not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("The Ability is not valid."));
 		return;
 	}
 
@@ -150,13 +151,13 @@ void ASideScrollerCharacter::BeginPlay()
 
 	if (!IsValid(SideScrollerAttributeSet))
 	{
-		UE_LOG(LogTemp, Error, TEXT("SideScrollerAttributeSet was not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("SideScrollerAttributeSet was not valid."));
 		return;
 	}
 
 	if (!IsValid(AttributeDataTable))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No valid AttributeDataTable was set."));
+		UE_LOG(SideScrollerLog, Error, TEXT("No valid AttributeDataTable was set."));
 		return;
 	}
 
@@ -165,11 +166,11 @@ void ASideScrollerCharacter::BeginPlay()
 
 	if (!IsValid(SideScrollerAttributeSet))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Cast failed. AttributeSet is not of type USideScrollerAttributeSet"))
+		UE_LOG(SideScrollerLog, Error, TEXT("Cast failed. AttributeSet is not of type USideScrollerAttributeSet"))
 		return;
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("%f max: %f"), SideScrollerAttributeSet->Health.GetCurrentValue(), SideScrollerAttributeSet->MaxHealth.GetCurrentValue());
+	UE_LOG(SideScrollerLog, Log, TEXT("%f max: %f"), SideScrollerAttributeSet->Health.GetCurrentValue(), SideScrollerAttributeSet->MaxHealth.GetCurrentValue());
 
 }
 
@@ -177,7 +178,7 @@ void ASideScrollerCharacter::DamageTaken(int32 IncomingDamage)
 {
 	if (!IsValid(HealthComponent))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No valid HealthComponent found."));
+		UE_LOG(SideScrollerLog, Error, TEXT("No valid HealthComponent found."));
 		return;
 	}
 	HealthComponent->DamageTaken(IncomingDamage);

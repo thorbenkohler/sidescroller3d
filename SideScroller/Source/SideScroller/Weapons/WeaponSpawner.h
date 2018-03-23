@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Weapons/Weapon.h"
 #include "WeaponSpawner.generated.h"
 
 
@@ -20,7 +21,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	// Spawns the referenced weapon
-	void Spawn(TSubclassOf<AActor> ReferencedClass);
+	AWeapon* Spawn(TSubclassOf<AActor> ReferencedClass);
 
 protected:
 	// Called when the game starts
