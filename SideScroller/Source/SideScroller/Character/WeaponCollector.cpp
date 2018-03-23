@@ -35,9 +35,18 @@ void UWeaponCollector::ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> Weapo
 {
 	if (!IsValid(WeaponSpawner))
 	{
-		UE_LOG(LogTemp, Error, TEXT("WeaponSpawner is not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("WeaponSpawner is not valid."));
 		return;
 	}
 
-	WeaponSpawner->Spawn(WeaponReference);
+	AWeapon* SpawnedWeapon = WeaponSpawner->Spawn(WeaponReference);
+
+	if (!IsValid(SpawnedWeapon))
+	{
+		UE_LOG(SideScrollerLog, Log, TEXT("Spawning weapon failed."));
+		return;
+	}
+
+	LastSpawnedWeapon = SpawnedWeapon;
+	UE_LOG(SideScrollerLog, Log, TEXT("Weapon spawned %s to owner %p and WeaponCollector %p"), *LastSpawnedWeapon->GetName(), GetOwner(), this);
 }

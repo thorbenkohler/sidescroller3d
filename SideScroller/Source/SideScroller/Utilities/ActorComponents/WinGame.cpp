@@ -28,6 +28,6 @@ void UWinGame::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 void UWinGame::WinGame()
 {
-	UE_LOG(LogTemp, Log, TEXT("Game Won is triggered."));
+	UE_LOG(SideScrollerLog, Log, TEXT("Game Won is triggered."));
 	USideScrollerDelegates::OnGameWon.Broadcast();
 }

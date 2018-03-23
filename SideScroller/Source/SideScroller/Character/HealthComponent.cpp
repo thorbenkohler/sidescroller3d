@@ -56,7 +56,7 @@ void UHealthComponent::ReceiveOnPlayerAddHealth(int32 Amount)
 
 void UHealthComponent::DamageTaken(int32 Amount)
 {
-	UE_LOG(LogTemp, Log, TEXT("Incoming player damage %d"), Amount);
+	UE_LOG(SideScrollerLog, Log, TEXT("Incoming player damage %d"), Amount);
 	if (Amount >= Health)
 	{
 		if (Health >= 0)
@@ -66,7 +66,7 @@ void UHealthComponent::DamageTaken(int32 Amount)
 
 			if (!IsValid(SideScrollerCharacter))
 			{
-				UE_LOG(LogTemp, Error, TEXT("Cast to SideScroller from Owner was invalid."));
+				UE_LOG(SideScrollerLog, Error, TEXT("Cast to SideScroller from Owner was invalid."));
 				return;
 			}
 

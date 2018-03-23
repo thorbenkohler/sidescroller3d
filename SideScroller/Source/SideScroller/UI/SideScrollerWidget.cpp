@@ -33,7 +33,7 @@ bool USideScrollerWidget::InitializeMenu()
 {
 	if (!IsValid(this))
 	{
-		UE_LOG(LogTemp, Error, TEXT("There was a problem with the main menu creation."))
+		UE_LOG(SideScrollerLog, Error, TEXT("There was a problem with the main menu creation."))
 		return false;
 	}
 	CurrentWidget = this;
@@ -69,7 +69,7 @@ void USideScrollerWidget::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetCla
 
 	if (!IsValid(NewWidgetClass))
 	{
-		UE_LOG(LogTemp, Error, TEXT("NewWidgetClass is not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("NewWidgetClass is not valid."));
 		return;
 	}
 
@@ -77,7 +77,7 @@ void USideScrollerWidget::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetCla
 
 	if (!IsValid(CurrentWidget))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Creating a new widget failed."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Creating a new widget failed."));
 		return;
 	}
 

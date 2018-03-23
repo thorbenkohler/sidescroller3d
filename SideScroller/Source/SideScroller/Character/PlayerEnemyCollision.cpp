@@ -23,7 +23,7 @@ void UPlayerEnemyCollision::BeginPlay()
 
 	if (!IsValid(PrimitiveComponent))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No primitive component found in %p"), this);
+		UE_LOG(SideScrollerLog, Error, TEXT("No primitive component found in %p"), this);
 		return;
 	}
 
@@ -51,7 +51,7 @@ void UPlayerEnemyCollision::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, 
 
 	if (!IsValid(SideScrollerCharacter))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Cast to SideScrollerCharacter failed."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Cast to SideScrollerCharacter failed."));
 		return;
 	}
 

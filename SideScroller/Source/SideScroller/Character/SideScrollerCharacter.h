@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Interfaces/DamageInterface.h"
 #include "GameFramework/Character.h"
+#include "WeaponCollector.h"
 #include "AbilitySystemInterface.h"
 #include "SideScrollerCharacter.generated.h"
 
@@ -110,7 +111,7 @@ public:
 
 	// Collects weapons
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-	class UWeaponCollector* WeaponCollector;
+	UWeaponCollector* WeaponCollector;
 
 	// Handles player collision with enemies
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")

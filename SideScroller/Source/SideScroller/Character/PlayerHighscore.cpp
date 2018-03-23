@@ -43,7 +43,7 @@ void UPlayerHighscore::ReceiveOnPlayerDied()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No Coin collector was found"));
+		UE_LOG(SideScrollerLog, Error, TEXT("No Coin collector was found"));
 		HighScoreWidgetData.CoinAmount = 0;
 	}
 
@@ -53,7 +53,7 @@ void UPlayerHighscore::ReceiveOnPlayerDied()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No Health collector was found"));
+		UE_LOG(SideScrollerLog, Error, TEXT("No Health collector was found"));
 		HighScoreWidgetData.HealthAmount = 0;
 	}
 
@@ -71,7 +71,7 @@ void UPlayerHighscore::ReceiveOnGameWon()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No Coin collector was found"));
+		UE_LOG(SideScrollerLog, Error, TEXT("No Coin collector was found"));
 		HighScoreWidgetData.CoinAmount = 0;
 	}
 
@@ -81,7 +81,7 @@ void UPlayerHighscore::ReceiveOnGameWon()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No Health component was found"));
+		UE_LOG(SideScrollerLog, Error, TEXT("No Health component was found"));
 		HighScoreWidgetData.HealthAmount = 0;
 	}
 

@@ -1,26 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilityTask_SpawnProjectile.h"
+#include "EngineGlobals.h"
+#include "Engine/Engine.h"
+#include "SideScroller.h"
+#include "Weapons/Muzzle.h"
+#include "Weapons/Weapon.h"
+#include "Character/WeaponCollector.h"
+#include "AbilitySystemComponent.h"
 
 
 
 UAbilityTask_SpawnProjectile::UAbilityTask_SpawnProjectile(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-}
-
-UAbilityTask_SpawnProjectile* UAbilityTask_SpawnProjectile::CreateMyTask(UGameplayAbility* OwningAbility, FName TaskInstanceName, float ExampleVariable)
-{
-
-	UAbilityTask_SpawnProjectile* AbilityTask_SpawnProjectile = NewAbilityTask<UAbilityTask_SpawnProjectile>(OwningAbility, TaskInstanceName);
-	return AbilityTask_SpawnProjectile;
-}
-
-void UAbilityTask_SpawnProjectile::Activate()
-{
-	//FVector SpawnLocation = Muzzle->GetComponentLocation();
-	//FRotator ShooterRotation = SideScrollerCharacter->GetActorRotation();
-	//UE_LOG(LogTemp, Log, TEXT("Spawn Projectile successfully activated %s"), *GetOwner()->GetName());
 }
 
 UAbilityTask_SpawnProjectile* UAbilityTask_SpawnProjectile::SpawnActor(UGameplayAbility* OwningAbility, FGameplayAbilityTargetDataHandle TargetData, TSubclassOf<AActor> InClass)
@@ -39,10 +32,11 @@ bool UAbilityTask_SpawnProjectile::BeginSpawningActor(UGameplayAbility* OwningAb
 		UWorld* const World = GEngine->GetWorldFromContextObject(OwningAbility, EGetWorldErrorMode::LogAndReturnNull);
 		if (World)
 		{
+			SpawnPosition = GetProjectilePosition(OwningAbility);
 			SpawnedActor = World->SpawnActorDeferred<AActor>(InClass, FTransform::Identity, NULL, NULL, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		}
 	}
-	
+
 	if (SpawnedActor == nullptr)
 	{
 		if (ShouldBroadcastAbilityTaskDelegates())
@@ -74,13 +68,15 @@ void UAbilityTask_SpawnProjectile::FinishSpawningActor(UGameplayAbility* OwningA
 				SpawnTransform = LocationData->GetEndPointTransform();
 				bTransformSet = true;
 			}
-			}
+		}
 		if (!bTransformSet)
 		{
 			SpawnTransform = AbilitySystemComponent->GetOwner()->GetTransform();
 		}
 
 		SpawnedActor->FinishSpawning(SpawnTransform);
+
+		SpawnedActor->SetActorLocation(SpawnPosition);
 
 		if (ShouldBroadcastAbilityTaskDelegates())
 		{
@@ -92,3 +88,54 @@ void UAbilityTask_SpawnProjectile::FinishSpawningActor(UGameplayAbility* OwningA
 }
 
 // --------------------------------------------------------------------------------------
+
+FVector UAbilityTask_SpawnProjectile::GetProjectilePosition(UGameplayAbility* OwningAbility)
+{
+	if (!IsValid(OwningAbility))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("OwningAbility is not valid."));
+		return FVector::ZeroVector;
+	}
+
+	AActor* AbilityOwner = OwningAbility->GetOwningActorFromActorInfo();
+
+	if (!IsValid(AbilityOwner))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("AbilityOwner is not valid."));
+		return FVector::ZeroVector;
+	}
+
+	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(AbilityOwner);
+
+	if (!IsValid(SideScrollerCharacter))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("Cast failed. AbilityOwner is not of type SideScrollerCharacter."));
+		return FVector::ZeroVector;
+	}
+
+	UWeaponCollector* WeaponCollector = SideScrollerCharacter->WeaponCollector;
+
+	if (!IsValid(WeaponCollector))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("WeaponCollector is not valid."));
+		return FVector::ZeroVector;
+	}
+
+	AWeapon* Weapon = WeaponCollector->LastSpawnedWeapon;
+
+	if (!IsValid(Weapon))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("Weapon is not valid."));
+		return FVector::ZeroVector;
+	}
+
+	USceneComponent* Muzzle = Weapon->Muzzle;
+
+	if (!IsValid(Muzzle))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("Muzzle is not valid."));
+		return FVector::ZeroVector;
+	}
+
+	return Muzzle->GetComponentLocation();
+}

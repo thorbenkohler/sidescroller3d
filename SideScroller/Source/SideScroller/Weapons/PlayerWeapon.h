@@ -18,10 +18,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Can be used to assign visual effects and sounds
-	UFUNCTION(BlueprintImplementableEvent, Category = "PlayerWeapon")
-	void ShotFired();
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

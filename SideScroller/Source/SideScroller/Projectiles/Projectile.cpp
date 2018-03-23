@@ -14,6 +14,7 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
+	SetRootComponent(StaticMeshComponent);
 }
 
 // Called when the game starts or when spawned
@@ -24,7 +25,7 @@ void AProjectile::BeginPlay()
 	if (Speed <= 0)
 	{
 		TimeUntilDestruction = 0;
-		UE_LOG(LogTemp, Warning, TEXT("Projectile has no speed and gets therefore desytroyed immediately"));
+		UE_LOG(SideScrollerLog, Warning, TEXT("Projectile has no speed and gets therefore desytroyed immediately"));
 		return;
 	}
 	TimeUntilDestruction = TravelDistance / Speed;

@@ -27,15 +27,15 @@ void UWeaponSpawner::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
+AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 {
 	FActorSpawnParameters SpawnParameters;
 	AWeapon* Weapon = GetWorld()->SpawnActor<AWeapon>(ReferencedClass, SpawnParameters);
 
 	if (!IsValid(Weapon))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Spawning Weapon failed"));
-		return;
+		UE_LOG(SideScrollerLog, Error, TEXT("Spawning Weapon failed"));
+		return nullptr;
 	}
 
 	FAttachmentTransformRules Rules(EAttachmentRule::KeepWorld, false);
@@ -58,16 +58,18 @@ void UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 
 	if (!IsValid(PlayerWeapon))
 	{
-		return;
+		return Weapon;
 	}
 
 	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(Owner);
 
 	if (!IsValid(SideScrollerCharacter))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Player Weapon %s without a valid owner was spawned."), *PlayerWeapon->GetName());
-		return;
+		UE_LOG(SideScrollerLog, Error, TEXT("Player Weapon %s without a valid owner was spawned."), *PlayerWeapon->GetName());
+		return Weapon;
 	}
 
 	SideScrollerCharacter->AbilitySystem->GiveAbility(FGameplayAbilitySpec(SideScrollerCharacter->FireWeaponAbility.GetDefaultObject(), 1, (uint32) AbilityInput::FireWeapon));
+
+	return Weapon;
 }

@@ -3,10 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilityTask.h"
+#include "Abilities/Tasks/AbilityTask.h"
+#include "UObject/ObjectMacros.h"
+#include "Templates/SubclassOf.h"
+#include "GameFramework/Actor.h"
+#include "Abilities/GameplayAbilityTargetTypes.h"
 #include "AbilityTask_SpawnProjectile.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSpawnProjectileDelegate, AActor*, SpawnedProjectile);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSpawnProjectileDelegate, AActor*, SpawnedActor);
+
 
 UCLASS()
 class SIDESCROLLER_API UAbilityTask_SpawnProjectile : public UAbilityTask
@@ -20,21 +26,25 @@ class SIDESCROLLER_API UAbilityTask_SpawnProjectile : public UAbilityTask
 	UPROPERTY(BlueprintAssignable)
 	FSpawnProjectileDelegate DidNotSpawn;
 	
-	/** Spawn new Actor on the network authority (server) */
+	/** Spawn new Projectile on the network authority (server) */
 	UFUNCTION(BlueprintCallable, meta=(HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true"), Category="Ability|Tasks")
 	static UAbilityTask_SpawnProjectile* SpawnActor(UGameplayAbility* OwningAbility, FGameplayAbilityTargetDataHandle TargetData, TSubclassOf<AActor> Class);
 
 	UFUNCTION(BlueprintCallable, meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true"), Category = "Abilities")
-	bool BeginSpawningActor(UGameplayAbility* OwningAbility, FGameplayAbilityTargetDataHandle TargetData, TSubclassOf<AActor> Class, AActor*& SpawnedProjectile);
+	bool BeginSpawningActor(UGameplayAbility* OwningAbility, FGameplayAbilityTargetDataHandle TargetData, TSubclassOf<AActor> Class, AActor*& SpawnedActor);
+
 
 	UFUNCTION(BlueprintCallable, meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true"), Category = "Abilities")
-	void FinishSpawningActor(UGameplayAbility* OwningAbility, FGameplayAbilityTargetDataHandle TargetData, AActor* SpawnedProjectile);
-
-public:
-	UAbilityTask_SpawnProjectile* CreateMyTask(UGameplayAbility* OwningAbility, FName TaskInstanceName, float ExampleVariable);
-
-	void Activate();
+	void FinishSpawningActor(UGameplayAbility* OwningAbility, FGameplayAbilityTargetDataHandle TargetData, AActor* SpawnedActor);
 
 protected:
 	FGameplayAbilityTargetDataHandle CachedTargetDataHandle;
+
+private:
+	// Retrieves position via the ability owner, in this case the player character
+	FVector GetProjectilePosition(UGameplayAbility* OwningAbility);
+
+	// Location needs to be set in FinishSpawningActor where no reference to 
+	// the OwningAbility is left, so this needs to be cached in BeginSpawningActor
+	FVector SpawnPosition;
 };

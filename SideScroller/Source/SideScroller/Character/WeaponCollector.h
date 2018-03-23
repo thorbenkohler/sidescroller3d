@@ -27,8 +27,11 @@ public:
 	void SpawnWeapon(UClass* ReferencedClass, FActorSpawnParameters SpawnParameters);
 
 	// Spawns Weapons
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector", meta = (AllowPrivateAccess = "true"))
 	class UWeaponSpawner* WeaponSpawner;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector", meta = (AllowPrivateAccess = "true"))
+	class AWeapon* LastSpawnedWeapon;
 
 protected:
 	// Called when the game starts
