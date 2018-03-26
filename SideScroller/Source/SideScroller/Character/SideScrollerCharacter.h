@@ -133,10 +133,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
 	TSubclassOf<class UGameplayAbility> UseAbility;
 
-	// Fire Weapon Ability
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
-	TSubclassOf<class UGameplayAbility> FireWeaponAbility;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
 	UDataTable* AttributeDataTable;
 

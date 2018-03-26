@@ -69,7 +69,15 @@ AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 		return Weapon;
 	}
 
-	SideScrollerCharacter->AbilitySystem->GiveAbility(FGameplayAbilitySpec(SideScrollerCharacter->FireWeaponAbility.GetDefaultObject(), 1, (uint32) AbilityInput::FireWeapon));
+	TSubclassOf<class UGameplayAbility> Ability = PlayerWeapon->Ability;
+
+	if (!IsValid(Ability))
+	{
+		UE_LOG(SideScrollerLog, Warning, TEXT("Player Weapon %s without a ability was collected."), *PlayerWeapon->GetName());
+		return Weapon;
+	}
+
+	SideScrollerCharacter->AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, (uint32) AbilityInput::FireWeapon));
 
 	return Weapon;
 }

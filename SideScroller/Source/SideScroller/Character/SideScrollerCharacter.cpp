@@ -137,12 +137,6 @@ void ASideScrollerCharacter::BeginPlay()
 		return;
 	}
 
-	if (!IsValid(FireWeaponAbility))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("The Ability is not valid."));
-		return;
-	}
-
 	if (HasAuthority())
 	{
 		AbilitySystem->GiveAbility(FGameplayAbilitySpec(UseAbility.GetDefaultObject(), 1, (uint32) AbilityInput::UseAbility1));
