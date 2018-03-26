@@ -16,7 +16,8 @@ public class SideScroller : ModuleRules
             "InputCore",
             "UMG",
             "GameplayAbilities",
-            "GameplayTasks"
+            "GameplayTasks",
+            "AIModule",
         });
 
         PrivateDependencyModuleNames.AddRange(new string[] 
