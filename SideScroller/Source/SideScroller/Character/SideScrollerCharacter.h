@@ -21,19 +21,6 @@ enum class AbilityInput : uint8
 	FireWeapon UMETA(DisplayName = "Fire Weapon"),
 };
 
-// This struct covers all possible sideScroller input schemes.
-USTRUCT(BlueprintType)
-struct FSideScrollerInput
-{
-	GENERATED_BODY()
-
-public:
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Input")
-	uint32 bFire : 1;
-
-	void Fire(bool bPressed);
-};
-
 
 UCLASS(config=Game)
 class ASideScrollerCharacter : public ACharacter, public IDamageInterface, public IAbilitySystemInterface
@@ -72,10 +59,6 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
-	// Side scroller input structure.
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-	FSideScrollerInput SideScrollerInput;
-
 public:
 	ASideScrollerCharacter();
 
@@ -84,8 +67,6 @@ public:
 	//~ Begin IDamageInterface
 	virtual void DamageTaken(int32 IncomingDamage) override;
 	//~ End IDamageInterface
-
-	const FSideScrollerInput& GetCurrentInput() { return SideScrollerInput; }
 
 	// Can be used for effects and disables input and collision
 	UFUNCTION(BlueprintNativeEvent, Category = "SideScrollerCharacter")

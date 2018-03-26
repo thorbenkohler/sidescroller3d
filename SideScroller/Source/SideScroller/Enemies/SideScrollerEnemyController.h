@@ -13,6 +13,4 @@ class SIDESCROLLER_API ASideScrollerEnemyController : public AAIController
 {
 	GENERATED_BODY()
 
-public:
-	ASideScrollerEnemyController();
 };

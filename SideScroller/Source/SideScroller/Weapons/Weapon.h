@@ -17,9 +17,6 @@ public:
 	// Sets default values for this actor's properties
 	AWeapon();
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Binds delegates, depending on the ParentActor
 	virtual void BindDelegates();
 
@@ -55,10 +52,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	AActor* WeaponOwner;
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	// The ability this weapon triggers
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerWeapon")
+	TSubclassOf<class UGameplayAbility> Ability;
 
+protected:
 	// Temporary value for the cooldown.
 	float DeltaCooldown;
 };

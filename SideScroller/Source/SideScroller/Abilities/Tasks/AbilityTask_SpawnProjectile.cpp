@@ -11,13 +11,14 @@
 
 
 
-UAbilityTask_SpawnProjectile::UAbilityTask_SpawnProjectile(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-}
-
 UAbilityTask_SpawnProjectile* UAbilityTask_SpawnProjectile::SpawnActor(UGameplayAbility* OwningAbility, FGameplayAbilityTargetDataHandle TargetData, TSubclassOf<AActor> InClass)
 {
+	if (!IsValid(OwningAbility))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("OwningAbility is not valid."));
+		return nullptr;
+	}
+
 	UAbilityTask_SpawnProjectile* MyObj = NewAbilityTask<UAbilityTask_SpawnProjectile>(OwningAbility);
 	MyObj->CachedTargetDataHandle = MoveTemp(TargetData);
 	return MyObj;
@@ -27,6 +28,12 @@ UAbilityTask_SpawnProjectile* UAbilityTask_SpawnProjectile::SpawnActor(UGameplay
 
 bool UAbilityTask_SpawnProjectile::BeginSpawningActor(UGameplayAbility* OwningAbility, FGameplayAbilityTargetDataHandle TargetData, TSubclassOf<AActor> InClass, AActor*& SpawnedActor)
 {
+	if (!IsValid(OwningAbility))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("OwningAbility is not valid."));
+		return false;
+	}
+
 	if (Ability && Ability->GetCurrentActorInfo()->IsNetAuthority() && ShouldBroadcastAbilityTaskDelegates())
 	{
 		UWorld* const World = GEngine->GetWorldFromContextObject(OwningAbility, EGetWorldErrorMode::LogAndReturnNull);

@@ -4,19 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Interfaces/DamageInterface.h"
+#include "AbilitySystemInterface.h"
 #include "Enemy.generated.h"
 
 UCLASS()
-class SIDESCROLLER_API AEnemy : public APawn, public IDamageInterface
+class SIDESCROLLER_API AEnemy : public APawn, public IDamageInterface, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
 	AEnemy();
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -27,24 +25,18 @@ public:
 
 	// Destroys the enemy and can used for special effects
 	UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
-	void Die();
+	void OnDeath();
 
 	// Destroys the enemy and can used for special effects
 	UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
 	void Impact();
 
+	UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystem; };
+
 	// Sets the actual form for the enemy
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 	UStaticMeshComponent* StaticMeshComponent;
 	 
-	// Reference to the blueprint of the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-	TSubclassOf<AActor> ReferencedWeapon;
-
-	// Spawns a weapon if one is referenced
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	class UWeaponSpawner* WeaponSpawner;
-
 	// Current health value
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
 	int32 Health;
@@ -53,7 +45,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
 	int32 DamageOnTouch;
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	// Ability System
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+	class UAbilitySystemComponent* AbilitySystem;
+
 };

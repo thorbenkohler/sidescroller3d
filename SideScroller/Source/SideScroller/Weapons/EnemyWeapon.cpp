@@ -25,23 +25,23 @@ void AEnemyWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!IsValid(WeaponOwner))
-	{
-		return;
-	}
+	//if (!IsValid(WeaponOwner))
+	//{
+	//	return;
+	//}
 
-	if (DeltaCooldown > 0)
-	{
-		DeltaCooldown -= DeltaTime;
-		return;
-	}
-	DeltaCooldown = Cooldown;
+	//if (DeltaCooldown > 0)
+	//{
+	//	DeltaCooldown -= DeltaTime;
+	//	return;
+	//}
+	//DeltaCooldown = Cooldown;
 
-	FVector SpawnLocation = Muzzle->GetComponentLocation();
-	FVector ShotDirection = WeaponOwner->GetActorForwardVector();
-	FRotator ShooterRotation = WeaponOwner->GetActorRotation();
-	FActorSpawnParameters SpawnParameters;
-	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	//FVector SpawnLocation = Muzzle->GetComponentLocation();
+	//FVector ShotDirection = WeaponOwner->GetActorForwardVector();
+	//FRotator ShooterRotation = WeaponOwner->GetActorRotation();
+	//FActorSpawnParameters SpawnParameters;
+	//SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	ProjectileSpawner->Spawn(ReferencedProjectile, SpawnLocation, ShooterRotation, SpawnParameters, ShotDirection);
+	//ProjectileSpawner->Spawn(ReferencedProjectile, SpawnLocation, ShooterRotation, SpawnParameters, ShotDirection);
 }

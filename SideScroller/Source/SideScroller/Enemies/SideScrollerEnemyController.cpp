@@ -2,7 +2,3 @@
 
 #include "SideScrollerEnemyController.h"
 
-
-ASideScrollerEnemyController::ASideScrollerEnemyController()
-{
-}

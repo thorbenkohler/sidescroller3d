@@ -17,7 +17,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSpawnProjectileDelegate, AActor*, S
 UCLASS()
 class SIDESCROLLER_API UAbilityTask_SpawnProjectile : public UAbilityTask
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 
 	UPROPERTY(BlueprintAssignable)
 	FSpawnProjectileDelegate Success;

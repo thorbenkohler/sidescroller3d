@@ -12,10 +12,6 @@
 #include "AbilitySystemGlobals.h"
 #include "AbilitySystemComponent.h"
 
-void FSideScrollerInput::Fire(bool bPressed)
-{
-	bFire = bPressed;
-}
 
 ASideScrollerCharacter::ASideScrollerCharacter()
 {
@@ -75,8 +71,6 @@ void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASideScrollerCharacter::Fire);
-	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ASideScrollerCharacter::StopFire);
 	PlayerInputComponent->BindAction("OpenMenu", IE_Released, this, &ASideScrollerCharacter::OpenIngameMenu);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASideScrollerCharacter::MoveRight);
 
@@ -84,16 +78,6 @@ void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	PlayerInputComponent->BindTouch(IE_Released, this, &ASideScrollerCharacter::TouchStopped);
 
 	AbilitySystem->BindAbilityActivationToInputComponent(PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "AbilityInput"));
-}
-
-void ASideScrollerCharacter::Fire()
-{
-	SideScrollerInput.bFire = true;
-}
-
-void ASideScrollerCharacter::StopFire()
-{
-	SideScrollerInput.bFire = false;
 }
 
 void ASideScrollerCharacter::OpenIngameMenu()

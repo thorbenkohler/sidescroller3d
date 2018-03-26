@@ -2,26 +2,11 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Weapon.h"
+#include "Weapons/Weapon.h"
 #include "PlayerWeapon.generated.h"
 
 UCLASS()
 class SIDESCROLLER_API APlayerWeapon : public AWeapon
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	APlayerWeapon();
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerWeapon")
-	TSubclassOf<class UGameplayAbility> Ability;
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 };
