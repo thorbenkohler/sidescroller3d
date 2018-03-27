@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "PlayerHighscore.generated.h"
 
@@ -12,18 +11,11 @@ class SIDESCROLLER_API UPlayerHighscore : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UPlayerHighscore();
-
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	// Gets called when the player dies
 	void ReceiveOnPlayerDied();
 

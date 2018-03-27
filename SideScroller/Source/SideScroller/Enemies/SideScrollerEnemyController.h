@@ -5,12 +5,8 @@
 #include "AIController.h"
 #include "SideScrollerEnemyController.generated.h"
 
-/**
-*
-*/
 UCLASS()
 class SIDESCROLLER_API ASideScrollerEnemyController : public AAIController
 {
-	GENERATED_BODY()
-
+    GENERATED_BODY()
 };

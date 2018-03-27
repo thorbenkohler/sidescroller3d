@@ -2,31 +2,30 @@
 
 #include "Enemy.h"
 
-
 // Sets default values
 AEnemy::AEnemy()
 {
-	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
-	AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
+    StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
+    AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
 }
 
 // Called to bind functionality to input
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+    Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
 void AEnemy::DamageTaken(int32 IncomingDamage)
 {
-	if (IncomingDamage >= Health)
-	{
-		if (Health >= 0)
-		{
-			Health = -1;
-			OnDeath();
-		}
-		return;
-	}
-	Health -= IncomingDamage;
-	Impact();
+    if (IncomingDamage >= Health)
+    {
+        if (Health >= 0)
+        {
+            Health = -1;
+            OnDeath();
+        }
+        return;
+    }
+    Health -= IncomingDamage;
+    Impact();
 }

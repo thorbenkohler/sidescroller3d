@@ -2,37 +2,24 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "AutoMovement.generated.h"
-
 
 UCLASS(Blueprintable)
 class SIDESCROLLER_API UAutoMovement : public UActorComponent
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UAutoMovement();
+public:
+    UFUNCTION(BlueprintCallable, Category = "AutoMovement")
+    void Move(float TimeEllapsed, UStaticMeshComponent* StaticMeshComponent);
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+    UFUNCTION(BlueprintCallable, Category = "AutoMovement")
+    void MoveFinished();
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+    UFUNCTION(BlueprintImplementableEvent, Category = "AutoMovement")
+    void OnMove(float TimeEllapsed, UStaticMeshComponent* StaticMeshComponent);
 
-	UFUNCTION(BlueprintCallable, Category = "AutoMovement")
-	void Move(float TimeEllapsed, UStaticMeshComponent* StaticMeshComponent);
-
-	UFUNCTION(BlueprintCallable, Category = "AutoMovement")
-	void MoveFinished();
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "AutoMovement")
-	void OnMove(float TimeEllapsed, UStaticMeshComponent* StaticMeshComponent);
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "AutoMovement")
-	void OnMoveFinished();
+    UFUNCTION(BlueprintImplementableEvent, Category = "AutoMovement")
+    void OnMoveFinished();
 };

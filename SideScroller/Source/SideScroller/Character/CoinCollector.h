@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Collector.h"
 #include "Components/ActorComponent.h"
 #include "CoinCollector.generated.h"
@@ -13,18 +12,11 @@ class SIDESCROLLER_API UCoinCollector : public UCollector
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UCoinCollector();
-
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	// To react to collisions with collectable coins
 	void ReceiveOnCollectableCoinAdded(int32 Amount);
 

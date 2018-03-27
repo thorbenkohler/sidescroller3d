@@ -7,81 +7,78 @@
 
 bool USideScrollerWidget::Initialize()
 {
-	bool Succesful = Super::Initialize();
-	if (!Succesful)
-	{
-		return false;
-	}
+    bool Succesful = Super::Initialize();
+    if (!Succesful)
+    {
+        return false;
+    }
 
-	UWidgetTree* WidgetTree = this->WidgetTree;
-	TArray<UWidget*> TempArray;
-	WidgetTree->GetAllWidgets(TempArray);
-	for (UWidget* Widget : TempArray)
-	{
-		USideScrollerButton* SideScrollerButton = Cast<USideScrollerButton>(Widget);
-		if (IsValid(SideScrollerButton))
-		{
-			SideScrollerButton->WidgetStyle = ButtonStyle;
-			AllButtons.Add(SideScrollerButton);
-		}
-	}
+    UWidgetTree* WidgetTree = this->WidgetTree;
+    TArray<UWidget*> TempArray;
+    WidgetTree->GetAllWidgets(TempArray);
+    for (UWidget* Widget : TempArray)
+    {
+        USideScrollerButton* SideScrollerButton = Cast<USideScrollerButton>(Widget);
+        if (IsValid(SideScrollerButton))
+        {
+            SideScrollerButton->WidgetStyle = ButtonStyle;
+            AllButtons.Add(SideScrollerButton);
+        }
+    }
 
-	return true;
+    return true;
 }
 
 bool USideScrollerWidget::InitializeMenu()
 {
-	if (!IsValid(this))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("There was a problem with the main menu creation."))
-		return false;
-	}
-	CurrentWidget = this;
+    if (!IsValid(this))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("There was a problem with the main menu creation."))
+        return false;
+    }
+    CurrentWidget = this;
 
-	CurrentWidget->AddToViewport();
+    CurrentWidget->AddToViewport();
 
-	return true;
+    return true;
 }
-
 
 void USideScrollerWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	Super::NativeTick(MyGeometry, InDeltaTime);
+    Super::NativeTick(MyGeometry, InDeltaTime);
 
-	for (USideScrollerButton* SideScrollerButton : AllButtons)
-	{
-		if (SideScrollerButton->HasKeyboardFocus())
-		{
-			SideScrollerButton->SlateHandleHovered();
-			continue;
-		}
-		SideScrollerButton->SlateHandleUnhovered();
-	}
+    for (USideScrollerButton* SideScrollerButton : AllButtons)
+    {
+        if (SideScrollerButton->HasKeyboardFocus())
+        {
+            SideScrollerButton->SlateHandleHovered();
+            continue;
+        }
+        SideScrollerButton->SlateHandleUnhovered();
+    }
 }
 
 void USideScrollerWidget::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 {
-	if (IsValid(CurrentWidget))
-	{
-		CurrentWidget->RemoveFromViewport();
-		CurrentWidget = nullptr;
-	}
+    if (IsValid(CurrentWidget))
+    {
+        CurrentWidget->RemoveFromViewport();
+        CurrentWidget = nullptr;
+    }
 
-	if (!IsValid(NewWidgetClass))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("NewWidgetClass is not valid."));
-		return;
-	}
+    if (!IsValid(NewWidgetClass))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("NewWidgetClass is not valid."));
+        return;
+    }
 
-	CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
+    CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
 
-	if (!IsValid(CurrentWidget))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("Creating a new widget failed."));
-		return;
-	}
+    if (!IsValid(CurrentWidget))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("Creating a new widget failed."));
+        return;
+    }
 
-	CurrentWidget->AddToViewport();
+    CurrentWidget->AddToViewport();
 }
-
-

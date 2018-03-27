@@ -10,43 +10,45 @@
 UCLASS()
 class SIDESCROLLER_API AEnemy : public APawn, public IDamageInterface, public IAbilitySystemInterface
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
-	AEnemy();
+    // Sets default values for this pawn's properties
+    AEnemy();
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    // Called to bind functionality to input
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	//~ Begin IDamageInterface
-	virtual void DamageTaken(int32 IncomingDamage) override;
-	//~ End IDamageInterface
+    //~ Begin IDamageInterface
+    virtual void DamageTaken(int32 IncomingDamage) override;
+    //~ End IDamageInterface
 
-	// Destroys the enemy and can used for special effects
-	UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
-	void OnDeath();
+    // Destroys the enemy and can used for special effects
+    UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
+    void OnDeath();
 
-	// Destroys the enemy and can used for special effects
-	UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
-	void Impact();
+    // Destroys the enemy and can used for special effects
+    UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
+    void Impact();
 
-	UAbilitySystemComponent* GetAbilitySystemComponent() const override { return Cast<UAbilitySystemComponent>(AbilitySystem); };
+    UAbilitySystemComponent* GetAbilitySystemComponent() const override
+    {
+        return Cast<UAbilitySystemComponent>(AbilitySystem);
+    };
 
-	// Sets the actual form for the enemy
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-	UStaticMeshComponent* StaticMeshComponent;
-	 
-	// Current health value
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
-	int32 Health;
+    // Sets the actual form for the enemy
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+    UStaticMeshComponent* StaticMeshComponent;
 
-	// The amount of damage that is dealt on touch
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
-	int32 DamageOnTouch;
+    // Current health value
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
+    int32 Health;
 
-	// Ability System
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
-	class USideScrollerAbilitySystemComponent* AbilitySystem;
+    // The amount of damage that is dealt on touch
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "0.0"))
+    int32 DamageOnTouch;
 
+    // Ability System
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+    class USideScrollerAbilitySystemComponent* AbilitySystem;
 };

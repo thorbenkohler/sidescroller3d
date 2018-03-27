@@ -9,28 +9,28 @@
 UCLASS()
 class SIDESCROLLER_API AWeaponEnemy : public AEnemy
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	AWeaponEnemy();
+    AWeaponEnemy();
 
-	virtual void BeginPlay() override;
+    virtual void BeginPlay() override;
 
-	// Used to trigger the ability of this enemy
-	UFUNCTION(BlueprintCallable, Category = "WeaponEnemy")
-	void ActivateAbility();
+    // Used to trigger the ability of this enemy
+    UFUNCTION(BlueprintCallable, Category = "WeaponEnemy")
+    void ActivateAbility();
 
-	// Reference to the blueprint of the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WeaponEnemy")
-	TSubclassOf<AActor> ReferencedWeapon;
+    // Reference to the blueprint of the weapon
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WeaponEnemy")
+    TSubclassOf<AActor> ReferencedWeapon;
 
-	// Spawns a weapon if one is referenced
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponEnemy")
-	class UWeaponSpawner* WeaponSpawner;
+    // Spawns a weapon if one is referenced
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponEnemy")
+    class UWeaponSpawner* WeaponSpawner;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponEnemy")
-	AWeapon* LastSpawnedWeapon;
-	
-	// Used to cache the ability after initalizing it
-	UGameplayAbility* InstancedAbility;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponEnemy")
+    AWeapon* LastSpawnedWeapon;
+
+    // Used to cache the ability after initalizing it
+    UGameplayAbility* InstancedAbility;
 };

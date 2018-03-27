@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "SideScrollerWidget.h"
 #include "HighScoreWidget.generated.h"
 
@@ -10,60 +9,57 @@
 USTRUCT()
 struct FHighScoreWidgetData
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	int32 CoinAmount;
+    int32 CoinAmount;
 
-	int32 HealthAmount;
+    int32 HealthAmount;
 
-	uint32 bWonState:1;
+    uint32 bWonState : 1;
 };
 
-/**
- * 
- */
 UCLASS()
 class SIDESCROLLER_API UHighScoreWidget : public USideScrollerWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Widget replacement for BeginPlay()
-	bool Initialize();
+    // Widget replacement for BeginPlay()
+    bool Initialize();
 
-	// Can be used for spawning effects
-	UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
-	void InitWidget();
+    // Can be used for spawning effects
+    UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
+    void InitWidget();
 
-	// Restarts the current level
-	UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
-	void RestartLevel();
+    // Restarts the current level
+    UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
+    void RestartLevel();
 
-	// Can be used as post-construct method for effects and sound according to data
-	UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
-	void DataSet();
+    // Can be used as post-construct method for effects and sound according to data
+    UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
+    void DataSet();
 
-	// The data which is shown on the score board
-	void SetData(FHighScoreWidgetData& HighScoreWidgetData);
+    // The data which is shown on the score board
+    void SetData(FHighScoreWidgetData& HighScoreWidgetData);
 
-	// Amount of coins
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
-	int32 CoinAmount;
+    // Amount of coins
+    UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
+    int32 CoinAmount;
 
-	// Amount of remaining health
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
-	int32 HealthAmount;
+    // Amount of remaining health
+    UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
+    int32 HealthAmount;
 
-	// If the game was finished by dying or winning
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
-	uint32 bWonState:1;
+    // If the game was finished by dying or winning
+    UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
+    uint32 bWonState : 1;
 
-	// localized text for positive game end
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HighScoreWidget")
-	FString GameOverPositive;
+    // localized text for positive game end
+    UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HighScoreWidget")
+    FString GameOverPositive;
 
-	// localized text for negative game end
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HighScoreWidget")
-	FString GameOverNegative;
+    // localized text for negative game end
+    UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HighScoreWidget")
+    FString GameOverNegative;
 };

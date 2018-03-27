@@ -2,39 +2,32 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Collector.h"
-#include "Components/ActorComponent.h"
 #include "WeaponCollector.generated.h"
 
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SIDESCROLLER_API UWeaponCollector : public UCollector
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UWeaponCollector();
+public:
+    // Sets default values for this component's properties
+    UWeaponCollector();
 
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+    // To react to collisions with collectable weapons
+    void ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> WeaponReference);
 
-	// To react to collisions with collectable weapons
-	void ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> WeaponReference);
+    // Spawns the referenced weapon
+    void SpawnWeapon(UClass* ReferencedClass, FActorSpawnParameters SpawnParameters);
 
-	// Spawns the referenced weapon
-	void SpawnWeapon(UClass* ReferencedClass, FActorSpawnParameters SpawnParameters);
+    // Spawns Weapons
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector")
+    class UWeaponSpawner* WeaponSpawner;
 
-	// Spawns Weapons
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector", meta = (AllowPrivateAccess = "true"))
-	class UWeaponSpawner* WeaponSpawner;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector", meta = (AllowPrivateAccess = "true"))
-	class AWeapon* LastSpawnedWeapon;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector")
+    class AWeapon* LastSpawnedWeapon;
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
+    // Called when the game starts
+    virtual void BeginPlay() override;
 };

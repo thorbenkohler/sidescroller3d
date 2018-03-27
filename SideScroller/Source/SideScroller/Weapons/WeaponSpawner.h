@@ -5,13 +5,12 @@
 #include "Components/ActorComponent.h"
 #include "WeaponSpawner.generated.h"
 
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SIDESCROLLER_API UWeaponSpawner : public UActorComponent
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-public:	
-	// Spawns the referenced weapon
-	AWeapon* Spawn(TSubclassOf<AActor> ReferencedClass);
+public:
+    // Spawns the referenced weapon
+    AWeapon* Spawn(TSubclassOf<AActor> ReferencedClass);
 };

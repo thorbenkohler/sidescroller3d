@@ -5,16 +5,15 @@
 #include "Components/Button.h"
 #include "SideScrollerButton.generated.h"
 
-
 UCLASS()
 class SIDESCROLLER_API USideScrollerButton : public UButton
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Used to show hovered visuals
-	void SlateHandleHovered();
+    // Used to show hovered visuals
+    void SlateHandleHovered();
 
-	// Used to show unhovered visuals
-	void SlateHandleUnhovered();
+    // Used to show unhovered visuals
+    void SlateHandleUnhovered();
 };

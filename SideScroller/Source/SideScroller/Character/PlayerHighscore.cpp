@@ -7,14 +7,6 @@
 #include "Utilities/SideScrollerDelegates.h"
 
 
-// Sets default values for this component's properties
-UPlayerHighscore::UPlayerHighscore()
-{
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-}
-
 // Called when the game starts
 void UPlayerHighscore::BeginPlay()
 {
@@ -25,12 +17,6 @@ void UPlayerHighscore::BeginPlay()
 
 	USideScrollerDelegates::OnPlayerDied.AddUObject(this, &UPlayerHighscore::ReceiveOnPlayerDied);
 	USideScrollerDelegates::OnGameWon.AddUObject(this, &UPlayerHighscore::ReceiveOnGameWon);
-}
-
-// Called every frame
-void UPlayerHighscore::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
 void UPlayerHighscore::ReceiveOnPlayerDied()

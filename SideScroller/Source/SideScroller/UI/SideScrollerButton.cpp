@@ -2,19 +2,18 @@
 
 #include "SideScrollerButton.h"
 
-
 void USideScrollerButton::SlateHandleHovered()
 {
-	Super::SlateHandleHovered();
+    Super::SlateHandleHovered();
 
-	FSlateBrush SlateBrush = WidgetStyle.Hovered;
-	SetBackgroundColor(SlateBrush.TintColor.GetSpecifiedColor());
+    FSlateBrush SlateBrush = WidgetStyle.Hovered;
+    SetBackgroundColor(SlateBrush.TintColor.GetSpecifiedColor());
 }
 
 void USideScrollerButton::SlateHandleUnhovered()
 {
-	Super::SlateHandleUnhovered();
+    Super::SlateHandleUnhovered();
 
-	FSlateBrush SlateBrush = WidgetStyle.Normal;
-	SetBackgroundColor(SlateBrush.TintColor.GetSpecifiedColor());
+    FSlateBrush SlateBrush = WidgetStyle.Normal;
+    SetBackgroundColor(SlateBrush.TintColor.GetSpecifiedColor());
 }

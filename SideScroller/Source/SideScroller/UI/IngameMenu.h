@@ -2,23 +2,19 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "SideScrollerWidget.h"
 #include "IngameMenu.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class SIDESCROLLER_API UIngameMenu : public USideScrollerWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Widget replacement for BeginPlay()
-	bool Initialize();
+    // Widget replacement for BeginPlay()
+    bool Initialize();
 
-	// Closes the menu
-	UFUNCTION(BlueprintCallable, Category = "IngameMenu")
-	void CloseMenu();
+    // Closes the menu
+    UFUNCTION(BlueprintCallable, Category = "IngameMenu")
+    void CloseMenu();
 };

@@ -3,27 +3,26 @@
 #include "Weapon.h"
 #include "ProjectileSpawner.h"
 
-
 // Sets default values
 AWeapon::AWeapon()
 {
-	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponForm"));
-	SetRootComponent(StaticMeshComponent);
+    StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponForm"));
+    SetRootComponent(StaticMeshComponent);
 
-	Muzzle = CreateDefaultSubobject<USceneComponent>(TEXT("Muzzle"));
-	Muzzle->SetupAttachment(StaticMeshComponent);
+    Muzzle = CreateDefaultSubobject<USceneComponent>(TEXT("Muzzle"));
+    Muzzle->SetupAttachment(StaticMeshComponent);
 
-	ProjectileSpawner = CreateDefaultSubobject<UProjectileSpawner>(TEXT("ProjectileSpawner"));
-	AddInstanceComponent(ProjectileSpawner);
+    ProjectileSpawner = CreateDefaultSubobject<UProjectileSpawner>(TEXT("ProjectileSpawner"));
+    AddInstanceComponent(ProjectileSpawner);
 }
 
 void AWeapon::OnDestroyedOwner(AActor* DestroyedActor)
 {
-	Destroy();
+    Destroy();
 }
 
 void AWeapon::BindDelegates()
 {
-	// crashes in BeginPlay()
-	WeaponOwner->OnDestroyed.AddDynamic(this, &AWeapon::OnDestroyedOwner);
+    // crashes in BeginPlay()
+    WeaponOwner->OnDestroyed.AddDynamic(this, &AWeapon::OnDestroyedOwner);
 }

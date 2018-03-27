@@ -6,23 +6,13 @@
 #include "GameFramework/Actor.h"
 #include "Collectable.generated.h"
 
-
 UCLASS()
 class SIDESCROLLER_API ACollectable : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ACollectable();
+    GENERATED_BODY()
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Gets triggered, when the actor collides with another actor
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+public:
+    // Gets triggered, when the actor collides with another actor
+    void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                        int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

@@ -3,18 +3,17 @@
 #include "MainMenu.h"
 #include "Utilities/SideScrollerDelegates.h"
 
-
 bool UMainMenu::Initialize()
 {
-	bool Succesful = Super::Initialize();
-	if (!Succesful)
-	{
-		return false;
-	}
-	return true;
+    bool Succesful = Super::Initialize();
+    if (!Succesful)
+    {
+        return false;
+    }
+    return true;
 }
 
 void UMainMenu::StartNewGame()
 {
-	USideScrollerDelegates::OnStartNewGame.Broadcast();
+    USideScrollerDelegates::OnStartNewGame.Broadcast();
 }

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Components/ActorComponent.h"
 #include "CollectableWeapon.generated.h"
 
 
@@ -12,12 +12,6 @@ class SIDESCROLLER_API UCollectableWeapon : public UActorComponent
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
-	UCollectableWeapon();
-
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	// Gets triggered, when the actor collides with another actor
 	UFUNCTION()
 	void OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor);

@@ -5,12 +5,8 @@
 #include "Abilities/GameplayAbility.h"
 #include "SideScrollerGameplayAbility.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class SIDESCROLLER_API USideScrollerGameplayAbility : public UGameplayAbility
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
 };

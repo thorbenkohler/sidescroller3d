@@ -4,7 +4,6 @@
 #include "Abilities/FireWeaponAbility.h"
 #include "GameplayAbilitySpec.h"
 
-
 AWeaponEnemy::AWeaponEnemy()
 {
     WeaponSpawner = CreateDefaultSubobject<UWeaponSpawner>(TEXT("WeaponSpawner"));
@@ -12,7 +11,7 @@ AWeaponEnemy::AWeaponEnemy()
 
 void AWeaponEnemy::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
 
     if (!IsValid(ReferencedWeapon))
     {
@@ -62,22 +61,22 @@ void AWeaponEnemy::BeginPlay()
 
 void AWeaponEnemy::ActivateAbility()
 {
-	if (!IsValid(InstancedAbility))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("InstancedAbility is not valid"));
-		return;
-	}
+    if (!IsValid(InstancedAbility))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("InstancedAbility is not valid"));
+        return;
+    }
 
-	UFireWeaponAbility* FireWeaponAbility = Cast<UFireWeaponAbility>(InstancedAbility);
+    UFireWeaponAbility* FireWeaponAbility = Cast<UFireWeaponAbility>(InstancedAbility);
 
-	if (!IsValid(FireWeaponAbility))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("FireWeaponAbility is not valid"));
-		return;
-	}
+    if (!IsValid(FireWeaponAbility))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("FireWeaponAbility is not valid"));
+        return;
+    }
 
-	FGameplayAbilityActorInfo ActorInfo(FireWeaponAbility->GetActorInfo());
-	FGameplayAbilityActorInfo* Temp = &ActorInfo;
+    FGameplayAbilityActorInfo ActorInfo(FireWeaponAbility->GetActorInfo());
+    FGameplayAbilityActorInfo* Temp = &ActorInfo;
 
     FireWeaponAbility->ActivateAbility(FireWeaponAbility->GetCurrentAbilitySpecHandle(), Temp,
                                        FireWeaponAbility->GetCurrentActivationInfo(), nullptr);

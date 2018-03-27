@@ -2,28 +2,19 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Collector.h"
 #include "HealthCollector.generated.h"
 
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SIDESCROLLER_API UHealthCollector : public UCollector
 {
-	GENERATED_BODY()
-
-public:	
-	// Sets default values for this component's properties
-	UHealthCollector();
+    GENERATED_BODY()
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+    // Called when the game starts
+    virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	// To react to collisions with collectable health
-	void ReceiveOnCollectableHealthAdded(int32 Amount);
+public:
+    // To react to collisions with collectable health
+    void ReceiveOnCollectableHealthAdded(int32 Amount);
 };
