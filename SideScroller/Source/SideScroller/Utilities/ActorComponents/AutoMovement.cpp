@@ -2,9 +2,9 @@
 
 #include "AutoMovement.h"
 
-void UAutoMovement::Move(float TimeEllapsed, UStaticMeshComponent* StaticMeshComponent)
+void UAutoMovement::Move(UStaticMeshComponent* StaticMeshComponent)
 {
-	OnMove(TimeEllapsed, StaticMeshComponent);
+	OnMove(StaticMeshComponent);
 }
 
 void UAutoMovement::MoveFinished()
