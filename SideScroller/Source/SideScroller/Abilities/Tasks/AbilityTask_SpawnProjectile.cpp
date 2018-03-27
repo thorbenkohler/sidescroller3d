@@ -7,6 +7,7 @@
 #include "Weapons/Muzzle.h"
 #include "Weapons/Weapon.h"
 #include "Character/WeaponCollector.h"
+#include "Enemies/WeaponEnemy.h"
 #include "AbilitySystemComponent.h"
 
 
@@ -34,7 +35,7 @@ bool UAbilityTask_SpawnProjectile::BeginSpawningActor(UGameplayAbility* OwningAb
 		return false;
 	}
 
-	if (Ability && Ability->GetCurrentActorInfo()->IsNetAuthority() && ShouldBroadcastAbilityTaskDelegates())
+	if (Ability && Ability->GetCurrentActorInfo()->IsNetAuthority())// && ShouldBroadcastAbilityTaskDelegates())
 	{
 		UWorld* const World = GEngine->GetWorldFromContextObject(OwningAbility, EGetWorldErrorMode::LogAndReturnNull);
 		if (World)
@@ -113,22 +114,33 @@ FVector UAbilityTask_SpawnProjectile::GetProjectilePosition(UGameplayAbility* Ow
 	}
 
 	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(AbilityOwner);
+	AWeapon* Weapon;
 
 	if (!IsValid(SideScrollerCharacter))
 	{
-		UE_LOG(SideScrollerLog, Error, TEXT("Cast failed. AbilityOwner is not of type SideScrollerCharacter."));
-		return FVector::ZeroVector;
+		AWeaponEnemy* WeaponEnemy = Cast<AWeaponEnemy>(AbilityOwner);
+
+		if (!IsValid(WeaponEnemy))
+		{
+			UE_LOG(SideScrollerLog, Error, TEXT("Cast failed. AbilityOwner is neither of type ASideScrollerCharacter nor AWeaponEnemy."));
+			return FVector::ZeroVector;
+		}
+
+		Weapon = WeaponEnemy->LastSpawnedWeapon;
 	}
-
-	UWeaponCollector* WeaponCollector = SideScrollerCharacter->WeaponCollector;
-
-	if (!IsValid(WeaponCollector))
+	else
 	{
-		UE_LOG(SideScrollerLog, Error, TEXT("WeaponCollector is not valid."));
-		return FVector::ZeroVector;
+		UWeaponCollector* WeaponCollector = SideScrollerCharacter->WeaponCollector;
+
+		if (!IsValid(WeaponCollector))
+		{
+			UE_LOG(SideScrollerLog, Error, TEXT("WeaponCollector is not valid."));
+			return FVector::ZeroVector;
+		}
+
+		Weapon = WeaponCollector->LastSpawnedWeapon;
 	}
 
-	AWeapon* Weapon = WeaponCollector->LastSpawnedWeapon;
 
 	if (!IsValid(Weapon))
 	{

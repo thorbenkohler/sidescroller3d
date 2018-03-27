@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Weapons/Weapon.h"
+#include "Enemies/Enemy.h"
 #include "WeaponEnemy.generated.h"
 
 UCLASS()
@@ -29,4 +30,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponEnemy")
 	AWeapon* LastSpawnedWeapon;
+	
+	// Used to cache the ability after initalizing it
+	UGameplayAbility* InstancedAbility;
 };

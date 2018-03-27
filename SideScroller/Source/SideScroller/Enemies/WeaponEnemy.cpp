@@ -7,55 +7,78 @@
 
 AWeaponEnemy::AWeaponEnemy()
 {
-	WeaponSpawner = CreateDefaultSubobject<UWeaponSpawner>(TEXT("WeaponSpawner"));
+    WeaponSpawner = CreateDefaultSubobject<UWeaponSpawner>(TEXT("WeaponSpawner"));
 }
 
 void AWeaponEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!IsValid(ReferencedWeapon))
-	{
-		return;
-	}
+    if (!IsValid(ReferencedWeapon))
+    {
+        UE_LOG(SideScrollerLog, Warning, TEXT("Weapon enemy has no referenced weapon."));
+        return;
+    }
 
-	LastSpawnedWeapon = WeaponSpawner->Spawn(ReferencedWeapon);
+    LastSpawnedWeapon = WeaponSpawner->Spawn(ReferencedWeapon);
+
+    if (!IsValid(LastSpawnedWeapon))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("LastSpawnedWeapon was not valid."));
+        return;
+    }
+
+    if (!IsValid(AbilitySystem))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("AbilitySystem was not valid."));
+        return;
+    }
+
+    if (!HasAuthority())
+    {
+        UE_LOG(SideScrollerLog, Log, TEXT("No authority."));
+        return;
+    }
+
+    FGameplayAbilitySpec GameplayAbilitySpec(LastSpawnedWeapon->Ability.GetDefaultObject(), 1);
+    FGameplayAbilitySpecHandle GameplayAbilitySpecHandle = AbilitySystem->GiveAbility(GameplayAbilitySpec);
+    AbilitySystem->InitAbilityActorInfo(this, this);
+
+    for (FGameplayAbilitySpec TempGameplayAbilitySpec : AbilitySystem->GetActivatableAbilities())
+    {
+        TArray<UGameplayAbility*> InstancedAbilities = TempGameplayAbilitySpec.GetAbilityInstances();
+        for (UGameplayAbility* TempInstancedAbility : InstancedAbilities)
+        {
+            if (!IsValid(TempInstancedAbility))
+            {
+                UE_LOG(SideScrollerLog, Error, TEXT("InstancedAbility is not valid"));
+                continue;
+            }
+
+            InstancedAbility = TempInstancedAbility;
+        }
+    }
 }
 
 void AWeaponEnemy::ActivateAbility()
 {
-	if (!IsValid(LastSpawnedWeapon))
+	if (!IsValid(InstancedAbility))
 	{
-		UE_LOG(SideScrollerLog, Error, TEXT("LastSpawnedWeapon was not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("InstancedAbility is not valid"));
 		return;
 	}
 
-	if (!IsValid(AbilitySystem))
+	UFireWeaponAbility* FireWeaponAbility = Cast<UFireWeaponAbility>(InstancedAbility);
+
+	if (!IsValid(FireWeaponAbility))
 	{
-		UE_LOG(SideScrollerLog, Error, TEXT("AbilitySystem was not valid."));
+		UE_LOG(SideScrollerLog, Error, TEXT("FireWeaponAbility is not valid"));
 		return;
 	}
 
-	if (!HasAuthority())
-	{
-		UE_LOG(SideScrollerLog, Log, TEXT("No authority."));
-		return;
-	}
+	FGameplayAbilityActorInfo ActorInfo(FireWeaponAbility->GetActorInfo());
+	FGameplayAbilityActorInfo* Temp = &ActorInfo;
 
-	FGameplayAbilitySpecHandle GameplayAbilitySpecHandle = AbilitySystem->GiveAbility(FGameplayAbilitySpec(LastSpawnedWeapon->Ability.GetDefaultObject(), 1));
-	TArray<FGameplayAbilitySpec>& GameplayAbilities = AbilitySystem->GetActivatableAbilities();
-	FGameplayAbilityActorInfo* GameplayAbilityActorInfo = AbilitySystem->AbilityActorInfo.Get();
-	for (FGameplayAbilitySpec GameplayAbility : GameplayAbilities)
-	{
-		UFireWeaponAbility* FireWeaponAbility = Cast<UFireWeaponAbility>(GameplayAbility.Ability);
-
-		if (!IsValid(FireWeaponAbility))
-		{
-			UE_LOG(SideScrollerLog, Error, TEXT("FireWeaponAbility is not valid"));
-			continue;
-		}
-
-		FireWeaponAbility->ActivateAbility(GameplayAbilitySpecHandle, GameplayAbilityActorInfo, GameplayAbility.ActivationInfo, nullptr);
-	}
-	//AbilitySystem->InitAbilityActorInfo(this, this);
+    FireWeaponAbility->ActivateAbility(FireWeaponAbility->GetCurrentAbilitySpecHandle(), Temp,
+                                       FireWeaponAbility->GetCurrentActivationInfo(), nullptr);
 }

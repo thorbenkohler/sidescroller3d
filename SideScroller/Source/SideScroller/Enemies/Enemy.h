@@ -31,7 +31,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
 	void Impact();
 
-	UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystem; };
+	UAbilitySystemComponent* GetAbilitySystemComponent() const override { return Cast<UAbilitySystemComponent>(AbilitySystem); };
 
 	// Sets the actual form for the enemy
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
@@ -47,6 +47,6 @@ public:
 
 	// Ability System
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
-	class UAbilitySystemComponent* AbilitySystem;
+	class USideScrollerAbilitySystemComponent* AbilitySystem;
 
 };

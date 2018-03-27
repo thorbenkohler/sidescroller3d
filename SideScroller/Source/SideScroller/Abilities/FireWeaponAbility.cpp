@@ -15,8 +15,5 @@ void UFireWeaponAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle
 		return;
 	}
 
-	UE_LOG(SideScrollerLog, Log, TEXT("FireWeaponAbility activated %s     %s    %s."), *Handle.ToString(), *ActorInfo->OwnerActor->GetName(), *ActivationInfo.GetActivationPredictionKey().ToString());
-
 	OnActivated();
-	//EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
