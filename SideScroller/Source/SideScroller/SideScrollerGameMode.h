@@ -50,6 +50,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	TSubclassOf<UUserWidget> GameOverWidget;
 
+	// Used to display the highscore and respawn button
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
+	TSubclassOf<UUserWidget> Hud;
+
 	// The character of the game
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	TSubclassOf<ASideScrollerCharacter> PlayerCharacter;
@@ -61,4 +65,8 @@ protected:
 	// Gets started, when a new game was chosen by the player
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	FName FirstLevelName;
+
+	// Name of menu scene
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
+	FName MenuLevelName;
 };

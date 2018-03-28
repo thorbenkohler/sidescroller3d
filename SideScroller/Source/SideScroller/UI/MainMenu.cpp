@@ -12,8 +12,3 @@ bool UMainMenu::Initialize()
     }
     return true;
 }
-
-void UMainMenu::StartNewGame()
-{
-    USideScrollerDelegates::OnStartNewGame.Broadcast();
-}

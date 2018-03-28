@@ -2,19 +2,15 @@
 
 #pragma once
 
-#include "SideScrollerWidget.h"
+#include "SideScrollerMenuWidget.h"
 #include "MainMenu.generated.h"
 
 UCLASS()
-class SIDESCROLLER_API UMainMenu : public USideScrollerWidget
+class SIDESCROLLER_API UMainMenu : public USideScrollerMenuWidget
 {
     GENERATED_BODY()
 
 public:
     // Used as BeginPlay replacement
     bool Initialize();
-
-    // Executes when the play game button in the menu was pressed
-    UFUNCTION(BlueprintCallable, Category = "MainMenu")
-    void StartNewGame();
 };

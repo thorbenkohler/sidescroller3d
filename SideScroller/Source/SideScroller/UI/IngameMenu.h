@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "SideScrollerWidget.h"
+#include "SideScrollerMenuWidget.h"
 #include "IngameMenu.generated.h"
 
 UCLASS()
-class SIDESCROLLER_API UIngameMenu : public USideScrollerWidget
+class SIDESCROLLER_API UIngameMenu : public USideScrollerMenuWidget
 {
     GENERATED_BODY()
 

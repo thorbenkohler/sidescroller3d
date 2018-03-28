@@ -9,16 +9,23 @@
 #include "EngineUtils.h"
 #include "UI/MainMenu.h"
 
-
 void ASideScrollerGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
-	USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
-	USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnRestartCurrentLevel);
-	USideScrollerDelegates::OnOpenIngameMenu.AddUObject(this, &ASideScrollerGameMode::ReceiveOnOpenIngameMenu);
-	USideScrollerDelegates::OnShowHighscore.AddUObject(this, &ASideScrollerGameMode::ReceiveOnShowHighscore);
+
+	FString TempCurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
+
+	if (MenuLevelName.ToString() != TempCurrentLevelName)
+	{
+		USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
+		USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
+		USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnRestartCurrentLevel);
+		USideScrollerDelegates::OnOpenIngameMenu.AddUObject(this, &ASideScrollerGameMode::ReceiveOnOpenIngameMenu);
+		USideScrollerDelegates::OnShowHighscore.AddUObject(this, &ASideScrollerGameMode::ReceiveOnShowHighscore);
+		USideScrollerDelegates::OnStartNewGame.Broadcast();
+		return;
+	}
 
 	InitFirstWidget();
 }
@@ -35,11 +42,11 @@ void ASideScrollerGameMode::InitFirstWidget()
 
 	if (!IsValid(SideScrollerWidget))
 	{
-		UE_LOG(SideScrollerLog, Error, TEXT("Creating a new widget failed."));
+		UE_LOG(SideScrollerLog, Error, TEXT("Creating the first menu failed."));
 		return;
 	}
 
-	if (!SideScrollerWidget->InitializeMenu())
+	if (!SideScrollerWidget->InitializeWidget())
 	{
 		return;
 	}
@@ -49,12 +56,6 @@ void ASideScrollerGameMode::InitFirstWidget()
 
 void ASideScrollerGameMode::ReceiveOnStartNewGame()
 {
-	if (!IsValid(PlayerCharacter))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("No initial player asset was set"));
-		return;
-	}
-
 	UWorld* World = GetWorld();
 
 	if (!IsValid(World))
@@ -63,7 +64,7 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 		return;
 	}
 
-	CurrentLevelName = FirstLevelName;
+	CurrentLevelName = FName(*UGameplayStatics::GetCurrentLevelName(GetWorld()));
 
 	APlayerController* PlayerController = World->GetFirstPlayerController();
 
@@ -75,22 +76,48 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 
 	AActor* PlayerStart = ChoosePlayerStart(PlayerController);
 
+	if (!IsValid(PlayerCharacter))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("No initial player asset was set"));
+		return;
+	}
+
+	ASideScrollerCharacter* SideScrollerCharacter = World->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
+
 	if (!IsValid(PlayerStart))
 	{
 		UE_LOG(SideScrollerLog, Log, TEXT("PlayerStart not found"));
 		return;
 	}
 
-	ASideScrollerCharacter* SideScrollerCharacter = World->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
+	SideScrollerCharacter->SetActorLocation(PlayerStart->GetActorLocation());
 
-	if (!IsValid(SideScrollerCharacter))
+    if (!IsValid(SideScrollerCharacter))
 	{
 		UE_LOG(SideScrollerLog, Error, TEXT("Spawning SideScrollerCharacter failed."));
 		return;
 	}
 
-	SideScrollerCharacter->SetActorLocation(PlayerStart->GetActorLocation());
 	PlayerController->Possess(SideScrollerCharacter);
+
+	if (!IsValid(Hud))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("No valid Hud was assigned."));
+		return;
+	}
+
+	USideScrollerWidget* SideScrollerWidget = CreateWidget<USideScrollerWidget>(GetWorld(), Hud);
+
+	if (!IsValid(SideScrollerWidget))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("Creating a Hud failed."));
+		return;
+	}
+
+	if (!SideScrollerWidget->InitializeWidget())
+	{
+		return;
+	}
 }
 
 void ASideScrollerGameMode::ReceiveOnStartNewLevel(FName NewLevelName)
@@ -122,7 +149,7 @@ void ASideScrollerGameMode::ReceiveOnOpenIngameMenu()
 		return;
 	}
 
-	SideScrollerWidget->InitializeMenu();
+	SideScrollerWidget->InitializeWidget();
 }
 
 void ASideScrollerGameMode::ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData)
@@ -141,7 +168,7 @@ void ASideScrollerGameMode::ReceiveOnShowHighscore(FHighScoreWidgetData HighScor
 		return;
 	}
 
-	if (!SideScrollerWidget->InitializeMenu())
+	if (!SideScrollerWidget->InitializeWidget())
 	{
 		return;
 	}

@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "Blueprint/UserWidget.h"
+#include "SideScrollerWidget.h"
 #include "SideScrollerHud.generated.h"
 
 UCLASS()
-class SIDESCROLLER_API USideScrollerHud : public UUserWidget
+class SIDESCROLLER_API USideScrollerHud : public USideScrollerWidget
 {
     GENERATED_BODY()
 

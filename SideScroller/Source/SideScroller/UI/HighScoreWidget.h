@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "SideScrollerWidget.h"
+#include "SideScrollerMenuWidget.h"
 #include "HighScoreWidget.generated.h"
 
 // Contains informations about the highscore screen
@@ -20,7 +20,7 @@ public:
 };
 
 UCLASS()
-class SIDESCROLLER_API UHighScoreWidget : public USideScrollerWidget
+class SIDESCROLLER_API UHighScoreWidget : public USideScrollerMenuWidget
 {
     GENERATED_BODY()
 
