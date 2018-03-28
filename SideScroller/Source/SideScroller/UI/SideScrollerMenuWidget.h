@@ -15,9 +15,6 @@ public:
 	// Replacing BeginPlay() for widgets
 	virtual bool Initialize() override;
 
-	// Used to show the already constructed widget
-	virtual bool InitializeWidget() override;
-
 	// Controls hovering
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 

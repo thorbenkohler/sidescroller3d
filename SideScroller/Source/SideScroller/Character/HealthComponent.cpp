@@ -11,7 +11,7 @@ void UHealthComponent::BeginPlay()
 
     USideScrollerDelegates::OnPlayerChangeHealth.AddUObject(this, &UHealthComponent::ReceiveOnPlayerChangeHealth);
     USideScrollerDelegates::OnPlayerAddHealth.AddUObject(this, &UHealthComponent::ReceiveOnPlayerAddHealth);
-    USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(MaxHealth);
+	USideScrollerDelegates::OnHudShown.AddUObject(this, &UHealthComponent::ReceiveOnHudShown);
 }
 
 void UHealthComponent::ReceiveOnPlayerChangeHealth(int32 Amount)
@@ -61,4 +61,14 @@ void UHealthComponent::DamageTaken(int32 Amount)
     }
     Health -= Amount;
     USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(Health);
+}
+
+void UHealthComponent::ReceiveOnHudShown()
+{
+	if (Health <= 0)
+	{
+		USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(MaxHealth);
+		return;
+	}
+	USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(Health);
 }

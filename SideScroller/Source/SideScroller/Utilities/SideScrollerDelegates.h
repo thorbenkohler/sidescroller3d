@@ -64,4 +64,7 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE(FOnCloseIngameMenu);
 	static FOnCloseIngameMenu OnCloseIngameMenu;
+
+	DECLARE_MULTICAST_DELEGATE(FOnHudShown);
+	static FOnHudShown OnHudShown;
 };

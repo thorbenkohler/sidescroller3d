@@ -28,15 +28,6 @@ bool USideScrollerMenuWidget::Initialize()
     return true;
 }
 
-bool USideScrollerMenuWidget::InitializeWidget()
-{
-    CurrentWidget = this;
-
-    CurrentWidget->AddToViewport();
-
-    return true;
-}
-
 void USideScrollerMenuWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
     Super::NativeTick(MyGeometry, InDeltaTime);

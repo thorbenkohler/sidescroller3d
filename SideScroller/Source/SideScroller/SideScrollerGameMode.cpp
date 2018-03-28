@@ -7,27 +7,26 @@
 #include "Kismet/GameplayStatics.h"
 #include "SideScroller.h"
 #include "EngineUtils.h"
-#include "UI/MainMenu.h"
 
 void ASideScrollerGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
+    FString TempCurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
 
-	FString TempCurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
+    if (MenuLevelName.ToString() != TempCurrentLevelName)
+    {
+        USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
+        USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
+        USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this,
+                                                                 &ASideScrollerGameMode::ReceiveOnRestartCurrentLevel);
+        USideScrollerDelegates::OnOpenIngameMenu.AddUObject(this, &ASideScrollerGameMode::ReceiveOnOpenIngameMenu);
+        USideScrollerDelegates::OnShowHighscore.AddUObject(this, &ASideScrollerGameMode::ReceiveOnShowHighscore);
+        USideScrollerDelegates::OnStartNewGame.Broadcast();
+        return;
+    }
 
-	if (MenuLevelName.ToString() != TempCurrentLevelName)
-	{
-		USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
-		USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
-		USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnRestartCurrentLevel);
-		USideScrollerDelegates::OnOpenIngameMenu.AddUObject(this, &ASideScrollerGameMode::ReceiveOnOpenIngameMenu);
-		USideScrollerDelegates::OnShowHighscore.AddUObject(this, &ASideScrollerGameMode::ReceiveOnShowHighscore);
-		USideScrollerDelegates::OnStartNewGame.Broadcast();
-		return;
-	}
-
-	InitFirstWidget();
+    InitFirstWidget();
 }
 
 void ASideScrollerGameMode::InitFirstWidget()
@@ -116,6 +115,7 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 
 	if (!SideScrollerWidget->InitializeWidget())
 	{
+		UE_LOG(SideScrollerLog, Error, TEXT("A problem occured while initializing the Hud."));
 		return;
 	}
 }

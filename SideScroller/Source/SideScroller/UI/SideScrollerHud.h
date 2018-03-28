@@ -14,6 +14,9 @@ public:
     // Replacement for BeginPlay() in widgets
     bool Initialize();
 
+	// Sends an additional event to initialize the values
+	virtual bool InitializeWidget() override;
+
     // Displays the coins on the player's HUD
     void ReceiveOnPlayerChangeCoins(int32 Amount);
 
@@ -33,10 +36,10 @@ public:
     void ChangeHealthAmount();
 
     // The amount of collected coins
-    UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "SideScrollerHud")
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerHud")
     int32 CoinAmount;
 
     // The amount of remaining health
-    UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SideScrollerHud")
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerHud")
     int32 HealthAmount;
 };

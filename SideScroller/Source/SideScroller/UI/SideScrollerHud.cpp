@@ -16,6 +16,16 @@ bool USideScrollerHud::Initialize()
     return true;
 }
 
+bool USideScrollerHud::InitializeWidget()
+{
+	if (Super::InitializeWidget())
+	{
+		USideScrollerDelegates::OnHudShown.Broadcast();
+		return true;
+	}
+	return false;
+}
+
 void USideScrollerHud::ReceiveOnPlayerChangeCoins(int32 Amount)
 {
     CoinAmount = Amount;

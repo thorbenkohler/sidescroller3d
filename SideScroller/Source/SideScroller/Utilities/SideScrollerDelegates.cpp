@@ -20,3 +20,4 @@ USideScrollerDelegates::FOnRestartCurrentLevel USideScrollerDelegates::OnRestart
 USideScrollerDelegates::FOnGameWon USideScrollerDelegates::OnGameWon;
 USideScrollerDelegates::FOnOpenIngameMenu USideScrollerDelegates::OnOpenIngameMenu;
 USideScrollerDelegates::FOnCloseIngameMenu USideScrollerDelegates::OnCloseIngameMenu;
+USideScrollerDelegates::FOnHudShown USideScrollerDelegates::OnHudShown;

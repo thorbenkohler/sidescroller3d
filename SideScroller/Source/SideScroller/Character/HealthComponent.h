@@ -21,6 +21,9 @@ public:
     // Adds health
     void ReceiveOnPlayerAddHealth(int32 Amount);
 
+	// When thehud was hidden and is shown again (for startup as well)
+	void ReceiveOnHudShown();
+
     // Calculates if damage was taken and sets health
     void DamageTaken(int32 Amount);
 
