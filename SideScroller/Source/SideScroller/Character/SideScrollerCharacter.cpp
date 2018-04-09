@@ -56,7 +56,7 @@ ASideScrollerCharacter::ASideScrollerCharacter()
     WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
     HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 
-    AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
+    AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
     SideScrollerAttributeSet = CreateDefaultSubobject<USideScrollerAttributeSet>(TEXT("AttributeSet"));
 }
 
@@ -68,11 +68,11 @@ void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
     // set up gameplay key bindings
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
     PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-    PlayerInputComponent->BindAction("OpenMenu", IE_Released, this, &ASideScrollerCharacter::OpenIngameMenu);
+    PlayerInputComponent->BindAction("OpenMenu", IE_Pressed, this, &ASideScrollerCharacter::OpenIngameMenu);
     PlayerInputComponent->BindAxis("MoveRight", this, &ASideScrollerCharacter::MoveRight);
 
     AbilitySystem->BindAbilityActivationToInputComponent(
-        PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "AbilityInput"));
+        PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "AbilityInput"), EInputEvent::IE_Repeat);
 }
 
 void ASideScrollerCharacter::OpenIngameMenu()

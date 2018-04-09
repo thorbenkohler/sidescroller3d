@@ -67,7 +67,7 @@ public:
 
     UAbilitySystemComponent* GetAbilitySystemComponent() const override
     {
-        return AbilitySystem;
+        return Cast<UAbilitySystemComponent>(AbilitySystem);
     };
 
     // Collects and counts the coins of the player
@@ -96,7 +96,7 @@ public:
 
     // Ability System
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
-    class UAbilitySystemComponent* AbilitySystem;
+    class USideScrollerAbilitySystemComponent* AbilitySystem;
 
     // One single ability
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)

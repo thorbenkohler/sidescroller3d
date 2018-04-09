@@ -13,4 +13,8 @@ class SIDESCROLLER_API UWeaponSpawner : public UActorComponent
 public:
     // Spawns the referenced weapon
     AWeapon* Spawn(TSubclassOf<AActor> ReferencedClass);
+
+	// The weapon will be attached to this socket
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WeaponSpawner")
+	FName WeaponSocketName;
 };

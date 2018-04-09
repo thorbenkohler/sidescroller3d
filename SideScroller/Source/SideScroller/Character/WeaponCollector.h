@@ -5,6 +5,8 @@
 #include "Collector.h"
 #include "WeaponCollector.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeaponCollected, AWeapon*, Weapon);
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SIDESCROLLER_API UWeaponCollector : public UCollector
 {
@@ -19,6 +21,10 @@ public:
 
     // Spawns the referenced weapon
     void SpawnWeapon(UClass* ReferencedClass, FActorSpawnParameters SpawnParameters);
+
+	// Used to set the weapon to the socket
+	UPROPERTY(BlueprintAssignable, Category = "WeaponCollector")
+	FOnWeaponCollected OnWeaponCollected;
 
     // Spawns Weapons
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector")

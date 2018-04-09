@@ -16,21 +16,19 @@ AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
         return nullptr;
     }
 
-    FAttachmentTransformRules Rules(EAttachmentRule::KeepWorld, false);
     AActor* Owner = GetOwner();
-    Weapon->AttachToActor(Owner, Rules);
-    Weapon->SetActorRelativeLocation(Weapon->Offset);
-    FRotator OwnerRotation = Owner->GetActorRotation();
-
-    // If the weapon owner is rotated against the standard direction, adjust the weapon direction
-    if (OwnerRotation.Yaw > 0.0f)
-    {
-        FRotator NewRotation = Weapon->GetActorRotation();
-        NewRotation.Yaw = -90.0f;
-        Weapon->SetActorRelativeRotation(NewRotation);
-    }
     Weapon->WeaponOwner = Owner;
     Weapon->BindDelegates();
+
+	AEnemy* Enemy = Cast<AEnemy>(Owner);
+
+	if (IsValid(Enemy))
+	{
+        FAttachmentTransformRules Rules(EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative,
+                                        EAttachmentRule::KeepWorld, false);
+        Weapon->AttachToComponent(Enemy->StaticMeshComponent, Rules, WeaponSocketName);
+		return Weapon;
+	}
 
     APlayerWeapon* PlayerWeapon = Cast<APlayerWeapon>(Weapon);
 

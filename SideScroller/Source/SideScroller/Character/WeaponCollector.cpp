@@ -37,4 +37,6 @@ void UWeaponCollector::ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> Weapo
 	}
 
 	LastSpawnedWeapon = SpawnedWeapon;
+
+	OnWeaponCollected.Broadcast(LastSpawnedWeapon);
 }
