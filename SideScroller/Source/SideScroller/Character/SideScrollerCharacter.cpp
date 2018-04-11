@@ -72,7 +72,7 @@ void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
     PlayerInputComponent->BindAxis("MoveRight", this, &ASideScrollerCharacter::MoveRight);
 
     AbilitySystem->BindAbilityActivationToInputComponent(
-        PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "AbilityInput"), EInputEvent::IE_Repeat);
+        PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "AbilityInput"));
 }
 
 void ASideScrollerCharacter::OpenIngameMenu()

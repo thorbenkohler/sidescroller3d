@@ -58,5 +58,14 @@ AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
     SideScrollerCharacter->AbilitySystem->GiveAbility(
         FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, (uint32)AbilityInput::FireWeapon));
 
+    Ability = PlayerWeapon->AdditionalAbility;
+
+    if (!IsValid(Ability))
+    {
+        return Weapon;
+    }
+
+    SideScrollerCharacter->AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1));
+
     return Weapon;
 }

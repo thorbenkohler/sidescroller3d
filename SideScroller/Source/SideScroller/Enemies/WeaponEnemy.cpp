@@ -39,7 +39,14 @@ void AWeaponEnemy::BeginPlay()
         return;
     }
 
-    FGameplayAbilitySpec GameplayAbilitySpec(LastSpawnedWeapon->Ability.GetDefaultObject(), 1);
+	TSubclassOf<class UGameplayAbility> Ability = LastSpawnedWeapon->Ability;
+	if (!IsValid(Ability))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("Ability of Weapon enemy %s is invalid."), *GetName());
+		return;
+	}
+
+    FGameplayAbilitySpec GameplayAbilitySpec(Ability.GetDefaultObject(), 1);
     FGameplayAbilitySpecHandle GameplayAbilitySpecHandle = AbilitySystem->GiveAbility(GameplayAbilitySpec);
     AbilitySystem->InitAbilityActorInfo(this, this);
 

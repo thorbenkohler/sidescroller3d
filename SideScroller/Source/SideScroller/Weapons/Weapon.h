@@ -51,7 +51,7 @@ public:
     AActor* WeaponOwner;
 
     // The ability this weapon triggers
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerWeapon")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
     TSubclassOf<class UGameplayAbility> Ability;
 
 protected:

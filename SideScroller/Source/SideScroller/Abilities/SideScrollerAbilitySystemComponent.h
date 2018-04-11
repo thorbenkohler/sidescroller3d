@@ -15,6 +15,4 @@ class SIDESCROLLER_API USideScrollerAbilitySystemComponent : public UAbilitySyst
 
 public:
 	FGameplayAbilitySpecHandle GiveAbility(const FGameplayAbilitySpec& AbilitySpec);
-	
-	void BindAbilityActivationToInputComponent(UInputComponent* InputComponent, FGameplayAbiliyInputBinds BindInfo, EInputEvent InputEvent = EInputEvent::IE_Pressed);
 };
