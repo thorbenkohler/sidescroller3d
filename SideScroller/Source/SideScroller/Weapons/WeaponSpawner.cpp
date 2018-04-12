@@ -2,7 +2,7 @@
 
 #include "WeaponSpawner.h"
 #include "Weapons/Weapon.h"
-#include "Weapons/PlayerWeapon.h"
+#include "Interfaces/PlayerWeapon.h"
 #include "Character/SideScrollerCharacter.h"
 
 AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
@@ -30,9 +30,9 @@ AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 		return Weapon;
 	}
 
-    APlayerWeapon* PlayerWeapon = Cast<APlayerWeapon>(Weapon);
+    IPlayerWeapon* PlayerWeapon = Cast<IPlayerWeapon>(Weapon);
 
-    if (!IsValid(PlayerWeapon))
+    if (!PlayerWeapon)
     {
         return Weapon;
     }
@@ -42,23 +42,23 @@ AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
     if (!IsValid(SideScrollerCharacter))
     {
         UE_LOG(SideScrollerLog, Error, TEXT("Player Weapon %s without a valid owner was spawned."),
-               *PlayerWeapon->GetName());
+               *Weapon->GetName());
         return Weapon;
     }
 
-    TSubclassOf<class UGameplayAbility> Ability = PlayerWeapon->Ability;
+    TSubclassOf<class UGameplayAbility> Ability = Weapon->Ability;
 
     if (!IsValid(Ability))
     {
         UE_LOG(SideScrollerLog, Warning, TEXT("Player Weapon %s without a ability was collected."),
-               *PlayerWeapon->GetName());
+               *Weapon->GetName());
         return Weapon;
     }
 
     SideScrollerCharacter->AbilitySystem->GiveAbility(
         FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, (uint32)AbilityInput::FireWeapon));
 
-    Ability = PlayerWeapon->AdditionalAbility;
+    Ability = PlayerWeapon->GetAdditionalAbility();
 
     if (!IsValid(Ability))
     {

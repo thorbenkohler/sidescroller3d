@@ -2,15 +2,11 @@
 
 #pragma once
 
-#include "Weapon.h"
+#include "RangedWeapon.h"
 #include "EnemyWeapon.generated.h"
 
 UCLASS()
-class SIDESCROLLER_API AEnemyWeapon : public AWeapon
+class SIDESCROLLER_API AEnemyWeapon : public ARangedWeapon
 {
 	GENERATED_BODY()
-	
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 };

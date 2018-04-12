@@ -44,6 +44,12 @@ private:
 	// Retrieves position via the ability owner, in this case the player character
 	FVector GetProjectilePosition(UGameplayAbility* OwningAbility);
 
+	// Retrieves the referenced projectile of the weapon
+	TSubclassOf<AActor> GetProjectileClass(UGameplayAbility* OwningAbility);
+
+	// Retrieves the corresponding weapon. Serves as convenience method
+	class ARangedWeapon* GetRangedWeapon(UGameplayAbility* OwningAbility);
+
 	// Location needs to be set in FinishSpawningActor where no reference to 
 	// the OwningAbility is left, so this needs to be cached in BeginSpawningActor
 	FVector SpawnPosition;
