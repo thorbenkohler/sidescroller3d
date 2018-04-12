@@ -22,8 +22,4 @@ public:
     // Position to spawn the projectiles.
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon|Ranged")
     USceneComponent* Muzzle;
-
-    // Spawns projectiles
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon|Ranged")
-    class UProjectileSpawner* ProjectileSpawner;
 };
