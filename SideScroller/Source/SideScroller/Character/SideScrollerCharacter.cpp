@@ -150,12 +150,10 @@ void ASideScrollerCharacter::DamageTaken(int32 IncomingDamage)
 void ASideScrollerCharacter::ReceiveOnGameWon()
 {
     DisableInput((APlayerController*)GetController());
-    //SetActorEnableCollision(false);
 }
 
 void ASideScrollerCharacter::OnDeath_Implementation()
 {
     DisableInput((APlayerController*)GetController());
-    //SetActorEnableCollision(false);
     USideScrollerDelegates::OnPlayerDied.Broadcast();
 }
