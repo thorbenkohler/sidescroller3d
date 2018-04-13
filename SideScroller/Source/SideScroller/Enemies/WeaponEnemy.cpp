@@ -19,11 +19,27 @@ void AWeaponEnemy::BeginPlay()
         return;
     }
 
-    LastSpawnedWeapon = WeaponSpawner->Spawn(ReferencedWeapon);
+	AWeapon* SpawnedWeapon = WeaponSpawner->Spawn(ReferencedWeapon);
 
-    if (!IsValid(LastSpawnedWeapon))
+    if (!IsValid(SpawnedWeapon))
     {
-        UE_LOG(SideScrollerLog, Error, TEXT("LastSpawnedWeapon was not valid."));
+        UE_LOG(SideScrollerLog, Error, TEXT("SpawnedWeapon was not valid."));
+        return;
+    }
+
+	ARangedWeapon* RangedWeapon = Cast<ARangedWeapon>(SpawnedWeapon);
+
+	if (!IsValid(RangedWeapon))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("SpawnedWeapon is in WeaponEnemy not of type ARangedWeapon"));
+		return;
+	}
+
+	CurrentlyEquippedRangedWeapon = RangedWeapon;
+
+    if (!IsValid(CurrentlyEquippedRangedWeapon))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("CurrentlyEquippedRangedWeapon was not valid."));
         return;
     }
 
@@ -39,7 +55,8 @@ void AWeaponEnemy::BeginPlay()
         return;
     }
 
-	TSubclassOf<class UGameplayAbility> Ability = LastSpawnedWeapon->Ability;
+	TSubclassOf<class UGameplayAbility> Ability = CurrentlyEquippedRangedWeapon->Ability;
+
 	if (!IsValid(Ability))
 	{
 		UE_LOG(SideScrollerLog, Error, TEXT("Ability of Weapon enemy %s is invalid."), *GetName());

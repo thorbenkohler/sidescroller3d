@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "Utilities/InputEnums.h"
 #include "Weapon.generated.h"
 
 UCLASS()
@@ -32,4 +33,16 @@ public:
     // The ability this weapon triggers
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
     TSubclassOf<class UGameplayAbility> Ability;
+
+	// The socket this weapon is used
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FName UnsheatedSocketName;
+
+	// The socket this weapon is not used, but carried
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FName SheatedSocketName;
+
+	// The slot this weapon gets set to
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	EAbilityInput AbilitySlot;
 };

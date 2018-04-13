@@ -55,17 +55,27 @@ AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
         return Weapon;
     }
 
-    SideScrollerCharacter->AbilitySystem->GiveAbility(
-        FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, (uint32)AbilityInput::FireWeapon));
+	USideScrollerAbilitySystemComponent* AbilitySystem = SideScrollerCharacter->AbilitySystem;
 
-    Ability = PlayerWeapon->GetAdditionalAbility();
+	if (!IsValid(AbilitySystem))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("AbilitySystem in WeaponSpawner is not valid."));
+		return Weapon;
+	}
 
-    if (!IsValid(Ability))
-    {
-        return Weapon;
-    }
+    AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, (uint32)Weapon->AbilitySlot));
 
-    SideScrollerCharacter->AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1));
+    TArray<TSubclassOf<class UGameplayAbility>> AdditionalAbilities = PlayerWeapon->GetAdditionalAbilities();
+
+	for (auto AdditionalAbility : AdditionalAbilities)
+	{
+		if (!IsValid(AdditionalAbility))
+		{
+			return Weapon;
+		}
+
+		AbilitySystem->GiveAbility(FGameplayAbilitySpec(AdditionalAbility.GetDefaultObject(), 1));
+	}
 
     return Weapon;
 }

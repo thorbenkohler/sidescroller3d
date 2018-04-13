@@ -173,7 +173,7 @@ ARangedWeapon* UAbilityTask_SpawnProjectile::GetRangedWeapon(UGameplayAbility* O
 	}
 
 	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(AbilityOwner);
-	AWeapon* Weapon;
+	ARangedWeapon* RangedWeapon;
 
 	if (!IsValid(SideScrollerCharacter))
 	{
@@ -186,7 +186,7 @@ ARangedWeapon* UAbilityTask_SpawnProjectile::GetRangedWeapon(UGameplayAbility* O
 			return nullptr;
 		}
 
-		Weapon = WeaponEnemy->LastSpawnedWeapon;
+		RangedWeapon = WeaponEnemy->CurrentlyEquippedRangedWeapon;
 	}
 	else
 	{
@@ -198,23 +198,14 @@ ARangedWeapon* UAbilityTask_SpawnProjectile::GetRangedWeapon(UGameplayAbility* O
 			return nullptr;
 		}
 
-		Weapon = WeaponCollector->LastSpawnedWeapon;
+		RangedWeapon = WeaponCollector->CurrentlyEquippedRangedWeapon;
 	}
 
-	if (!IsValid(Weapon))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("Weapon is not valid."));
-		return nullptr;
-	}
-
-	ARangedWeapon* RangedWeapon = Cast<ARangedWeapon>(Weapon);
-
-	// optional, that an enemy has ranged or melee
 	if (!IsValid(RangedWeapon))
 	{
-		UE_LOG(SideScrollerLog, Error, TEXT("Spawn Projectile Task was executed, but Weapon is not of type ARangedWeapon."));
+		UE_LOG(SideScrollerLog, Error, TEXT("RangedWeapon in SpawnProjectile is not valid."));
 		return nullptr;
 	}
 
-	return RangedWeapon;
+    return RangedWeapon;
 }

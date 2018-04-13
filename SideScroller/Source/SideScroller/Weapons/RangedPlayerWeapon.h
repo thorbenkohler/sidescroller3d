@@ -13,12 +13,12 @@ class SIDESCROLLER_API ARangedPlayerWeapon : public ARangedWeapon, public IPlaye
 
 public:
 
-	TSubclassOf<class UGameplayAbility> GetAdditionalAbility() override
+	TArray<TSubclassOf<class UGameplayAbility>> GetAdditionalAbilities() override
 	{ 
-		return AdditionalAbility; 
+		return AdditionalAbilities; 
 	}
 
     // An additional ability this weapon may trigger
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Ranged|Player")
-    TSubclassOf<class UGameplayAbility> AdditionalAbility;
+    TArray<TSubclassOf<class UGameplayAbility>> AdditionalAbilities;
 };

@@ -29,7 +29,7 @@ public:
     class UWeaponSpawner* WeaponSpawner;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponEnemy")
-    AWeapon* LastSpawnedWeapon;
+    ARangedWeapon* CurrentlyEquippedRangedWeapon;
 
     // Used to cache the ability after initalizing it
     UGameplayAbility* InstancedAbility;

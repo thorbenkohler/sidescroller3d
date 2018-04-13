@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Abilities/SideScrollerGameplayAbility.h"
+#include "SideScrollerGameplayAbility.h"
 #include "FireWeaponAbility.generated.h"
 
 UCLASS()

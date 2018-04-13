@@ -2,6 +2,8 @@
 
 #include "WeaponCollector.h"
 #include "Weapons/Weapon.h"
+#include "Weapons/RangedWeapon.h"
+#include "Weapons/MeleeWeapon.h"
 #include "Weapons/WeaponSpawner.h"
 #include "Utilities/SideScrollerDelegates.h"
 
@@ -36,7 +38,19 @@ void UWeaponCollector::ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> Weapo
 		return;
 	}
 
-	LastSpawnedWeapon = SpawnedWeapon;
+	ARangedWeapon* RangedWeapon = Cast<ARangedWeapon>(SpawnedWeapon);
+	
+	if (IsValid(RangedWeapon))
+	{
+		CurrentlyEquippedRangedWeapon = RangedWeapon;
+	}
 
-	OnWeaponCollected.Broadcast(LastSpawnedWeapon);
+	AMeleeWeapon* MeleeWeapon = Cast<AMeleeWeapon>(SpawnedWeapon);
+
+	if (IsValid(MeleeWeapon))
+	{
+		CurrentlyEquippedMeleeWeapon = MeleeWeapon;
+	}
+
+	OnWeaponCollected.Broadcast(SpawnedWeapon);
 }

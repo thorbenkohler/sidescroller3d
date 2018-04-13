@@ -7,18 +7,8 @@
 #include "GameFramework/Character.h"
 #include "WeaponCollector.h"
 #include "AbilitySystemInterface.h"
+#include "Utilities/InputEnums.h"
 #include "SideScrollerCharacter.generated.h"
-
-// Example for an enum the FGameplayAbiliyInputBinds may use to map input to ability slots.
-UENUM(BlueprintType)
-enum class AbilityInput : uint8
-{
-    UseAbility1 UMETA(DisplayName = "Use Spell 1"),
-    UseAbility2 UMETA(DisplayName = "Use Spell 2"),
-    UseAbility3 UMETA(DisplayName = "Use Spell 3"),
-    UseAbility4 UMETA(DisplayName = "Use Spell 4"),
-    FireWeapon UMETA(DisplayName = "Fire Weapon"),
-};
 
 UCLASS(config = Game)
 class ASideScrollerCharacter : public ACharacter, public IDamageInterface, public IAbilitySystemInterface
@@ -97,10 +87,6 @@ public:
     // Ability System
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
     class USideScrollerAbilitySystemComponent* AbilitySystem;
-
-    // One single ability
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
-    TSubclassOf<class UGameplayAbility> UseAbility;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
     UDataTable* AttributeDataTable;

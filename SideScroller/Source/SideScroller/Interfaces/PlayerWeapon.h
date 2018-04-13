@@ -17,5 +17,5 @@ class SIDESCROLLER_API IPlayerWeapon
 
 public:
 
-	virtual TSubclassOf<class UGameplayAbility> GetAdditionalAbility() = 0;
+	virtual TArray<TSubclassOf<class UGameplayAbility>> GetAdditionalAbilities() = 0;
 };

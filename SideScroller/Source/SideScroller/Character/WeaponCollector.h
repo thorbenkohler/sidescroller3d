@@ -27,11 +27,13 @@ public:
 	FOnWeaponCollected OnWeaponCollected;
 
     // Spawns Weapons
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector")
     class UWeaponSpawner* WeaponSpawner;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector")
-    class AWeapon* LastSpawnedWeapon;
+    class ARangedWeapon* CurrentlyEquippedRangedWeapon;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponCollector")
+    class AMeleeWeapon* CurrentlyEquippedMeleeWeapon;
 
 protected:
     // Called when the game starts

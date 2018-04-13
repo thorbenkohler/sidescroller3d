@@ -72,7 +72,7 @@ void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
     PlayerInputComponent->BindAxis("MoveRight", this, &ASideScrollerCharacter::MoveRight);
 
     AbilitySystem->BindAbilityActivationToInputComponent(
-        PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "AbilityInput"));
+        PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "EAbilityInput"));
 }
 
 void ASideScrollerCharacter::OpenIngameMenu()
@@ -98,17 +98,6 @@ void ASideScrollerCharacter::BeginPlay()
         return;
     }
 
-    if (!IsValid(UseAbility))
-    {
-        UE_LOG(SideScrollerLog, Error, TEXT("The Ability is not valid."));
-        return;
-    }
-
-    if (HasAuthority())
-    {
-        AbilitySystem->GiveAbility(
-            FGameplayAbilitySpec(UseAbility.GetDefaultObject(), 1, (uint32)AbilityInput::UseAbility1));
-    }
     AbilitySystem->InitAbilityActorInfo(this, this);
 
     if (!IsValid(SideScrollerAttributeSet))
