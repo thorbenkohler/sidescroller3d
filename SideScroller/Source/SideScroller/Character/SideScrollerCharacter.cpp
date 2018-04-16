@@ -50,9 +50,9 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 
     CreateDefaultSubobject<UHealthCollector>(TEXT("HealthCollector"));
     CreateDefaultSubobject<UCoinCollector>(TEXT("CoinCollector"));
-    CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
     CreateDefaultSubobject<UPlayerHighscore>(TEXT("PlayerHighscore"));
 
+    PlayerEnemyCollision = CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
     WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
     HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 

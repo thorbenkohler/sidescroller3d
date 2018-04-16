@@ -6,6 +6,7 @@
 #include "Interfaces/DamageInterface.h"
 #include "GameFramework/Character.h"
 #include "WeaponCollector.h"
+#include "PlayerEnemyCollision.h"
 #include "AbilitySystemInterface.h"
 #include "Utilities/InputEnums.h"
 #include "SideScrollerCharacter.generated.h"
@@ -74,7 +75,7 @@ public:
 
     // Handles player collision with enemies
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-    class UPlayerEnemyCollision* PlayerEnemyCollision;
+    UPlayerEnemyCollision* PlayerEnemyCollision;
 
     // Manages data that is needed at the highscore
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
@@ -85,12 +86,12 @@ public:
     class UHealthComponent* HealthComponent;
 
     // Ability System
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
     class USideScrollerAbilitySystemComponent* AbilitySystem;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerCharacter")
     UDataTable* AttributeDataTable;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Abilities)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SideScrollerCharacter")
     const USideScrollerAttributeSet* SideScrollerAttributeSet;
 };

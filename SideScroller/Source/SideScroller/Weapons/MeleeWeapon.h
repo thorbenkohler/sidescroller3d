@@ -12,4 +12,12 @@ class SIDESCROLLER_API AMeleeWeapon : public AWeapon
 
 public:
     AMeleeWeapon();
+
+	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Melee")
+	int32 Damage;
 };

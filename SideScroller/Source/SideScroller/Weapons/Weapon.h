@@ -42,6 +42,14 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FName SheatedSocketName;
 
+	// Make weapons able to damage enemies on contact
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FName UnsheatedCollisionProfileName;
+
+	// That the weapon is colliding with enemies while sheated
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FName SheatedCollisionProfileName;
+
 	// The slot this weapon gets set to
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	EAbilityInput AbilitySlot;

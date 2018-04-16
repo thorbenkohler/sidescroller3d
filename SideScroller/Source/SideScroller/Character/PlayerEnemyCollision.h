@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include "Collector.h"
+#include "Components/ActorComponent.h"
 #include "PlayerEnemyCollision.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class SIDESCROLLER_API UPlayerEnemyCollision : public UCollector
+UCLASS()
+class SIDESCROLLER_API UPlayerEnemyCollision : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -16,7 +16,16 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Gets triggered, when the actor collides with another actor
 	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerEnemyCollision")
+	FName NoCollisionWithEnemies;
+
+private:
+	// Cached instance from Owner
+	class USkeletalMeshComponent* SkeletalMeshComponent;
+
+	// Cached instance from Owner
+	class ASideScrollerCharacter* SideScrollerCharacter;
 };
