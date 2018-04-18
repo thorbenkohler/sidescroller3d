@@ -58,12 +58,15 @@ void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	FVector CurrentInputVector = Character->GetLastMovementInputVector();
 
-    if (!FMath::IsNearlyEqual(LastControlInputVector.Y, CurrentInputVector.Y))
-	{
-		CurrentInputVector.Y == 0 ? SetWallSlidingState() : ResetWallState();
-	}
+	// If the input changes to the opposite direction or is 0 the character loses the grip
+    if (LastControlInputVector.Y > 0 && CurrentInputVector.Y < 0 ||
+        LastControlInputVector.Y < 0 && CurrentInputVector.Y > 0 || CurrentInputVector.Y == 0)
+    {
+        CurrentInputVector.Y == 0 ? SetWallSlidingState() : ResetWallState();
+    }
 
-	if (!CharacterMovementComponent->IsFalling())
+	// if the character hits the bottom (e.g. after sliding down)
+    if (!CharacterMovementComponent->IsFalling())
 	{
 		ResetWallState();
 	}
