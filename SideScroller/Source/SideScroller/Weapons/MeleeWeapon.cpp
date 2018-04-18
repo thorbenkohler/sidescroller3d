@@ -2,10 +2,6 @@
 
 #include "MeleeWeapon.h"
 
-AMeleeWeapon::AMeleeWeapon()
-{
-}
-
 void AMeleeWeapon::BeginPlay()
 {
 	Super::BeginPlay();

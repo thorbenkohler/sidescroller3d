@@ -11,13 +11,14 @@ class SIDESCROLLER_API AMeleeWeapon : public AWeapon
     GENERATED_BODY()
 
 public:
-    AMeleeWeapon();
-
-	virtual void BeginPlay() override;
-
+	// Triggers when another actor overlaps
 	UFUNCTION()
 	void OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor);
 
+	// Inflict on contact
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Melee")
 	int32 Damage;
+
+protected:
+	virtual void BeginPlay() override;
 };

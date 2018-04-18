@@ -9,6 +9,7 @@
 #include "PlayerEnemyCollision.h"
 #include "AbilitySystemInterface.h"
 #include "Utilities/InputEnums.h"
+#include "WallJump.h"
 #include "SideScrollerCharacter.generated.h"
 
 UCLASS(config = Game)
@@ -94,4 +95,12 @@ public:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SideScrollerCharacter")
     const USideScrollerAttributeSet* SideScrollerAttributeSet;
+
+	// To jump and hang off of walls
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	UWallJump* WallJump;
+
+	// Used to reset to the default gravity scale when it was changed
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "SideScrollerCharacter")
+	float DefaultGravityScale;
 };

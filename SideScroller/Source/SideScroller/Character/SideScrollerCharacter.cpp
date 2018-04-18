@@ -55,6 +55,7 @@ ASideScrollerCharacter::ASideScrollerCharacter()
     PlayerEnemyCollision = CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
     WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
     HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+	WallJump = CreateDefaultSubobject<UWallJump>(TEXT("WallJump"));
 
     AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
     SideScrollerAttributeSet = CreateDefaultSubobject<USideScrollerAttributeSet>(TEXT("AttributeSet"));
@@ -82,7 +83,7 @@ void ASideScrollerCharacter::OpenIngameMenu()
 
 void ASideScrollerCharacter::MoveRight(float Value)
 {
-    // add movement in that direction
+    // Add movement in that direction
     AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
 }
 
