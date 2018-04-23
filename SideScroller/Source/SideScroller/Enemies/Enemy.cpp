@@ -7,6 +7,7 @@ AEnemy::AEnemy()
 {
     StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
     AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
+    HealthAttributeSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("AttributeSet"));
 }
 
 // Called to bind functionality to input

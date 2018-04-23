@@ -52,5 +52,10 @@ void UWeaponCollector::ReceiveOnCollectableWeaponAdded(TSubclassOf<AActor> Weapo
 		CurrentlyEquippedMeleeWeapon = MeleeWeapon;
 	}
 
+	FAttachmentTransformRules Rules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative,
+									EAttachmentRule::KeepRelative, true);
+	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(GetOwner());
+	SpawnedWeapon->AttachToComponent(SideScrollerCharacter->GetMesh(), Rules, SpawnedWeapon->SheatedSocketName);
+
 	OnWeaponCollected.Broadcast(SpawnedWeapon);
 }

@@ -27,6 +27,11 @@ public:
     // Calculates if damage was taken and sets health
     void DamageTaken(int32 Amount);
 
+	void ReceiveOnHealthAttributeChanged(const FOnAttributeChangeData& Callback);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastSetHealth(float OldHealth, float NewHealth, AActor* DamageCauser);
+
     // Current amount of Health
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "HealthComponent")
     int32 Health;

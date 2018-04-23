@@ -50,6 +50,8 @@ void UWallJump::BeginPlay()
         UE_LOG(SideScrollerLog, Error, TEXT("No CharacterMovementComponent found in Owner in WallJump."));
         return;
     }
+
+	SideScrollerCharacter->DefaultGravityScale = CharacterMovementComponent->GravityScale;
 }
 
 void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)

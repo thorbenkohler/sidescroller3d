@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SideScrollerStatics.h"
+#include "GameplayTagsManager.h"
 #include "Engine.h"
 
 ASideScrollerGameMode* USideScrollerStatics::GetSideScrollerGameMode(UObject* WorldContextObject)
@@ -35,4 +36,11 @@ TArray<UObject*> USideScrollerStatics::LoadObjectLibrary(const FString& Path, TS
 		}
 	}
 	return Assets;
+}
+
+FName USideScrollerStatics::GetLastTagName(FGameplayTag Tag)
+{
+	TArray<FName> TagNames;
+	UGameplayTagsManager::Get().SplitGameplayTagFName(Tag, TagNames);
+	return TagNames.Last();
 }

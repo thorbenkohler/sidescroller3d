@@ -8,7 +8,7 @@ public class SideScroller : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] 
+        PublicDependencyModuleNames.AddRange(new string[]
         {
             "Core",
             "CoreUObject",
@@ -17,6 +17,7 @@ public class SideScroller : ModuleRules
             "UMG",
             "GameplayAbilities",
             "GameplayTasks",
+            "GameplayTags",
             "AIModule",
         });
 
@@ -25,5 +26,6 @@ public class SideScroller : ModuleRules
             "Slate",
             "SlateCore"
         });
+
     }
 }

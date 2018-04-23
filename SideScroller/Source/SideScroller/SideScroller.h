@@ -7,6 +7,10 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(SideScrollerLog, Log, All);
 
+#define CUR_CLASS_LOG (FString(__FUNCTION__).Left(FString(__FUNCTION__).Find(TEXT(":"))))
+#define CUR_LINE_LOG (FString::FromInt(__LINE__))
+#define CUR_FUNC_LOG (FString(__FUNCTION__).Right(FString(__FUNCTION__).Len() - FString(__FUNCTION__).Find(TEXT("::")) - 2 ))
+#define LOG_STACK (CUR_CLASS_LOG + "->" + CUR_FUNC_LOG + "(" + CUR_LINE_LOG + "):")
 
 #define NETMODE_WORLD (((GEngine == nullptr) || (GetWorld() == nullptr)) ? TEXT("") \
         : (GEngine->GetNetMode(GetWorld()) == NM_Client) ? TEXT("[Client] ") \

@@ -7,6 +7,7 @@
 #include "Weapons/Muzzle.h"
 #include "Weapons/Weapon.h"
 #include "Weapons/RangedWeapon.h"
+#include "Character/SideScrollerCharacter.h"
 #include "Character/WeaponCollector.h"
 #include "Enemies/WeaponEnemy.h"
 #include "AbilitySystemComponent.h"

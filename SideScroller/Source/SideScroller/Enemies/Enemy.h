@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Interfaces/DamageInterface.h"
 #include "AbilitySystemInterface.h"
+#include "Abilities/AttributeSets/HealthAttributeSet.h"
 #include "Enemy.generated.h"
 
 UCLASS()
@@ -51,4 +52,7 @@ public:
     // Ability System
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
     class USideScrollerAbilitySystemComponent* AbilitySystem;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy")
+    const UHealthAttributeSet* HealthAttributeSet;
 };

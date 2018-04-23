@@ -19,7 +19,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SideScroller")
 	static class ASideScrollerGameMode* GetSideScrollerGameMode(UObject* WorldContextObject);
 
-	UFUNCTION(BlueprintCallable, Category = "CBluePrintLibrary")
+	UFUNCTION(BlueprintCallable, Category = "SideScroller")
 	static TArray<UObject*> LoadObjectLibrary(const FString& Path, TSubclassOf<UObject> ObjectClass);
 
+	/** Gets the last single name of the specified Tag. */
+	UFUNCTION(BlueprintPure, Category = "SideScroller")
+	static FName GetLastTagName(FGameplayTag Tag);
 };

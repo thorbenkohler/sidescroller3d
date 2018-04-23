@@ -88,19 +88,16 @@ public:
 
     // Ability System
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-    class USideScrollerAbilitySystemComponent* AbilitySystem;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerCharacter")
-    UDataTable* AttributeDataTable;
+    USideScrollerAbilitySystemComponent* AbilitySystem;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SideScrollerCharacter")
-    const USideScrollerAttributeSet* SideScrollerAttributeSet;
+    const UHealthAttributeSet* HealthAttributeSet;
 
 	// To jump and hang off of walls
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	UWallJump* WallJump;
 
 	// Used to reset to the default gravity scale when it was changed
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "SideScrollerCharacter")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	float DefaultGravityScale;
 };

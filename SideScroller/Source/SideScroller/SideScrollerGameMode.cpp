@@ -16,6 +16,8 @@ void ASideScrollerGameMode::BeginPlay()
 
     if (MenuLevelName.ToString() != TempCurrentLevelName)
     {
+		UAbilitySystemGlobals::Get().InitGlobalData();
+
         USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
         USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
         USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this,
@@ -23,6 +25,7 @@ void ASideScrollerGameMode::BeginPlay()
         USideScrollerDelegates::OnOpenIngameMenu.AddUObject(this, &ASideScrollerGameMode::ReceiveOnOpenIngameMenu);
         USideScrollerDelegates::OnShowHighscore.AddUObject(this, &ASideScrollerGameMode::ReceiveOnShowHighscore);
         USideScrollerDelegates::OnStartNewGame.Broadcast();
+
         return;
     }
 

@@ -58,7 +58,7 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 	WallJump = CreateDefaultSubobject<UWallJump>(TEXT("WallJump"));
 
     AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
-    SideScrollerAttributeSet = CreateDefaultSubobject<USideScrollerAttributeSet>(TEXT("AttributeSet"));
+    HealthAttributeSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("AttributeSet"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -101,30 +101,51 @@ void ASideScrollerCharacter::BeginPlay()
 
     AbilitySystem->InitAbilityActorInfo(this, this);
 
-    if (!IsValid(SideScrollerAttributeSet))
+    if (!IsValid(HealthAttributeSet))
     {
-        UE_LOG(SideScrollerLog, Error, TEXT("SideScrollerAttributeSet was not valid."));
+        UE_LOG(SideScrollerLog, Error, TEXT("HealthAttributeSet was not valid."));
         return;
     }
 
-    if (!IsValid(AttributeDataTable))
-    {
-        UE_LOG(SideScrollerLog, Error, TEXT("No valid AttributeDataTable was set."));
-        return;
-    }
+    //if (!IsValid(AttributeDataTable))
+    //{
+    //    UE_LOG(SideScrollerLog, Error, TEXT("No valid AttributeDataTable was set."));
+    //    return;
+    //}
 
-    const UAttributeSet* AttributeSet =
-        AbilitySystem->InitStats(USideScrollerAttributeSet::StaticClass(), AttributeDataTable);
-    SideScrollerAttributeSet = Cast<USideScrollerAttributeSet>(AttributeSet);
+	//AbilitySystem->AddSet<UHealthAttributeSet>();
 
-    if (!IsValid(SideScrollerAttributeSet))
-    {
-        UE_LOG(SideScrollerLog, Error, TEXT("Cast failed. AttributeSet is not of type USideScrollerAttributeSet"))
-        return;
-    }
+ //   const UAttributeSet* AttributeSet =
+ //       AbilitySystem->InitStats(UHealthAttributeSet::StaticClass(), AttributeDataTable);
 
-    UE_LOG(SideScrollerLog, Log, TEXT("%f max: %f"), SideScrollerAttributeSet->Health.GetCurrentValue(),
-           SideScrollerAttributeSet->MaxHealth.GetCurrentValue());
+	//if (!IsValid(AttributeSet))
+	//{
+	//	UE_LOG(SideScrollerLog, Error, TEXT("%s AttributeSet is not valid."), *LOG_STACK);
+	//	return;
+	//}
+
+ //   HealthAttributeSet = Cast<UHealthAttributeSet>(AttributeSet);
+
+ //   if (!IsValid(HealthAttributeSet))
+ //   {
+ //       UE_LOG(SideScrollerLog, Error, TEXT("Cast failed. AttributeSet is not of type UHealthAttributeSet"))
+ //       return;
+ //   }
+
+	//UE_LOG(SideScrollerLog, Log, TEXT("max: %f"), HealthAttributeSet->MaxHealthAttribute()->GetCurrentValue());
+	//
+ //   if (!IsValid(HealthComponent))
+ //   {
+ //       UE_LOG(SideScrollerLog, Error, TEXT("No valid HealthComponent found."));
+ //       return;
+ //   }
+
+	//HealthComponent->MaxHealth = HealthAttributeSet->MaxHealth->MaxHealthAttribute()->GetCurrentValue();
+
+	//AbilitySystem->InitializeAttributes(2, true);
+
+	//USideScrollerDelegates::OnPlayerChangeHealth.Broadcast(
+	//	HealthAttributeSet->MaxHealth);
 }
 
 void ASideScrollerCharacter::DamageTaken(int32 IncomingDamage)
