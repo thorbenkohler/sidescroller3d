@@ -4,8 +4,6 @@
 .vs
 *.opendb
 *.sln
-SideScroller3DBP.VC.db
-Binaries
 x64
 Saved
 Intermediate
@@ -13,5 +11,11 @@ DerivedDataCache
 Debug
 Durango
 DerivedData
-SideScroller3DBP.uproject.bkp
-SideScroller3DBP.xcworkspace
+*.lib
+*.version
+*.exe
+*.exp
+SideScroller.target
+SideScroller.pdb
+*-SideScroller-*.pdb
+*-SideScroller-*.dll
