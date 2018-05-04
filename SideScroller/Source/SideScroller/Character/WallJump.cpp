@@ -163,11 +163,13 @@ void UWallJump::SetWallSlidingState()
     }
 
 	CharacterMovementComponent->GravityScale = SideScrollerCharacter->DefaultGravityScale * SlideGravityModifier;
+	bIsSliding = true;
 }
 
 void UWallJump::ResetWallState()
 {
 	bHangsOnWall = false;
+	bIsSliding = false;
 
 	if (!IsValid(SideScrollerCharacter))
     {
