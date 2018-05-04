@@ -32,7 +32,7 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerAddHealth, int32);
 	static FOnPlayerAddHealth OnPlayerAddHealth;
 
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerChangeHealth, int32);
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerChangeHealth, float);
 	static FOnPlayerChangeHealth OnPlayerChangeHealth;
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnShowWidget, TSubclassOf<UUserWidget>);

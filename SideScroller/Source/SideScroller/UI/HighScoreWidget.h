@@ -14,7 +14,7 @@ struct FHighScoreWidgetData
 public:
     int32 CoinAmount;
 
-    int32 HealthAmount;
+    float HealthAmount;
 
     uint32 bWonState : 1;
 };
@@ -49,7 +49,7 @@ public:
 
     // Amount of remaining health
     UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")
-    int32 HealthAmount;
+    float HealthAmount;
 
     // If the game was finished by dying or winning
     UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "HighScoreWidget")

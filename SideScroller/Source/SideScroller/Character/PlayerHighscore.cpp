@@ -1,9 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "PlayerHighscore.h"
-#include "UI/HighScoreWidget.h"
 #include "PlayerHighscore.h"
 #include "HealthCollector.h"
+
+#include "UI/HighScoreWidget.h"
+
+#include "Interfaces/HealthInterface.h"
+
+#include "Abilities/AttributeSets/HealthAttributeSet.h"
+
 #include "Utilities/SideScrollerDelegates.h"
 
 
@@ -13,7 +19,7 @@ void UPlayerHighscore::BeginPlay()
 	Super::BeginPlay();
 
 	CoinCollector = GetOwner()->FindComponentByClass<UCoinCollector>();
-	HealthComponent = GetOwner()->FindComponentByClass<UHealthComponent>();
+	HealthComponent = Cast<IHealthInterface>(GetOwner())->GetHealthComponent();
 
 	USideScrollerDelegates::OnPlayerDied.AddUObject(this, &UPlayerHighscore::ReceiveOnPlayerDied);
 	USideScrollerDelegates::OnGameWon.AddUObject(this, &UPlayerHighscore::ReceiveOnGameWon);
@@ -35,12 +41,13 @@ void UPlayerHighscore::ReceiveOnPlayerDied()
 
 	if (IsValid(HealthComponent))
 	{
-		HighScoreWidgetData.HealthAmount = HealthComponent->Health;
-	}
+        HighScoreWidgetData.HealthAmount =
+            HealthComponent->AbilitySystem->GetNumericAttribute(UHealthAttributeSet::HealthAttribute());
+    }
 	else
 	{
-		UE_LOG(SideScrollerLog, Error, TEXT("No Health collector was found"));
-		HighScoreWidgetData.HealthAmount = 0;
+		UE_LOG(SideScrollerLog, Error, TEXT("No HealthComponent was found"));
+		HighScoreWidgetData.HealthAmount = 0.0f;
 	}
 
 	HighScoreWidgetData.bWonState = false;
@@ -63,12 +70,13 @@ void UPlayerHighscore::ReceiveOnGameWon()
 
 	if (IsValid(HealthComponent))
 	{
-		HighScoreWidgetData.HealthAmount = HealthComponent->Health;
+        HighScoreWidgetData.HealthAmount =
+            HealthComponent->AbilitySystem->GetNumericAttribute(UHealthAttributeSet::HealthAttribute());
 	}
 	else
 	{
 		UE_LOG(SideScrollerLog, Error, TEXT("No Health component was found"));
-		HighScoreWidgetData.HealthAmount = 0;
+		HighScoreWidgetData.HealthAmount = 0.0f;
 	}
 
 	HighScoreWidgetData.bWonState = true;

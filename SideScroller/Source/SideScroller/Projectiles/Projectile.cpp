@@ -3,8 +3,9 @@
 #include "Projectile.h"
 #include "Runtime/Engine/Public/WorldCollision.h"
 #include "Kismet/GameplayStatics.h"
-#include "Interfaces/DamageInterface.h"
+#include "Interfaces/HealthInterface.h"
 #include "Components/ShapeComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -53,11 +54,17 @@ void AProjectile::Tick(float DeltaTime)
         if (World->SweepSingleByProfile(OutHit, Loc, DesiredEndLoc, FQuat::Identity, CollisionProfile, CollisionShape))
         {
             SetActorLocation(OutHit.Location);
-            // UE_LOG(LogTemp, Log, TEXT("OutHit %s"), *OutHit.Actor->GetName())
-            if (IDamageInterface* DamageActor = Cast<IDamageInterface>(OutHit.Actor.Get()))
+			AActor* TempActor = OutHit.Actor.Get();
+            if (IHealthInterface* DamageActor = Cast<IHealthInterface>(TempActor))
             {
-                DamageActor->DamageTaken(Damage);
-            }
+				UAbilitySystemComponent* AbilitySystemComponent =
+					UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TempActor);
+
+				if (IsValid(AbilitySystemComponent) && ImpactEffect.IsValid())
+				{
+					AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*ImpactEffect.Data.Get());
+				}
+			}
             Destroy();
         }
         else

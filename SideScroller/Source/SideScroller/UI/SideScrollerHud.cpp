@@ -10,8 +10,8 @@ bool USideScrollerHud::Initialize()
     {
         return false;
     }
-    USideScrollerDelegates::OnPlayerChangeCoins.AddUObject(this, &USideScrollerHud::ReceiveOnPlayerChangeCoins);
-    USideScrollerDelegates::OnPlayerChangeHealth.AddUObject(this, &USideScrollerHud::ReceiveOnPlayerChangeHealth);
+	USideScrollerDelegates::OnPlayerChangeCoins.AddUObject(this, &USideScrollerHud::ReceiveOnPlayerChangeCoins);
+	USideScrollerDelegates::OnPlayerChangeHealth.AddUObject(this, &USideScrollerHud::ReceiveOnPlayerChangeHealth);
     InitWidget();
     return true;
 }
@@ -31,7 +31,7 @@ void USideScrollerHud::ReceiveOnPlayerChangeCoins(int32 Amount)
     CoinAmount = Amount;
 }
 
-void USideScrollerHud::ReceiveOnPlayerChangeHealth(int32 Amount)
+void USideScrollerHud::ReceiveOnPlayerChangeHealth(float Amount)
 {
     HealthAmount = Amount;
 }

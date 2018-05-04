@@ -35,5 +35,43 @@ UDamageEffectExecutionCalculation::UDamageEffectExecutionCalculation(const FObje
 	AttStruct Attributes;
 
 	RelevantAttributesToCapture.Add(GetAttributes().HealthDef);
+	InvalidScopedModifierAttributes.Add(GetAttributes().HealthDef);
+
 	RelevantAttributesToCapture.Add(GetAttributes().DamageDef);
+}
+
+void UDamageEffectExecutionCalculation::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
+	OUT FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
+{
+	UAbilitySystemComponent* TargetAbilitySystemComponent = ExecutionParams.GetTargetAbilitySystemComponent();
+	UAbilitySystemComponent* SourceAbilitySystemComponent = ExecutionParams.GetSourceAbilitySystemComponent();
+
+	AActor* SourceActor = SourceAbilitySystemComponent ? SourceAbilitySystemComponent->AvatarActor : nullptr;
+	AActor* TargetActor = TargetAbilitySystemComponent ? TargetAbilitySystemComponent->AvatarActor : nullptr;
+
+	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+
+	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
+	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
+
+	FAggregatorEvaluateParameters EvaluationParameters;
+
+	EvaluationParameters.SourceTags = SourceTags;
+	EvaluationParameters.TargetTags = TargetTags;
+
+	float Health = 0.f;
+    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetAttributes().HealthDef, EvaluationParameters, Health);
+
+	float Damage = 0.f;
+    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetAttributes().DamageDef, EvaluationParameters, Damage);
+
+	float DamageDone = FMath::Min<float>(Damage, Health);
+
+	UE_LOG(SideScrollerLog, Log, TEXT("%s Damage done %f"), *LOG_STACK, DamageDone);
+
+	if (DamageDone > 0.f)
+	{
+		OutExecutionOutput.AddOutputModifier(
+			FGameplayModifierEvaluatedData(GetAttributes().HealthProperty, EGameplayModOp::Additive, -DamageDone));
+	}
 }

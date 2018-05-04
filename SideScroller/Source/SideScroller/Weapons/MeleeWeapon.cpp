@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MeleeWeapon.h"
+#include "Interfaces/HealthInterface.h"
+#include "AbilitySystemComponent.h"
 
 void AMeleeWeapon::BeginPlay()
 {
@@ -19,5 +21,5 @@ void AMeleeWeapon::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 		return;
 	}
 
-	Enemy->DamageTaken(Damage);
+	UAbilityDelegates::OnDashOverlapBegin.Broadcast(OtherActor);
 }

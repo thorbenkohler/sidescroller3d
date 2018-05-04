@@ -1,4 +1,8 @@
 #include "HealthAttributeSet.h"
+#include "Abilities/GameplayAbilityTypes.h"
+#include "Character/SideScrollerCharacter.h"
+#include "Utilities/SideScrollerDelegates.h"
+#include "Interfaces/HealthInterface.h"
 #include "SideScroller.h"
  
 const float UHealthAttributeSet::MAX_HEALTH = TNumericLimits<float>::Max();

@@ -55,6 +55,7 @@ void UPlayerEnemyCollision::ActorBeginOverlap(AActor* OverlappedActor, AActor* O
 		return;
     }
 
-    SideScrollerCharacter->DamageTaken(Enemy->DamageOnTouch);
+	// TODO
+    //SideScrollerCharacter->DamageTaken(Enemy->DamageOnTouch);
     SideScrollerCharacter->EnemyCollidedWithPlayer();
 }

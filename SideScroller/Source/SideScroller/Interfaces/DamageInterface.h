@@ -5,7 +5,6 @@
 #include "UObject/Interface.h"
 #include "DamageInterface.generated.h"
 
-// This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UDamageInterface : public UInterface
 {

@@ -2,18 +2,26 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Interfaces/DamageInterface.h"
-#include "GameFramework/Character.h"
-#include "WeaponCollector.h"
-#include "PlayerEnemyCollision.h"
-#include "AbilitySystemInterface.h"
-#include "Utilities/InputEnums.h"
 #include "WallJump.h"
+#include "PlayerEnemyCollision.h"
+#include "WeaponCollector.h"
+#include "AbilitySystemInterface.h"
+
+#include "GameFramework/Character.h"
+
+#include "Abilities/SideScrollerAbilitySystemComponent.h"
+
+#include "Utilities/InputEnums.h"
+
+#include "Interfaces/DamageInterface.h"
+#include "Interfaces/HealthInterface.h"
+
 #include "SideScrollerCharacter.generated.h"
 
 UCLASS(config = Game)
-class ASideScrollerCharacter : public ACharacter, public IDamageInterface, public IAbilitySystemInterface
+class ASideScrollerCharacter : public ACharacter,
+                               public IAbilitySystemInterface,
+                               public IHealthInterface
 {
     GENERATED_BODY()
 
@@ -41,13 +49,9 @@ public:
 
     virtual void BeginPlay();
 
-    //~ Begin IDamageInterface
-    virtual void DamageTaken(int32 IncomingDamage) override;
-    //~ End IDamageInterface
-
     // Can be used for effects and disables input and collision
     UFUNCTION(BlueprintNativeEvent, Category = "SideScrollerCharacter")
-    void OnDeath();
+    void OnDeath() const override;
     virtual void OnDeath_Implementation();
 
     // Handles player-enemy collision
@@ -60,6 +64,11 @@ public:
     UAbilitySystemComponent* GetAbilitySystemComponent() const override
     {
         return Cast<UAbilitySystemComponent>(AbilitySystem);
+    };
+
+    UHealthComponent* GetHealthComponent() const override
+    {
+        return HealthComponent;
     };
 
     // Collects and counts the coins of the player
@@ -92,6 +101,10 @@ public:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SideScrollerCharacter")
     const UHealthAttributeSet* HealthAttributeSet;
+
+	// Data which gives the weapon it's damage
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	const UDamageAttributeSet* DamageAttributeSet;
 
 	// To jump and hang off of walls
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")

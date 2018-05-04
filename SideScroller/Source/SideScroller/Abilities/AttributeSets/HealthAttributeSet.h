@@ -21,7 +21,7 @@ public:
 
 	virtual void PostInitializeProperties(bool bInitialInit) override;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Attributes|Health")
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes|MaxHealth")
 	float MaxHealth;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes|Health")

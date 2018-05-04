@@ -1,16 +1,23 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilityTask_SpawnProjectile.h"
-#include "EngineGlobals.h"
-#include "Engine/Engine.h"
+
 #include "SideScroller.h"
+#include "AbilitySystemComponent.h"
+
 #include "Weapons/Muzzle.h"
 #include "Weapons/Weapon.h"
 #include "Weapons/RangedWeapon.h"
+
 #include "Character/SideScrollerCharacter.h"
 #include "Character/WeaponCollector.h"
+
 #include "Enemies/WeaponEnemy.h"
-#include "AbilitySystemComponent.h"
+
+#include "Projectiles/Projectile.h"
+
+#include "Abilities/Utilities/AbilitySystemStatics.h"
+
 
 UAbilityTask_SpawnProjectile* UAbilityTask_SpawnProjectile::SpawnActor(UGameplayAbility* OwningAbility,
                                                                        FGameplayAbilityTargetDataHandle TargetData,
@@ -39,15 +46,15 @@ bool UAbilityTask_SpawnProjectile::BeginSpawningActor(UGameplayAbility* OwningAb
         return false;
     }
 
-	if (!IsValid(InClass))
-	{
-		InClass = GetProjectileClass(OwningAbility);
-		if (!IsValid(InClass))
-		{
-			UE_LOG(SideScrollerLog, Error, TEXT("Ranged Weapon is missing a referenced projectile."));
-			return false;
-		}
-	}
+    if (!IsValid(InClass))
+    {
+        InClass = GetProjectileClass(OwningAbility);
+        if (!IsValid(InClass))
+        {
+            UE_LOG(SideScrollerLog, Error, TEXT("Ranged Weapon is missing a referenced projectile."));
+            return false;
+        }
+    }
 
     if (Ability && Ability->GetCurrentActorInfo()->IsNetAuthority()) // && ShouldBroadcastAbilityTaskDelegates())
     {
@@ -104,6 +111,8 @@ void UAbilityTask_SpawnProjectile::FinishSpawningActor(UGameplayAbility* OwningA
 
         SpawnedActor->SetActorLocation(SpawnPosition);
 
+		UAbilitySystemStatics::SetGameplayEffect(OwningAbility, SpawnedActor);
+
         if (ShouldBroadcastAbilityTaskDelegates())
         {
             Success.Broadcast(SpawnedActor);
@@ -117,13 +126,14 @@ void UAbilityTask_SpawnProjectile::FinishSpawningActor(UGameplayAbility* OwningA
 
 FVector UAbilityTask_SpawnProjectile::GetProjectilePosition(UGameplayAbility* OwningAbility)
 {
-	ARangedWeapon* RangedWeapon = GetRangedWeapon(OwningAbility);
+    ARangedWeapon* RangedWeapon = GetRangedWeapon(OwningAbility);
 
-	if (!IsValid(RangedWeapon))
-	{
-        UE_LOG(SideScrollerLog, Error, TEXT("Spawn Projectile Task was executed, but Weapon is not of type ARangedWeapon."));
+    if (!IsValid(RangedWeapon))
+    {
+        UE_LOG(SideScrollerLog, Error,
+               TEXT("Spawn Projectile Task was executed, but Weapon is not of type ARangedWeapon."));
         return FVector::ZeroVector;
-	}
+    }
 
     USceneComponent* Muzzle = RangedWeapon->Muzzle;
 
@@ -138,75 +148,76 @@ FVector UAbilityTask_SpawnProjectile::GetProjectilePosition(UGameplayAbility* Ow
 
 TSubclassOf<AActor> UAbilityTask_SpawnProjectile::GetProjectileClass(UGameplayAbility* OwningAbility)
 {
-	ARangedWeapon* RangedWeapon = GetRangedWeapon(OwningAbility);
+    ARangedWeapon* RangedWeapon = GetRangedWeapon(OwningAbility);
 
-	if (!IsValid(RangedWeapon))
-	{
-        UE_LOG(SideScrollerLog, Error, TEXT("Spawn Projectile Task was executed, but Weapon is not of type ARangedWeapon."));
-		return nullptr;
-	}
+    if (!IsValid(RangedWeapon))
+    {
+        UE_LOG(SideScrollerLog, Error,
+               TEXT("Spawn Projectile Task was executed, but Weapon is not of type ARangedWeapon."));
+        return nullptr;
+    }
 
-	TSubclassOf<AActor> ReferencedProjectile = RangedWeapon->ReferencedProjectile;
+    TSubclassOf<AActor> ReferencedProjectile = RangedWeapon->ReferencedProjectile;
 
-	if (!IsValid(ReferencedProjectile))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("ReferencedProjectile in SpawnProjectile Task is not valid."));
-		return nullptr;
-	}
+    if (!IsValid(ReferencedProjectile))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("ReferencedProjectile in SpawnProjectile Task is not valid."));
+        return nullptr;
+    }
 
-	return ReferencedProjectile;
+    return ReferencedProjectile;
 }
 
 ARangedWeapon* UAbilityTask_SpawnProjectile::GetRangedWeapon(UGameplayAbility* OwningAbility)
 {
-	if (!IsValid(OwningAbility))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("OwningAbility is not valid."));
-		return nullptr;
-	}
+    if (!IsValid(OwningAbility))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("OwningAbility is not valid."));
+        return nullptr;
+    }
 
-	AActor* AbilityOwner = OwningAbility->GetOwningActorFromActorInfo();
+    AActor* AbilityOwner = OwningAbility->GetOwningActorFromActorInfo();
 
-	if (!IsValid(AbilityOwner))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("AbilityOwner is not valid."));
-		return nullptr;
-	}
+    if (!IsValid(AbilityOwner))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("AbilityOwner is not valid."));
+        return nullptr;
+    }
 
-	ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(AbilityOwner);
-	ARangedWeapon* RangedWeapon;
+    ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(AbilityOwner);
+    ARangedWeapon* RangedWeapon;
 
-	if (!IsValid(SideScrollerCharacter))
-	{
-		AWeaponEnemy* WeaponEnemy = Cast<AWeaponEnemy>(AbilityOwner);
+    if (!IsValid(SideScrollerCharacter))
+    {
+        AWeaponEnemy* WeaponEnemy = Cast<AWeaponEnemy>(AbilityOwner);
 
-		if (!IsValid(WeaponEnemy))
-		{
-			UE_LOG(SideScrollerLog, Error,
-				TEXT("Cast failed. AbilityOwner is neither of type ASideScrollerCharacter nor AWeaponEnemy."));
-			return nullptr;
-		}
+        if (!IsValid(WeaponEnemy))
+        {
+            UE_LOG(SideScrollerLog, Error,
+                   TEXT("Cast failed. AbilityOwner is neither of type ASideScrollerCharacter nor AWeaponEnemy."));
+            return nullptr;
+        }
 
-		RangedWeapon = WeaponEnemy->CurrentlyEquippedRangedWeapon;
-	}
-	else
-	{
-		UWeaponCollector* WeaponCollector = SideScrollerCharacter->WeaponCollector;
+        RangedWeapon = WeaponEnemy->CurrentlyEquippedRangedWeapon;
+    }
+    else
+    {
+        UWeaponCollector* WeaponCollector = SideScrollerCharacter->WeaponCollector;
 
-		if (!IsValid(WeaponCollector))
-		{
-			UE_LOG(SideScrollerLog, Error, TEXT("WeaponCollector is not valid."));
-			return nullptr;
-		}
+        if (!IsValid(WeaponCollector))
+        {
+            UE_LOG(SideScrollerLog, Error, TEXT("WeaponCollector is not valid."));
+            return nullptr;
+        }
 
-		RangedWeapon = WeaponCollector->CurrentlyEquippedRangedWeapon;
-	}
+        RangedWeapon = WeaponCollector->CurrentlyEquippedRangedWeapon;
+    }
 
-	if (!IsValid(RangedWeapon))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("RangedWeapon in SpawnProjectile is not valid."));
-		return nullptr;
-	}
+    if (!IsValid(RangedWeapon))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("RangedWeapon in SpawnProjectile is not valid."));
+        return nullptr;
+    }
 
     return RangedWeapon;
 }

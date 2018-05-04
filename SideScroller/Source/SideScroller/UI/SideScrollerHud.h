@@ -21,7 +21,7 @@ public:
     void ReceiveOnPlayerChangeCoins(int32 Amount);
 
     // Displays the health on the player's HUD
-    void ReceiveOnPlayerChangeHealth(int32 Amount);
+    void ReceiveOnPlayerChangeHealth(float Amount);
 
     // Can be used for spawn effects
     UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerHud")
@@ -41,5 +41,5 @@ public:
 
     // The amount of remaining health
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerHud")
-    int32 HealthAmount;
+    float HealthAmount;
 };

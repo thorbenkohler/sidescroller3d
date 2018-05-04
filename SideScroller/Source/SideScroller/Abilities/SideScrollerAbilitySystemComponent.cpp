@@ -1,10 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SideScrollerAbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "Utilities/SideScrollerStatics.h"
-#include "Character/SideScrollerCharacter.h"
 #include "SideScroller.h"
+#include "AbilitySystemGlobals.h"
+
+#include "Character/SideScrollerCharacter.h"
+
+#include "Interfaces/GameplayEffectInterface.h"
+
+#include "Utilities/SideScrollerStatics.h"
+#include "Utilities/AbilitySystemStatics.h"
+
 
 void USideScrollerAbilitySystemComponent::BeginPlay()
 {

@@ -2,6 +2,7 @@
 
 #include "WeaponSpawner.h"
 #include "Weapons/Weapon.h"
+#include "Weapons/MeleeWeapon.h"
 #include "Interfaces/PlayerWeapon.h"
 #include "Character/SideScrollerCharacter.h"
 
@@ -63,7 +64,7 @@ AWeapon* UWeaponSpawner::Spawn(TSubclassOf<AActor> ReferencedClass)
 		return Weapon;
 	}
 
-    AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, (uint32)Weapon->AbilitySlot));
+	AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, (uint32)Weapon->AbilitySlot));
 
     TArray<TSubclassOf<class UGameplayAbility>> AdditionalAbilities = PlayerWeapon->GetAdditionalAbilities();
 

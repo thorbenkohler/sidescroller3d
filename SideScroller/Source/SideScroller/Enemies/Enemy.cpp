@@ -6,6 +6,9 @@
 AEnemy::AEnemy()
 {
     StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
+	SetRootComponent(StaticMeshComponent);
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
     AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
     HealthAttributeSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("AttributeSet"));
 }
@@ -14,19 +17,4 @@ AEnemy::AEnemy()
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
-void AEnemy::DamageTaken(int32 IncomingDamage)
-{
-    if (IncomingDamage >= Health)
-    {
-        if (Health >= 0)
-        {
-            Health = -1;
-            OnDeath();
-        }
-        return;
-    }
-    Health -= IncomingDamage;
-    Impact();
 }
