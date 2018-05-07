@@ -12,20 +12,7 @@ void UPlayerEnemyCollision::BeginPlay()
     Owner->OnActorBeginOverlap.AddDynamic(this, &UPlayerEnemyCollision::ActorBeginOverlap);
 
     SideScrollerCharacter = Cast<ASideScrollerCharacter>(Owner);
-
-    if (!IsValid(SideScrollerCharacter))
-    {
-        UE_LOG(SideScrollerLog, Error, TEXT("Cast to SideScrollerCharacter failed."));
-		return;
-    }
-
     SkeletalMeshComponent = Owner->FindComponentByClass<USkeletalMeshComponent>();
-
-    if (!IsValid(SkeletalMeshComponent))
-    {
-        UE_LOG(SideScrollerLog, Error, TEXT("In PlayerEnemyCollision character has no SkeletalMeshComponent."));
-        return;
-    }
 }
 
 void UPlayerEnemyCollision::ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
@@ -38,11 +25,11 @@ void UPlayerEnemyCollision::ActorBeginOverlap(AActor* OverlappedActor, AActor* O
         return;
     }
 
-	if (!IsValid(SkeletalMeshComponent))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("In PlayerEnemyCollision character has no SkeletalMeshComponent."));
-		return;
-	}
+    if (!IsValid(SkeletalMeshComponent))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("%s SideScrollerCharacter has no SkeletalMeshComponent."), *LOG_STACK);
+        return;
+    }
 
     if (SkeletalMeshComponent->GetCollisionProfileName().IsEqual(NoCollisionWithEnemies))
     {
@@ -51,11 +38,56 @@ void UPlayerEnemyCollision::ActorBeginOverlap(AActor* OverlappedActor, AActor* O
 
     if (!IsValid(SideScrollerCharacter))
     {
-        UE_LOG(SideScrollerLog, Error, TEXT("SideScrollerCharacter is invalid in PlayerEnemyCollision."));
-		return;
+        UE_LOG(SideScrollerLog, Error, TEXT("%s SideScrollerCharacter is invalid."), *LOG_STACK);
+        return;
     }
 
-	// TODO
-    //SideScrollerCharacter->DamageTaken(Enemy->DamageOnTouch);
+    ApplyGameplayEffect(Enemy);
+
     SideScrollerCharacter->EnemyCollidedWithPlayer();
+}
+
+void UPlayerEnemyCollision::ApplyGameplayEffect(AEnemy* Enemy)
+{
+    if (!IsValid(SideScrollerCharacter))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("SideScrollerCharacter is invalid in PlayerEnemyCollision."));
+        return;
+    }
+
+    UAbilitySystemComponent* AbilitySystem = SideScrollerCharacter->AbilitySystem;
+
+    if (!IsValid(Ability))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("%s no valid collision ability."), *LOG_STACK);
+        return;
+    }
+
+    InstancedAbility = UAbilitySystemStatics::GetInstancedAbility(AbilitySystem, Ability.GetDefaultObject(),
+                                                                  SideScrollerCharacter->Level);
+
+    if (!IsValid(InstancedAbility))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("%s non valid InstancedAbility."), *LOG_STACK);
+        return;
+    }
+
+    FGameplayAbilitySpecHandle Handle = InstancedAbility->GetCurrentAbilitySpecHandle();
+    FGameplayAbilityActorInfo TempActorInfo = InstancedAbility->GetActorInfo();
+    FGameplayAbilityActorInfo* ActorInfo = &TempActorInfo;
+    FGameplayAbilityActivationInfo ActivationInfo = InstancedAbility->GetCurrentActivationInfo();
+
+    if (!IsValid(Enemy->CollisionGameplayEffect))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("%s enemy %s has no GameplayEffect for collision referenced."), *LOG_STACK,
+               *Enemy->GetName());
+        return;
+    }
+
+    // Construct an impact game play effect spec and pass it to the projectile.
+    FGameplayEffectSpecHandle ImpactEffect = InstancedAbility->MakeOutgoingGameplayEffectSpec(
+        Handle, ActorInfo, ActivationInfo, Enemy->CollisionGameplayEffect,
+        InstancedAbility->GetAbilityLevel(Handle, ActorInfo));
+
+    AbilitySystem->ApplyGameplayEffectSpecToSelf(*ImpactEffect.Data.Get());
 }

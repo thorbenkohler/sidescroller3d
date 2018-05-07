@@ -113,4 +113,8 @@ public:
 	// Used to reset to the default gravity scale when it was changed
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	float DefaultGravityScale;
+
+	// Player Level
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	int32 Level = 1;
 };

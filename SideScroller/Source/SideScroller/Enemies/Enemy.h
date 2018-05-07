@@ -14,9 +14,7 @@
 #include "Enemy.generated.h"
 
 UCLASS()
-class SIDESCROLLER_API AEnemy : public APawn,
-                                public IAbilitySystemInterface,
-                                public IHealthInterface
+class SIDESCROLLER_API AEnemy : public APawn, public IAbilitySystemInterface, public IHealthInterface
 {
     GENERATED_BODY()
 
@@ -33,7 +31,7 @@ public:
 
     // If the enemy gets hit by anthing, cues can be spawned here
     UFUNCTION(BlueprintImplementableEvent, Category = "Enemy")
-	void OnImpact();
+    void OnImpact();
 
     UAbilitySystemComponent* GetAbilitySystemComponent() const override
     {
@@ -50,13 +48,22 @@ public:
     UStaticMeshComponent* StaticMeshComponent;
 
     // Manages damage and adding health
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
     class UHealthComponent* HealthComponent;
 
     // Ability System
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
     class USideScrollerAbilitySystemComponent* AbilitySystem;
 
+    // Defines the enemie's health amount
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy")
     const UHealthAttributeSet* HealthAttributeSet;
+
+    // Triggers the ability if the player collides with the player
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy")
+    TSubclassOf<class UGameplayEffect> CollisionGameplayEffect;
+
+    // Level of this enemy
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy")
+	int32 Level = 1;
 };

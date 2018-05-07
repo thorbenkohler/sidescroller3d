@@ -20,4 +20,6 @@ public:
 	static FGameplayEffectSpecHandle GetGameplayEffectSpecHandle(USideScrollerGameplayAbility* OwningAbility);
 
 	static void SetGameplayEffect(UGameplayAbility* OwningAbility, AActor* ActorWithGameplayEffect);
+
+	static UGameplayAbility* GetInstancedAbility(UAbilitySystemComponent* AbilitySystem, UGameplayAbility* InAbility, int32 Level);
 };

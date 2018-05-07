@@ -12,4 +12,7 @@ class SIDESCROLLER_API UAbilityDelegates : public UObject
 public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnDashOverlapBegin, AActor*);
 	static FOnDashOverlapBegin OnDashOverlapBegin;
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerEnemyCollision, class AEnemy*);
+	static FOnPlayerEnemyCollision OnPlayerEnemyCollision;
 };

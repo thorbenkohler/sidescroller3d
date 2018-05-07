@@ -4,3 +4,4 @@
 #include "Kismet/GameplayStatics.h"
 
 UAbilityDelegates::FOnDashOverlapBegin UAbilityDelegates::OnDashOverlapBegin;
+UAbilityDelegates::FOnPlayerEnemyCollision UAbilityDelegates::OnPlayerEnemyCollision;

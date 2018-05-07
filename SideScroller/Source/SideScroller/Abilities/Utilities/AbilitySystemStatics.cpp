@@ -47,3 +47,27 @@ void UAbilitySystemStatics::SetGameplayEffect(UGameplayAbility* OwningAbility, A
 
     GameplayEffectInterface->SetGameplayEffect(GameplayEffectSpecHandle);
 }
+
+UGameplayAbility* UAbilitySystemStatics::GetInstancedAbility(UAbilitySystemComponent* AbilitySystem, UGameplayAbility* InAbility, int32 Level)
+{
+    FGameplayAbilitySpec GameplayAbilitySpec(InAbility, Level);
+    FGameplayAbilitySpecHandle GameplayAbilitySpecHandle = AbilitySystem->GiveAbility(GameplayAbilitySpec);
+
+    for (FGameplayAbilitySpec TempGameplayAbilitySpec : AbilitySystem->GetActivatableAbilities())
+    {
+        TArray<UGameplayAbility*> InstancedAbilities = TempGameplayAbilitySpec.GetAbilityInstances();
+        for (UGameplayAbility* TempInstancedAbility : InstancedAbilities)
+        {
+            if (!IsValid(TempInstancedAbility))
+            {
+                UE_LOG(SideScrollerLog, Error, TEXT("InstancedAbility is not valid"));
+                continue;
+            }
+
+            return TempInstancedAbility;
+        }
+    }
+
+	UE_LOG(SideScrollerLog, Error, TEXT("%s No instanced ability could be found."), *LOG_STACK);
+	return nullptr;
+}

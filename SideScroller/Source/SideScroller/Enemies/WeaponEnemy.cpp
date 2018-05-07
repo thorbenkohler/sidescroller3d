@@ -63,24 +63,9 @@ void AWeaponEnemy::BeginPlay()
 		return;
 	}
 
-    FGameplayAbilitySpec GameplayAbilitySpec(Ability.GetDefaultObject(), 1);
-    FGameplayAbilitySpecHandle GameplayAbilitySpecHandle = AbilitySystem->GiveAbility(GameplayAbilitySpec);
     AbilitySystem->InitAbilityActorInfo(this, this);
 
-    for (FGameplayAbilitySpec TempGameplayAbilitySpec : AbilitySystem->GetActivatableAbilities())
-    {
-        TArray<UGameplayAbility*> InstancedAbilities = TempGameplayAbilitySpec.GetAbilityInstances();
-        for (UGameplayAbility* TempInstancedAbility : InstancedAbilities)
-        {
-            if (!IsValid(TempInstancedAbility))
-            {
-                UE_LOG(SideScrollerLog, Error, TEXT("InstancedAbility is not valid"));
-                continue;
-            }
-
-            InstancedAbility = TempInstancedAbility;
-        }
-    }
+    InstancedAbility = UAbilitySystemStatics::GetInstancedAbility(AbilitySystem, Ability.GetDefaultObject(), Level);
 }
 
 void AWeaponEnemy::ActivateAbility()
