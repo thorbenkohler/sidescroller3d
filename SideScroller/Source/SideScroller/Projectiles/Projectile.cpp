@@ -1,11 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Projectile.h"
-#include "Runtime/Engine/Public/WorldCollision.h"
-#include "Kismet/GameplayStatics.h"
-#include "Interfaces/HealthInterface.h"
-#include "Components/ShapeComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
+
+#include "Kismet/GameplayStatics.h"
+
+#include "Interfaces/HealthInterface.h"
+
+#include "Components/ShapeComponent.h"
+
+#include "Runtime/Engine/Public/WorldCollision.h"
 
 // Sets default values
 AProjectile::AProjectile()

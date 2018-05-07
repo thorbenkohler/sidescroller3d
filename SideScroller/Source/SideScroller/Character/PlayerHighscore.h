@@ -6,7 +6,7 @@
 #include "PlayerHighscore.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS()
 class SIDESCROLLER_API UPlayerHighscore : public UActorComponent
 {
 	GENERATED_BODY()

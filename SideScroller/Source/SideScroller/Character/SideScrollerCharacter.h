@@ -2,16 +2,9 @@
 
 #pragma once
 
-#include "WallJump.h"
-#include "PlayerEnemyCollision.h"
-#include "WeaponCollector.h"
 #include "AbilitySystemInterface.h"
 
 #include "GameFramework/Character.h"
-
-#include "Abilities/SideScrollerAbilitySystemComponent.h"
-
-#include "Utilities/InputEnums.h"
 
 #include "Interfaces/DamageInterface.h"
 #include "Interfaces/HealthInterface.h"
@@ -81,11 +74,11 @@ public:
 
     // Collects weapons
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-    UWeaponCollector* WeaponCollector;
+    class UWeaponCollector* WeaponCollector;
 
     // Handles player collision with enemies
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-    UPlayerEnemyCollision* PlayerEnemyCollision;
+    class UPlayerEnemyCollision* PlayerEnemyCollision;
 
     // Manages data that is needed at the highscore
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
@@ -97,7 +90,7 @@ public:
 
     // Ability System
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-    USideScrollerAbilitySystemComponent* AbilitySystem;
+    class USideScrollerAbilitySystemComponent* AbilitySystem;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SideScrollerCharacter")
     const UHealthAttributeSet* HealthAttributeSet;
@@ -108,7 +101,7 @@ public:
 
 	// To jump and hang off of walls
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
-	UWallJump* WallJump;
+	class UWallJump* WallJump;
 
 	// Used to reset to the default gravity scale when it was changed
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")

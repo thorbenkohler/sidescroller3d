@@ -5,11 +5,8 @@
 #include "Components/ActorComponent.h"
 #include "Collector.generated.h"
 
-class ACollectable;
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS()
 class SIDESCROLLER_API UCollector : public UActorComponent
 {
 	GENERATED_BODY()
-
 };

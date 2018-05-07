@@ -15,6 +15,6 @@ public:
 	APowerUp();
 
 	// Sets the actual form for the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PowerUp", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PowerUp")
 	UStaticMeshComponent* StaticMeshComponent;
 };

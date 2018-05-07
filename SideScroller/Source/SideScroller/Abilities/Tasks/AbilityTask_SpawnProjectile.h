@@ -2,10 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Abilities/Tasks/AbilityTask.h"
-#include "UObject/ObjectMacros.h"
-#include "Templates/SubclassOf.h"
 #include "GameFramework/Actor.h"
 #include "Abilities/GameplayAbilityTargetTypes.h"
 #include "AbilityTask_SpawnProjectile.generated.h"

@@ -17,7 +17,7 @@ class SIDESCROLLER_API USideScrollerStatics : public UBlueprintFunctionLibrary
 public:
 	/** Get the current game mode, pre-cast to ASideScrollerGameMode for convenience. */
 	UFUNCTION(BlueprintCallable, Category = "SideScroller")
-	static class ASideScrollerGameMode* GetSideScrollerGameMode(UObject* WorldContextObject);
+	static ASideScrollerGameMode* GetSideScrollerGameMode(UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, Category = "SideScroller")
 	static TArray<UObject*> LoadObjectLibrary(const FString& Path, TSubclassOf<UObject> ObjectClass);

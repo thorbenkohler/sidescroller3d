@@ -3,23 +3,20 @@
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Abilities/SideScrollerGameplayAbility.h"
 #include "Abilities/GameplayAbilityTypes.h"
 #include "AbilitySystemStatics.generated.h"
 
-/**
-*
-*/
 UCLASS()
 class SIDESCROLLER_API UAbilitySystemStatics : public UBlueprintFunctionLibrary
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
+    static FGameplayEffectSpecHandle GetGameplayEffectSpecHandle(class USideScrollerGameplayAbility* OwningAbility);
 
-	static FGameplayEffectSpecHandle GetGameplayEffectSpecHandle(USideScrollerGameplayAbility* OwningAbility);
+    static void SetGameplayEffect(class UGameplayAbility* OwningAbility, AActor* ActorWithGameplayEffect);
 
-	static void SetGameplayEffect(UGameplayAbility* OwningAbility, AActor* ActorWithGameplayEffect);
-
-	static UGameplayAbility* GetInstancedAbility(UAbilitySystemComponent* AbilitySystem, UGameplayAbility* InAbility, int32 Level);
+    // Works only if the Instancing policy is set to instance-per-actor
+    static UGameplayAbility* GetInstancedAbility(class UAbilitySystemComponent* AbilitySystem,
+                                                 class UGameplayAbility* InAbility, int32 Level);
 };

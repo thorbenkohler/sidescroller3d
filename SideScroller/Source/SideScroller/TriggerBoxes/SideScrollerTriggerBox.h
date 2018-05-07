@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Engine/TriggerBox.h"
 #include "SideScrollerTriggerBox.generated.h"
 

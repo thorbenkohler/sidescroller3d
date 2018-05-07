@@ -4,7 +4,8 @@
 #include "Interfaces/GameplayEffectInterface.h"
 #include "Abilities/SideScrollerGameplayAbility.h"
 
-FGameplayEffectSpecHandle UAbilitySystemStatics::GetGameplayEffectSpecHandle(USideScrollerGameplayAbility* OwningAbility)
+FGameplayEffectSpecHandle
+UAbilitySystemStatics::GetGameplayEffectSpecHandle(USideScrollerGameplayAbility* OwningAbility)
 {
     FGameplayAbilitySpecHandle Handle = OwningAbility->GetCurrentAbilitySpecHandle();
     FGameplayAbilityActorInfo TempActorInfo = OwningAbility->GetActorInfo();
@@ -48,7 +49,8 @@ void UAbilitySystemStatics::SetGameplayEffect(UGameplayAbility* OwningAbility, A
     GameplayEffectInterface->SetGameplayEffect(GameplayEffectSpecHandle);
 }
 
-UGameplayAbility* UAbilitySystemStatics::GetInstancedAbility(UAbilitySystemComponent* AbilitySystem, UGameplayAbility* InAbility, int32 Level)
+UGameplayAbility* UAbilitySystemStatics::GetInstancedAbility(UAbilitySystemComponent* AbilitySystem,
+                                                             UGameplayAbility* InAbility, int32 Level)
 {
     FGameplayAbilitySpec GameplayAbilitySpec(InAbility, Level);
     FGameplayAbilitySpecHandle GameplayAbilitySpecHandle = AbilitySystem->GiveAbility(GameplayAbilitySpec);
@@ -68,6 +70,6 @@ UGameplayAbility* UAbilitySystemStatics::GetInstancedAbility(UAbilitySystemCompo
         }
     }
 
-	UE_LOG(SideScrollerLog, Error, TEXT("%s No instanced ability could be found."), *LOG_STACK);
-	return nullptr;
+    UE_LOG(SideScrollerLog, Error, TEXT("%s No instanced ability could be found."), *LOG_STACK);
+    return nullptr;
 }

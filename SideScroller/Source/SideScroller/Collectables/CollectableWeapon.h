@@ -6,7 +6,7 @@
 #include "CollectableWeapon.generated.h"
 
 
-UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS()
 class SIDESCROLLER_API UCollectableWeapon : public UActorComponent
 {
 	GENERATED_BODY()

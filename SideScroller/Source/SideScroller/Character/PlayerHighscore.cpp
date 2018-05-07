@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "PlayerHighscore.h"
-#include "PlayerHighscore.h"
 #include "HealthCollector.h"
 
 #include "UI/HighScoreWidget.h"

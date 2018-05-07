@@ -4,7 +4,6 @@
 
 #include "Components/ActorComponent.h"
 
-#include "AbilitySystemComponent.h"
 #include "HealthComponent.generated.h"
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -30,5 +29,5 @@ public:
 
 	// Used for Attributes
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "HealthComponent")
-	UAbilitySystemComponent* AbilitySystem;
+	class UAbilitySystemComponent* AbilitySystem;
 };

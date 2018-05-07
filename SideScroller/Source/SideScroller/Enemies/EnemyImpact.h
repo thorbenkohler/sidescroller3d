@@ -6,7 +6,7 @@
 #include "EnemyImpact.generated.h"
 
 
-UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS()
 class SIDESCROLLER_API UEnemyImpact : public UActorComponent
 {
 	GENERATED_BODY()

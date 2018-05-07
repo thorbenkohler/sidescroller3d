@@ -3,11 +3,10 @@
 #pragma once
 
 #include "Collector.h"
-#include "Components/ActorComponent.h"
 #include "CoinCollector.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS()
 class SIDESCROLLER_API UCoinCollector : public UCollector
 {
 	GENERATED_BODY()

@@ -5,7 +5,7 @@
 #include "Components/ActorComponent.h"
 #include "WinGame.generated.h"
 
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS()
 class SIDESCROLLER_API UWinGame : public UActorComponent
 {
     GENERATED_BODY()

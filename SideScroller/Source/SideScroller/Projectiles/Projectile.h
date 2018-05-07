@@ -8,7 +8,7 @@
 
 #include "Projectile.generated.h"
 
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS()
 class SIDESCROLLER_API AProjectile : public AActor, public IGameplayEffectInterface
 {
     GENERATED_BODY()

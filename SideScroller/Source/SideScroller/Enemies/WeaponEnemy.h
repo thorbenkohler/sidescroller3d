@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "Weapons/Weapon.h"
 #include "Enemies/Enemy.h"
 #include "WeaponEnemy.generated.h"
 
@@ -29,8 +28,8 @@ public:
     class UWeaponSpawner* WeaponSpawner;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WeaponEnemy")
-    ARangedWeapon* CurrentlyEquippedRangedWeapon;
+    class ARangedWeapon* CurrentlyEquippedRangedWeapon;
 
     // Used to cache the ability after initalizing it
-    UGameplayAbility* InstancedAbility;
+    class UGameplayAbility* InstancedAbility;
 };

@@ -5,7 +5,7 @@
 #include "Collector.h"
 #include "HealthCollector.generated.h"
 
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS()
 class SIDESCROLLER_API UHealthCollector : public UCollector
 {
     GENERATED_BODY()
