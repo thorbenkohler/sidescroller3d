@@ -15,6 +15,7 @@ DerivedData
 *.version
 *.exe
 *.exp
+*DebugGame*
 SideScroller.target
 SideScroller.pdb
 *-SideScroller-*.pdb
