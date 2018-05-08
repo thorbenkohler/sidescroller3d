@@ -55,7 +55,7 @@ void UPlayerEnemyCollision::ApplyGameplayEffect(AEnemy* Enemy)
         return;
     }
 
-    UAbilitySystemComponent* AbilitySystem = SideScrollerCharacter->AbilitySystem;
+    USideScrollerAbilitySystemComponent* AbilitySystem = SideScrollerCharacter->AbilitySystem;
 
     if (!IsValid(Ability))
     {
@@ -63,8 +63,8 @@ void UPlayerEnemyCollision::ApplyGameplayEffect(AEnemy* Enemy)
         return;
     }
 
-    InstancedAbility = UAbilitySystemStatics::GetInstancedAbility(AbilitySystem, Ability.GetDefaultObject(),
-                                                                  SideScrollerCharacter->Level);
+    InstancedAbility =
+        UAbilitySystemStatics::GetInstancedAbility(AbilitySystem, Ability.GetDefaultObject(), AbilitySystem->Level);
 
     if (!IsValid(InstancedAbility))
     {
@@ -86,8 +86,7 @@ void UPlayerEnemyCollision::ApplyGameplayEffect(AEnemy* Enemy)
 
     // Construct an impact game play effect spec and pass it to the projectile.
     FGameplayEffectSpecHandle ImpactEffect = InstancedAbility->MakeOutgoingGameplayEffectSpec(
-        Handle, ActorInfo, ActivationInfo, Enemy->CollisionGameplayEffect,
-        InstancedAbility->GetAbilityLevel(Handle, ActorInfo));
+        Handle, ActorInfo, ActivationInfo, Enemy->CollisionGameplayEffect, Enemy->AbilitySystem->GetLevel());
 
     AbilitySystem->ApplyGameplayEffectSpecToSelf(*ImpactEffect.Data.Get());
 }

@@ -65,7 +65,8 @@ void AWeaponEnemy::BeginPlay()
 
     AbilitySystem->InitAbilityActorInfo(this, this);
 
-    InstancedAbility = UAbilitySystemStatics::GetInstancedAbility(AbilitySystem, Ability.GetDefaultObject(), Level);
+    InstancedAbility =
+        UAbilitySystemStatics::GetInstancedAbility(AbilitySystem, Ability.GetDefaultObject(), AbilitySystem->Level);
 }
 
 void AWeaponEnemy::ActivateAbility()

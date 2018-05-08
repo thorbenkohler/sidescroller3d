@@ -15,6 +15,12 @@ public:
 	// Used to check the states, while hanging on the wall
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
+	virtual void Activate(bool bReset=false) override;
+	virtual void Deactivate() override;
+
+	// Registers the overlapping delegates
+	void BindDelegates();
+
 	// If the character overlaps with a wall he can hang on
 	UFUNCTION()
 	void ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);

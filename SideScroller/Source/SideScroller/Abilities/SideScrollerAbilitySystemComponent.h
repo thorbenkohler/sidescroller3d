@@ -5,9 +5,6 @@
 #include "AbilitySystemComponent.h"
 #include "SideScrollerAbilitySystemComponent.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class SIDESCROLLER_API USideScrollerAbilitySystemComponent : public UAbilitySystemComponent
 {
@@ -26,6 +23,17 @@ public:
 
 	virtual void InitializeAttributes(int AttributeLevel, bool bInitialInit);
 
+	// Sets the level of this actor. This might change the attributes of the actor.
+	UFUNCTION(BlueprintCallable, Category = "SideScroller")
+	void SetLevel(int32 NewLevel);
+
+	// Gets the current level of this actor.
+	int32 GetLevel() const;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SideScroller")
 	FGameplayTag NameTag;
+
+	// Current level of the actor.
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScroller")
+	int32 Level = 1;
 };

@@ -16,7 +16,8 @@ void USideScrollerAbilitySystemComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitializeAttributes(1, true);
+	UE_LOG(SideScrollerLog, Log, TEXT("%s"), *LOG_STACK);
+	InitializeAttributes(Level, true);
 }
 
 FGameplayAbilitySpecHandle USideScrollerAbilitySystemComponent::GiveAbility(const FGameplayAbilitySpec& Spec)
@@ -154,5 +155,30 @@ const UAttributeSet* USideScrollerAbilitySystemComponent::GetAttributeSubobject(
 		}
 	}
 	return NULL;
+}
+
+void USideScrollerAbilitySystemComponent::SetLevel(int32 NewLevel)
+{
+	Level = NewLevel;
+
+	InitializeAttributes(NewLevel, false);
+
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		AbilitySpec.Level = Level;
+		for (UGameplayAbility* Ability : AbilitySpec.GetAbilityInstances())
+		{
+			USideScrollerGameplayAbility* SideScrollerAbility = Cast<USideScrollerGameplayAbility>(Ability);
+			if (Ability->GetInstancingPolicy() != EGameplayAbilityInstancingPolicy::NonInstanced)
+			{
+				//SideScrollerAbility->OnAbilityLevelChanged(NewLevel);
+			}
+		}
+	}
+}
+
+int32 USideScrollerAbilitySystemComponent::GetLevel() const
+{
+	return Level;
 }
 

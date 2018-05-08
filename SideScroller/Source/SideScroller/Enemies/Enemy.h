@@ -62,8 +62,4 @@ public:
     // Triggers the ability if the player collides with the player
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy")
     TSubclassOf<class UGameplayEffect> CollisionGameplayEffect;
-
-    // Level of this enemy
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy")
-	int32 Level = 1;
 };

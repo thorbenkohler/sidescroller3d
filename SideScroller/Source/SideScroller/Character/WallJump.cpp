@@ -16,8 +16,7 @@ void UWallJump::BeginPlay()
     Super::BeginPlay();
 
     AActor* Owner = GetOwner();
-    Owner->OnActorBeginOverlap.AddDynamic(this, &UWallJump::ActorBeginOverlap);
-    Owner->OnActorEndOverlap.AddDynamic(this, &UWallJump::ActorEndOverlap);
+	BindDelegates();
 
 	Character = Cast<ACharacter>(Owner);
 
@@ -82,6 +81,27 @@ void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 		ResetWallState();
 		return;
 	}
+}
+
+void UWallJump::Activate(bool bReset)
+{
+	Super::Activate(bReset);
+
+	BindDelegates();
+}
+
+void UWallJump::Deactivate()
+{
+	Super::Deactivate();
+
+	GetOwner()->OnActorBeginOverlap.RemoveAll(this);
+}
+
+void UWallJump::BindDelegates()
+{
+    AActor* Owner = GetOwner();
+    Owner->OnActorBeginOverlap.AddDynamic(this, &UWallJump::ActorBeginOverlap);
+    Owner->OnActorEndOverlap.AddDynamic(this, &UWallJump::ActorEndOverlap);
 }
 
 void UWallJump::ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
