@@ -26,6 +26,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SideScrollerWidget")
 	void ShowNewWidget(TSubclassOf<UUserWidget> NewWidgetClass);
 
+    // Lets the player respawn at the last checkpoint
+    UFUNCTION(BlueprintCallable, Category = "SideScrollerWidget")
+    virtual void RestartAtLastCheckpoint();
+
 	// Caches SideScroller Buttons
 	TArray<class USideScrollerButton*> AllButtons;
 

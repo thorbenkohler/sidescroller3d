@@ -14,13 +14,6 @@ bool UHighScoreWidget::Initialize()
     return true;
 }
 
-void UHighScoreWidget::RestartAtLastCheckpoint()
-{
-    this->RemoveFromViewport();
-
-    USideScrollerDelegates::OnRestartAtLastCheckpoint.Broadcast();
-}
-
 void UHighScoreWidget::SetData(FHighScoreWidgetData& HighScoreWidgetData)
 {
     CoinAmount = HighScoreWidgetData.CoinAmount;

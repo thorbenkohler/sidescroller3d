@@ -72,3 +72,10 @@ void USideScrollerMenuWidget::ShowNewWidget(TSubclassOf<UUserWidget> NewWidgetCl
 
     CurrentWidget->AddToViewport();
 }
+
+void USideScrollerMenuWidget::RestartAtLastCheckpoint()
+{
+    this->RemoveFromViewport();
+
+    USideScrollerDelegates::OnRestartAtLastCheckpoint.Broadcast();
+}

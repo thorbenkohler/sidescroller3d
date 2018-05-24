@@ -32,10 +32,6 @@ public:
     UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
     void InitWidget();
 
-    // Restarts the current level
-    UFUNCTION(BlueprintCallable, Category = "HighScoreWidget")
-    void RestartAtLastCheckpoint();
-
     // Can be used as post-construct method for effects and sound according to data
     UFUNCTION(BlueprintImplementableEvent, Category = "HighScoreWidget")
     void DataSet();

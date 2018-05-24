@@ -55,14 +55,14 @@ ASideScrollerCharacter::ASideScrollerCharacter()
     PlayerEnemyCollision = CreateDefaultSubobject<UPlayerEnemyCollision>(TEXT("PlayerEnemyCollision"));
     WeaponCollector = CreateDefaultSubobject<UWeaponCollector>(TEXT("WeaponCollector"));
     HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
-	WallJump = CreateDefaultSubobject<UWallJump>(TEXT("WallJump"));
+    WallJump = CreateDefaultSubobject<UWallJump>(TEXT("WallJump"));
 
     AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
     HealthAttributeSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("HealthAttributeSet"));
     DamageAttributeSet = CreateDefaultSubobject<UDamageAttributeSet>(TEXT("DamageAttributeSet"));
 
-	USideScrollerDelegates::OnRestartAtLastCheckpoint.AddUObject(this,
-															 &ASideScrollerCharacter::ReceiveOnRestartAtLastCheckpoint);
+    USideScrollerDelegates::OnRestartAtLastCheckpoint.AddUObject(
+        this, &ASideScrollerCharacter::ReceiveOnRestartAtLastCheckpoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -111,19 +111,18 @@ void ASideScrollerCharacter::OnDeath_Implementation()
 
 void ASideScrollerCharacter::FellOutOfWorld(const class UDamageType& dmgType)
 {
-	StopAnimMontage();
-	SetActorTransform(RespawnPosition);
-	OnRevive();
+    StopAnimMontage();
+    SetActorTransform(RespawnPosition);
+    OnRevive();
 }
 
 void ASideScrollerCharacter::ReceiveOnRestartAtLastCheckpoint()
 {
-	StopAnimMontage();
-	SetActorTransform(RespawnPosition);
-	OnRevive();
+    StopAnimMontage();
+    SetActorTransform(RespawnPosition);
+    OnRevive();
 }
 
 void ASideScrollerCharacter::OnRevive_Implementation()
 {
-
 }
