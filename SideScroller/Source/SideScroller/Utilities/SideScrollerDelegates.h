@@ -53,8 +53,8 @@ public:
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnStartNewLevel, FName);
 	static FOnStartNewLevel OnStartNewLevel;
 
-	DECLARE_MULTICAST_DELEGATE(FOnRestartCurrentLevel);
-	static FOnRestartCurrentLevel OnRestartCurrentLevel;
+	DECLARE_MULTICAST_DELEGATE(FOnRestartAtLastCheckpoint);
+	static FOnRestartAtLastCheckpoint OnRestartAtLastCheckpoint;
 
 	DECLARE_MULTICAST_DELEGATE(FOnGameWon);
 	static FOnGameWon OnGameWon;

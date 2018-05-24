@@ -42,7 +42,7 @@ public:
 
     virtual void BeginPlay();
 
-    // Can be used for effects and disables input and collision
+    // Can be used for effects
     UFUNCTION(BlueprintNativeEvent, Category = "SideScrollerCharacter")
     void OnDeath() const override;
     virtual void OnDeath_Implementation();
@@ -51,8 +51,8 @@ public:
     UFUNCTION(BlueprintImplementableEvent, Category = "SideScrollerCharacter")
     void EnemyCollidedWithPlayer();
 
-    // Handles the player input and collision
-    void ReceiveOnGameWon();
+	// Called when the actor falls out of the world 'safely' (below KillZ and such)
+	virtual void FellOutOfWorld(const class UDamageType& dmgType) override;
 
     UAbilitySystemComponent* GetAbilitySystemComponent() const override
     {
@@ -63,6 +63,14 @@ public:
     {
         return HealthComponent;
     };
+
+	// Sets the character to its last checkpoint
+	void ReceiveOnRestartAtLastCheckpoint();
+
+	// Used to reset the character and or play effects
+	UFUNCTION(BlueprintNativeEvent, Category = "SideScrollerCharacter")
+	void OnRevive();
+	virtual void OnRevive_Implementation();
 
     // Collects and counts the coins of the player
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
@@ -106,4 +114,8 @@ public:
 	// Used to reset to the default gravity scale when it was changed
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	float DefaultGravityScale;
+
+	// Used to respawn the character
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+	FTransform RespawnPosition;
 };

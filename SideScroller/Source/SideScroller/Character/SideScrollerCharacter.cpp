@@ -60,6 +60,9 @@ ASideScrollerCharacter::ASideScrollerCharacter()
     AbilitySystem = CreateDefaultSubobject<USideScrollerAbilitySystemComponent>(TEXT("AbilitySystem"));
     HealthAttributeSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("HealthAttributeSet"));
     DamageAttributeSet = CreateDefaultSubobject<UDamageAttributeSet>(TEXT("DamageAttributeSet"));
+
+	USideScrollerDelegates::OnRestartAtLastCheckpoint.AddUObject(this,
+															 &ASideScrollerCharacter::ReceiveOnRestartAtLastCheckpoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -92,8 +95,6 @@ void ASideScrollerCharacter::BeginPlay()
 {
     Super::BeginPlay();
 
-    USideScrollerDelegates::OnGameWon.AddUObject(this, &ASideScrollerCharacter::ReceiveOnGameWon);
-
     if (!IsValid(AbilitySystem))
     {
         UE_LOG(SideScrollerLog, Error, TEXT("AbilitySystem was not valid."));
@@ -103,13 +104,26 @@ void ASideScrollerCharacter::BeginPlay()
     AbilitySystem->InitAbilityActorInfo(this, this);
 }
 
-void ASideScrollerCharacter::ReceiveOnGameWon()
-{
-    DisableInput((APlayerController*)GetController());
-}
-
 void ASideScrollerCharacter::OnDeath_Implementation()
 {
-    DisableInput((APlayerController*)GetController());
     USideScrollerDelegates::OnPlayerDied.Broadcast();
+}
+
+void ASideScrollerCharacter::FellOutOfWorld(const class UDamageType& dmgType)
+{
+	StopAnimMontage();
+	SetActorTransform(RespawnPosition);
+	OnRevive();
+}
+
+void ASideScrollerCharacter::ReceiveOnRestartAtLastCheckpoint()
+{
+	StopAnimMontage();
+	SetActorTransform(RespawnPosition);
+	OnRevive();
+}
+
+void ASideScrollerCharacter::OnRevive_Implementation()
+{
+
 }

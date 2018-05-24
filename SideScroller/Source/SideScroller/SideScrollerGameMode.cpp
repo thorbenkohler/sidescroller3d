@@ -20,8 +20,6 @@ void ASideScrollerGameMode::BeginPlay()
 
         USideScrollerDelegates::OnStartNewGame.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewGame);
         USideScrollerDelegates::OnStartNewLevel.AddUObject(this, &ASideScrollerGameMode::ReceiveOnStartNewLevel);
-        USideScrollerDelegates::OnRestartCurrentLevel.AddUObject(this,
-                                                                 &ASideScrollerGameMode::ReceiveOnRestartCurrentLevel);
         USideScrollerDelegates::OnOpenIngameMenu.AddUObject(this, &ASideScrollerGameMode::ReceiveOnOpenIngameMenu);
         USideScrollerDelegates::OnShowHighscore.AddUObject(this, &ASideScrollerGameMode::ReceiveOnShowHighscore);
         USideScrollerDelegates::OnStartNewGame.Broadcast();
@@ -78,29 +76,13 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 
 	AActor* PlayerStart = ChoosePlayerStart(PlayerController);
 
-	if (!IsValid(PlayerCharacter))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("No initial player asset was set"));
-		return;
-	}
-
-	ASideScrollerCharacter* SideScrollerCharacter = World->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
-
 	if (!IsValid(PlayerStart))
 	{
 		UE_LOG(SideScrollerLog, Log, TEXT("PlayerStart not found"));
 		return;
 	}
 
-	SideScrollerCharacter->SetActorLocation(PlayerStart->GetActorLocation());
-
-    if (!IsValid(SideScrollerCharacter))
-	{
-		UE_LOG(SideScrollerLog, Error, TEXT("Spawning SideScrollerCharacter failed."));
-		return;
-	}
-
-	PlayerController->Possess(SideScrollerCharacter);
+	SideScrollerCharacter = SpawnCharacterAtLocation(PlayerStart->GetActorLocation());
 
 	if (!IsValid(Hud))
 	{
@@ -121,6 +103,8 @@ void ASideScrollerGameMode::ReceiveOnStartNewGame()
 		UE_LOG(SideScrollerLog, Error, TEXT("A problem occured while initializing the Hud."));
 		return;
 	}
+
+	SideScrollerCharacter->RespawnPosition = PlayerStart->GetTransform();
 }
 
 void ASideScrollerGameMode::ReceiveOnStartNewLevel(FName NewLevelName)
@@ -128,12 +112,6 @@ void ASideScrollerGameMode::ReceiveOnStartNewLevel(FName NewLevelName)
 	UE_LOG(SideScrollerLog, Log, TEXT("Starting Level %s"), *NewLevelName.ToString());
 	UGameplayStatics::OpenLevel(GetWorld(), NewLevelName);
 	CurrentLevelName = NewLevelName;
-}
-
-void ASideScrollerGameMode::ReceiveOnRestartCurrentLevel()
-{
-	UE_LOG(SideScrollerLog, Log, TEXT("Restarting Level %s"), *CurrentLevelName.ToString());
-	UGameplayStatics::OpenLevel(GetWorld(), CurrentLevelName);
 }
 
 void ASideScrollerGameMode::ReceiveOnOpenIngameMenu()
@@ -185,4 +163,37 @@ void ASideScrollerGameMode::ReceiveOnShowHighscore(FHighScoreWidgetData HighScor
 	}
 	
 	HighScoreWidget->SetData(HighScoreWidgetData);
+}
+
+ASideScrollerCharacter* ASideScrollerGameMode::SpawnCharacterAtLocation(FVector InLocation)
+{
+	UWorld* World = GetWorld();
+
+	if (!IsValid(PlayerCharacter))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("No initial player asset was set"));
+		return nullptr;
+	}
+
+	ASideScrollerCharacter* SideScrollerCharacter = World->SpawnActor<ASideScrollerCharacter>(PlayerCharacter);
+
+	if (!IsValid(SideScrollerCharacter))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("Spawning SideScrollerCharacter failed."));
+		return nullptr;
+	}
+
+	SideScrollerCharacter->SetActorLocation(InLocation);
+
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+
+	if (!IsValid(PlayerController))
+	{
+		UE_LOG(SideScrollerLog, Error, TEXT("PlayerController is not valid."));
+		return SideScrollerCharacter;
+	}
+
+	PlayerController->Possess(SideScrollerCharacter);
+
+	return SideScrollerCharacter;
 }
