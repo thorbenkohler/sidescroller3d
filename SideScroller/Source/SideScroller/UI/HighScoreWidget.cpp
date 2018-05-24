@@ -14,9 +14,11 @@ bool UHighScoreWidget::Initialize()
     return true;
 }
 
-void UHighScoreWidget::RestartLevel()
+void UHighScoreWidget::RestartAtLastCheckpoint()
 {
-    USideScrollerDelegates::OnRestartCurrentLevel.Broadcast();
+    this->RemoveFromViewport();
+
+    USideScrollerDelegates::OnRestartAtLastCheckpoint.Broadcast();
 }
 
 void UHighScoreWidget::SetData(FHighScoreWidgetData& HighScoreWidgetData)

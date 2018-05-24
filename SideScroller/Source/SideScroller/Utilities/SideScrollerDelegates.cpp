@@ -16,7 +16,7 @@ USideScrollerDelegates::FOnStartNewGame USideScrollerDelegates::OnStartNewGame;
 USideScrollerDelegates::FOnPlayerDied USideScrollerDelegates::OnPlayerDied;
 USideScrollerDelegates::FOnShowHighscore USideScrollerDelegates::OnShowHighscore;
 USideScrollerDelegates::FOnStartNewLevel USideScrollerDelegates::OnStartNewLevel;
-USideScrollerDelegates::FOnRestartCurrentLevel USideScrollerDelegates::OnRestartCurrentLevel;
+USideScrollerDelegates::FOnRestartAtLastCheckpoint USideScrollerDelegates::OnRestartAtLastCheckpoint;
 USideScrollerDelegates::FOnGameWon USideScrollerDelegates::OnGameWon;
 USideScrollerDelegates::FOnOpenIngameMenu USideScrollerDelegates::OnOpenIngameMenu;
 USideScrollerDelegates::FOnCloseIngameMenu USideScrollerDelegates::OnCloseIngameMenu;

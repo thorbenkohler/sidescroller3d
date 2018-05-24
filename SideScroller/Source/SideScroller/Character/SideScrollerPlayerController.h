@@ -33,6 +33,9 @@ public:
     // Handles the cursor and sets the according input mode
     void ReceiveOnCloseIngameMenu();
 
+    // Handles the cursor and sets the according input mode
+	void ReceiveOnRestartAtLastCheckpoint();
+
     // Used for Ui controlling
     void SetupInputComponent();
 };

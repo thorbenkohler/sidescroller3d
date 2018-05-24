@@ -6,11 +6,6 @@
 #include "GameFramework/GameModeBase.h"
 #include "SideScrollerGameMode.generated.h"
 
-class ASideScrollerCharacter;
-
-struct FHighScoreWidgetData;
-
-
 UCLASS(minimalapi)
 class ASideScrollerGameMode : public AGameModeBase
 {
@@ -29,14 +24,14 @@ protected:
 	// Can be used to start a new level
 	void ReceiveOnStartNewLevel(FName LevelName);
 
-	// Restarts the current level
-	void ReceiveOnRestartCurrentLevel();
-
 	// Shows the ingame menu
 	void ReceiveOnOpenIngameMenu();
 
 	// Shows the highscore after the player's death
-	void ReceiveOnShowHighscore(FHighScoreWidgetData HighScoreWidgetData);
+	void ReceiveOnShowHighscore(struct FHighScoreWidgetData HighScoreWidgetData);
+
+	// Is used for initializing the game and respawning
+	class ASideScrollerCharacter* SpawnCharacterAtLocation(FVector InLocation);
 
 	// The menu which gets shown after game start up
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
@@ -69,4 +64,8 @@ protected:
 	// Name of menu scene
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SideScrollerGameMode")
 	FName MenuLevelName;
+
+	// Reference to the current player character
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category ="SideScrollerGameMode")
+	class ASideScrollerCharacter* SideScrollerCharacter;
 };
