@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WallJump.h"
+#include "Components/BoxComponent.h"
 
 
 UWallJump::UWallJump()
@@ -106,7 +107,7 @@ void UWallJump::BindDelegates()
 
 void UWallJump::ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
-	UPrimitiveComponent* BoxComponent = OtherActor->FindComponentByClass<UPrimitiveComponent>();
+	UBoxComponent* BoxComponent = OtherActor->FindComponentByClass<UBoxComponent>();
 
 	if (!IsValid(BoxComponent))
 	{
