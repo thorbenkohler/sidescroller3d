@@ -153,7 +153,7 @@ void UWallJump::SetWallState()
 	}
 
 	Character->ResetJumpState();
-	Character->JumpCurrentCount = 0;
+	Character->JumpCurrentCount = -1;
 
 	if (!IsValid(SkeletalMeshComponent))
 	{
