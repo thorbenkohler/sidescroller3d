@@ -16,6 +16,7 @@ DerivedData
 *.exe
 *.exp
 *DebugGame*
+desktop.ini
 failed.hotreload
 SideScroller.target
 SideScroller.pdb
