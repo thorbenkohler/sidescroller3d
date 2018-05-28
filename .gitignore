@@ -16,6 +16,7 @@ DerivedData
 *.exe
 *.exp
 *DebugGame*
+failed.hotreload
 SideScroller.target
 SideScroller.pdb
 *-SideScroller-*.pdb
