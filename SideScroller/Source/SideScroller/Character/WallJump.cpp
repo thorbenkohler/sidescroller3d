@@ -75,10 +75,9 @@ void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	LastControlInputVector = CurrentInputVector;
 
-	// Character jumped
-	if (Character->JumpCurrentCount > 0)
+	// Character jumped (was set to -1 when overlapping)
+	if (Character->JumpCurrentCount >= 0)
 	{
-		CharacterMovementComponent->GravityScale = SideScrollerCharacter->DefaultGravityScale;
 		ResetWallState();
 		return;
 	}
@@ -107,17 +106,17 @@ void UWallJump::BindDelegates()
 
 void UWallJump::ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
-	UBoxComponent* BoxComponent = OtherActor->FindComponentByClass<UBoxComponent>();
+    UBoxComponent* BoxComponent = OtherActor->FindComponentByClass<UBoxComponent>();
 
-	if (!IsValid(BoxComponent))
-	{
-		return;
-	}
+    if (!IsValid(BoxComponent))
+    {
+        return;
+    }
 
-	if (!BoxComponent->GetCollisionProfileName().IsEqual(WallJumpCollisionProfile))
-	{
-		return;
-	}
+    if (!BoxComponent->GetCollisionProfileName().IsEqual(WallJumpCollisionProfile))
+    {
+        return;
+    }
 
 	SetWallState();
 }
@@ -189,6 +188,8 @@ void UWallJump::SetWallSlidingState()
 
 void UWallJump::ResetWallState()
 {
+	SetComponentTickEnabled(false);
+
 	bHangsOnWall = false;
 	bIsSliding = false;
 
@@ -208,6 +209,4 @@ void UWallJump::ResetWallState()
 
 	USkeletalMeshComponent* SkeletalMeshComponent = GetOwner()->FindComponentByClass<USkeletalMeshComponent>();
 	SkeletalMeshComponent->SetWorldScale3D(FVector::OneVector);
-
-	SetComponentTickEnabled(false);
 }
