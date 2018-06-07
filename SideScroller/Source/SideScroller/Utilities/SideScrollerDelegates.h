@@ -67,4 +67,7 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE(FOnHudShown);
 	static FOnHudShown OnHudShown;
+
+    DECLARE_MULTICAST_DELEGATE_OneParam(FOnResetCombo, const FHitResult&);
+	static FOnResetCombo OnResetCombo;
 };

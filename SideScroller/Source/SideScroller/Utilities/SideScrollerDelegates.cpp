@@ -21,3 +21,4 @@ USideScrollerDelegates::FOnGameWon USideScrollerDelegates::OnGameWon;
 USideScrollerDelegates::FOnOpenIngameMenu USideScrollerDelegates::OnOpenIngameMenu;
 USideScrollerDelegates::FOnCloseIngameMenu USideScrollerDelegates::OnCloseIngameMenu;
 USideScrollerDelegates::FOnHudShown USideScrollerDelegates::OnHudShown;
+USideScrollerDelegates::FOnResetCombo USideScrollerDelegates::OnResetCombo;

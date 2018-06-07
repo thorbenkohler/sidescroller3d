@@ -126,3 +126,8 @@ void ASideScrollerCharacter::ReceiveOnRestartAtLastCheckpoint()
 void ASideScrollerCharacter::OnRevive_Implementation()
 {
 }
+
+void ASideScrollerCharacter::NotifyResetCombo(const FHitResult& Hit)
+{
+    USideScrollerDelegates::OnResetCombo.Broadcast(Hit);
+}
