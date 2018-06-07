@@ -72,6 +72,10 @@ public:
 	void OnRevive();
 	virtual void OnRevive_Implementation();
 
+    // Notifies via Delegates every observer about the character's landing
+    UFUNCTION(BlueprintCallable, Category = "SideScrollerCharacter")
+    void NotifyResetCombo(const FHitResult& Hit);
+
     // Collects and counts the coins of the player
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
     class UCoinCollector* CoinCollector;
@@ -100,6 +104,7 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
     class USideScrollerAbilitySystemComponent* AbilitySystem;
 
+	// Data which manages the Health of the Player
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SideScrollerCharacter")
     const UHealthAttributeSet* HealthAttributeSet;
 
