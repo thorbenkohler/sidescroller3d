@@ -74,7 +74,7 @@ void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
     PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
     PlayerInputComponent->BindAction("OpenMenu", IE_Pressed, this, &ASideScrollerCharacter::OpenIngameMenu);
-    PlayerInputComponent->BindAxis("MoveRight", this, &ASideScrollerCharacter::MoveRight);
+    InputComponent->BindAxis("MoveRight", this, &ASideScrollerCharacter::MoveRight);
 
     AbilitySystem->BindAbilityActivationToInputComponent(
         PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "EAbilityInput"));
@@ -87,8 +87,20 @@ void ASideScrollerCharacter::OpenIngameMenu()
 
 void ASideScrollerCharacter::MoveRight(float Value)
 {
+    if (bBlockMovement)
+    {
+        return;
+    }
+
     // Add movement in that direction
     AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
+}
+
+void ASideScrollerCharacter::Landed(const FHitResult& Hit)
+{
+    Super::Landed(Hit);
+
+    bBlockMovement = false;
 }
 
 void ASideScrollerCharacter::BeginPlay()

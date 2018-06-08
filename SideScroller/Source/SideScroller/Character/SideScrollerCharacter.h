@@ -76,6 +76,8 @@ public:
     UFUNCTION(BlueprintCallable, Category = "SideScrollerCharacter")
     void NotifyResetCombo(const FHitResult& Hit);
 
+    void Landed(const FHitResult& Hit);
+
     // Collects and counts the coins of the player
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
     class UCoinCollector* CoinCollector;
@@ -123,4 +125,7 @@ public:
 	// Used to respawn the character
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	FTransform RespawnPosition;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+    bool bBlockMovement;
 };

@@ -54,6 +54,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WallJump")
 	float SlideGravityModifier;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WallJump")
+    FVector WallLaunchVelocity;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -73,4 +76,7 @@ private:
 
 	// GetPendingInputVector in APawn always gets Vector::Zero, so this is cached here instead
 	FVector LastControlInputVector;
+
+    // To reset the jump velocity
+    float OldJumpZVelocity;
 };

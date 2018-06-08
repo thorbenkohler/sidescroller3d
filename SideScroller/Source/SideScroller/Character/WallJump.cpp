@@ -45,13 +45,16 @@ void UWallJump::BeginPlay()
 
     CharacterMovementComponent = Owner->FindComponentByClass<UCharacterMovementComponent>();
 
-    if (!IsValid(CharacterMovementComponent ))
+    if (!IsValid(CharacterMovementComponent))
     {
         UE_LOG(SideScrollerLog, Error, TEXT("No CharacterMovementComponent found in Owner in WallJump."));
         return;
     }
 
 	SideScrollerCharacter->DefaultGravityScale = CharacterMovementComponent->GravityScale;
+
+    // This helps resetting the value afterwards
+    OldJumpZVelocity = CharacterMovementComponent->JumpZVelocity;
 }
 
 void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
@@ -64,13 +67,24 @@ void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
     if (LastControlInputVector.Y > 0 && CurrentInputVector.Y < 0 ||
         LastControlInputVector.Y < 0 && CurrentInputVector.Y > 0 || CurrentInputVector.Y == 0)
     {
-        CurrentInputVector.Y == 0 ? SetWallSlidingState() : ResetWallState();
+
+        if (CurrentInputVector.Y == 0)
+        {
+            SetWallSlidingState();
+        }
+        else 
+        { 
+            SideScrollerCharacter->bBlockMovement = false;
+            ResetWallState(); 
+            return;
+        }
     }
 
 	// if the character hits the bottom (e.g. after sliding down)
     if (!CharacterMovementComponent->IsFalling())
 	{
 		ResetWallState();
+        return;
 	}
 
 	LastControlInputVector = CurrentInputVector;
@@ -78,6 +92,24 @@ void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	// Character jumped (was set to -1 when overlapping)
 	if (Character->JumpCurrentCount >= 0)
 	{
+        SideScrollerCharacter->bBlockMovement = true;
+
+        FRotator CurrentRotation = GetOwner()->GetActorRotation();
+        FVector AdjustedLaunchVelocity = WallLaunchVelocity;
+        //FVector NewInput = FVector::ZeroVector;
+        //NewInput.Y = CurrentRotation.Yaw > 0.f ? -1.f : 1.f;
+
+        //UE_LOG(SideScrollerLog, Log, TEXT("%s current rot roll: %f new input %f"), *LOG_STACK, CurrentRotation.Yaw, NewInput.Y);
+        if (CurrentRotation.Yaw > 0)
+        {
+            AdjustedLaunchVelocity.Y = -WallLaunchVelocity.Y;
+        }
+
+        CurrentRotation.Yaw = -CurrentRotation.Yaw;
+        GetOwner()->SetActorRotation(CurrentRotation);
+        //SideScrollerCharacter->AddMovementInput(NewInput);
+        
+        Character->LaunchCharacter(AdjustedLaunchVelocity, true, true);
 		ResetWallState();
 		return;
 	}
@@ -141,6 +173,9 @@ void UWallJump::SetWallState()
 	CharacterMovementComponent->GravityScale = 0.0f;
 	CharacterMovementComponent->Velocity.Z = 0.0f;
 
+    // The character will launch instead of jump when hanging on a wall
+    CharacterMovementComponent->JumpZVelocity = 0.0f;
+
 	SetComponentTickEnabled(true);
 
 	bHangsOnWall = true;
@@ -192,6 +227,7 @@ void UWallJump::ResetWallState()
 
 	bHangsOnWall = false;
 	bIsSliding = false;
+    CharacterMovementComponent->JumpZVelocity = OldJumpZVelocity;
 
 	if (!IsValid(SideScrollerCharacter))
     {
