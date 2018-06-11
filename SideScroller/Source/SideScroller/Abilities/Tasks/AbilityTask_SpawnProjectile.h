@@ -41,6 +41,9 @@ private:
 	// Retrieves position via the ability owner, in this case the player character
 	FVector GetProjectilePosition(UGameplayAbility* OwningAbility);
 
+	// Retrieves shooting direction via the ability owner, in this case the pawn
+    void SetShootingDirection(UGameplayAbility* OwningAbility, AActor* SpawnedProjectile);
+
 	// Retrieves the referenced projectile of the weapon
 	TSubclassOf<AActor> GetProjectileClass(UGameplayAbility* OwningAbility);
 

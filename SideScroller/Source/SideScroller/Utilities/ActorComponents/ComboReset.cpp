@@ -5,10 +5,15 @@
 
 UComboReset::UComboReset()
 {
-    USideScrollerDelegates::OnResetCombo.AddUObject(this, &UComboReset::Reset);
+    USideScrollerDelegates::OnCharacterLanded.AddUObject(this, &UComboReset::ReceiveOnCharacterLanded);
 }
 
-void UComboReset::Reset_Implementation(const FHitResult& Hit)
+void UComboReset::ReceiveOnCharacterLanded(const FHitResult& Hit)
 {
+    Reset();
+}
 
+void UComboReset::Reset_Implementation()
+{
+    USideScrollerDelegates::OnResetCombo.Broadcast();
 }

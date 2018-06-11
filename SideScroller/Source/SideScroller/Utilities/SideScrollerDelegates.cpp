@@ -22,3 +22,4 @@ USideScrollerDelegates::FOnOpenIngameMenu USideScrollerDelegates::OnOpenIngameMe
 USideScrollerDelegates::FOnCloseIngameMenu USideScrollerDelegates::OnCloseIngameMenu;
 USideScrollerDelegates::FOnHudShown USideScrollerDelegates::OnHudShown;
 USideScrollerDelegates::FOnResetCombo USideScrollerDelegates::OnResetCombo;
+USideScrollerDelegates::FOnCharacterLanded USideScrollerDelegates::OnCharacterLanded;

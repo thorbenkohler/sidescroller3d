@@ -14,6 +14,9 @@ public:
     UComboReset();
 
     UFUNCTION(BlueprintNativeEvent, Category = "SideScroller")
-    void Reset(const FHitResult& Hit);
-    void Reset_Implementation(const FHitResult& Hit);
+    void Reset();
+    void Reset_Implementation();
+
+private:
+    void ReceiveOnCharacterLanded(const FHitResult& Hit);
 };

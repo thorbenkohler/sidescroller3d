@@ -33,7 +33,7 @@ void AProjectile::BeginPlay()
         return;
     }
     TimeUntilDestruction = TravelDistance / Speed;
-	ShotDirection = GetActorForwardVector().RotateAngleAxis(90.0f, FVector::UpVector);
+	//ShotDirection = GetActorForwardVector().RotateAngleAxis(90.0f, FVector::UpVector);
 }
 
 // Called every frame

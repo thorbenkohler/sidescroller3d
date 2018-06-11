@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Utilities/CharacterDirection.h"
 #include "WallJump.generated.h"
 
 UCLASS()
@@ -62,6 +63,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+    // If the character lands on the ground, things need to be reset
+    void ReceiveOnCharacterLanded(const FHitResult& Hit);
+
 	// Cached instance from Owner
 	class USkeletalMeshComponent* SkeletalMeshComponent;
 
@@ -79,4 +83,6 @@ private:
 
     // To reset the jump velocity
     float OldJumpZVelocity;
+
+    bool bJumpedFromWall;
 };

@@ -17,5 +17,5 @@ class SIDESCROLLER_API IComboResettable
 
 public:
     UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "SideScroller")
-    void ComboReset(const FHitResult& Hit);
+    void ComboReset();
 };

@@ -110,6 +110,7 @@ void UAbilityTask_SpawnProjectile::FinishSpawningActor(UGameplayAbility* OwningA
         SpawnedActor->FinishSpawning(SpawnTransform);
 
         SpawnedActor->SetActorLocation(SpawnPosition);
+        SetShootingDirection(OwningAbility, SpawnedActor);
 
 		UAbilitySystemStatics::SetGameplayEffect(OwningAbility, SpawnedActor);
 
@@ -145,6 +146,30 @@ FVector UAbilityTask_SpawnProjectile::GetProjectilePosition(UGameplayAbility* Ow
 
     return Muzzle->GetComponentLocation();
 }
+
+void UAbilityTask_SpawnProjectile::SetShootingDirection(UGameplayAbility* OwningAbility, AActor* SpawnedProjectile)
+{
+    AActor* AbilityOwner = OwningAbility->GetOwningActorFromActorInfo();
+
+    if (!IsValid(AbilityOwner))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("%s AbilityOwner is not valid."), *LOG_STACK);
+        return;
+    }
+
+    ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(AbilityOwner);
+
+    if (!IsValid(SideScrollerCharacter ))
+    {
+        UE_LOG(SideScrollerLog, Error, TEXT("%s AbilityOwner is not of type APawn."), *LOG_STACK);
+        return;
+    }
+
+    AProjectile* Projectile = Cast<AProjectile>(SpawnedProjectile);
+
+    Projectile->ShotDirection = SideScrollerCharacter->AimDirection;
+}
+
 
 TSubclassOf<AActor> UAbilityTask_SpawnProjectile::GetProjectileClass(UGameplayAbility* OwningAbility)
 {
