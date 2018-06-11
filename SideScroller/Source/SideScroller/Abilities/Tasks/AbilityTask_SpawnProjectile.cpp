@@ -110,6 +110,8 @@ void UAbilityTask_SpawnProjectile::FinishSpawningActor(UGameplayAbility* OwningA
         SpawnedActor->FinishSpawning(SpawnTransform);
 
         SpawnedActor->SetActorLocation(SpawnPosition);
+
+        // if player only
         SetShootingDirection(OwningAbility, SpawnedActor);
 
 		UAbilitySystemStatics::SetGameplayEffect(OwningAbility, SpawnedActor);
@@ -159,17 +161,21 @@ void UAbilityTask_SpawnProjectile::SetShootingDirection(UGameplayAbility* Owning
 
     ASideScrollerCharacter* SideScrollerCharacter = Cast<ASideScrollerCharacter>(AbilityOwner);
 
-    if (!IsValid(SideScrollerCharacter ))
+    if (!IsValid(SideScrollerCharacter))
     {
-        UE_LOG(SideScrollerLog, Error, TEXT("%s AbilityOwner is not of type APawn."), *LOG_STACK);
         return;
     }
 
     AProjectile* Projectile = Cast<AProjectile>(SpawnedProjectile);
 
     Projectile->ShotDirection = SideScrollerCharacter->AimDirection;
-}
+    float Angle = FMath::Atan2(SideScrollerCharacter->AimDirection.Y, SideScrollerCharacter->AimDirection.Z);
 
+    float NewYaw = FMath::RadiansToDegrees(Angle);
+    FRotator NewRotator = Projectile->GetActorRotation();
+    NewRotator.Roll = NewYaw;
+    Projectile->SetActorRotation(NewRotator);
+}
 
 TSubclassOf<AActor> UAbilityTask_SpawnProjectile::GetProjectileClass(UGameplayAbility* OwningAbility)
 {

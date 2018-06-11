@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
+#include "Interfaces/ComboResettable.h"
 #include "ComboReset.generated.h"
 
 UCLASS(Blueprintable)
@@ -16,6 +17,9 @@ public:
     UFUNCTION(BlueprintNativeEvent, Category = "SideScroller")
     void Reset();
     void Reset_Implementation();
+
+    UFUNCTION(BlueprintCallable, Category = "SideScroller")
+    UActorComponent* GetResettableComponent();
 
 private:
     void ReceiveOnCharacterLanded(const FHitResult& Hit);
