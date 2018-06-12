@@ -14,13 +14,6 @@ class SIDESCROLLER_API UComboReset : public UActorComponent
 public:
     UComboReset();
 
-    UFUNCTION(BlueprintNativeEvent, Category = "SideScroller")
-    void Reset();
-    void Reset_Implementation();
-
-    UFUNCTION(BlueprintCallable, Category = "SideScroller")
-    UActorComponent* GetResettableComponent();
-
 private:
     void ReceiveOnCharacterLanded(const FHitResult& Hit);
 };

@@ -16,6 +16,5 @@ class SIDESCROLLER_API IComboResettable
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "SideScroller")
-    void ComboReset();
+    virtual void ComboReset() = 0;
 };

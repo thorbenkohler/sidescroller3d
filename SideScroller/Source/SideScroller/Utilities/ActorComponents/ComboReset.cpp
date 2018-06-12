@@ -10,21 +10,11 @@ UComboReset::UComboReset()
 
 void UComboReset::ReceiveOnCharacterLanded(const FHitResult& Hit)
 {
-    Reset();
-}
-
-void UComboReset::Reset_Implementation()
-{
-    USideScrollerDelegates::OnResetCombo.Broadcast();
-}
-
-UActorComponent* UComboReset::GetResettableComponent()
-{
     AActor* Owner = GetOwner();
 
     if (!IsValid(Owner))
     {
-        return nullptr;
+        return;
     }
 
     TSet<UActorComponent*> Components = Owner->GetComponents();
@@ -34,10 +24,8 @@ UActorComponent* UComboReset::GetResettableComponent()
         IComboResettable* ComboResettable = Cast<IComboResettable>(Component);
         if (ComboResettable)
         {
-            return Component;
+            ComboResettable->ComboReset();
+            break;
         }
     }
-
-    UE_LOG(SideScrollerLog, Error, TEXT("%s ComboResettable at owner %s not found."), *LOG_STACK, *GetOwner()->GetName());
-    return nullptr;
 }
