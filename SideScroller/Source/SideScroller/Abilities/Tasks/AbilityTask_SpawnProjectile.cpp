@@ -168,8 +168,17 @@ void UAbilityTask_SpawnProjectile::SetShootingDirection(UGameplayAbility* Owning
 
     AProjectile* Projectile = Cast<AProjectile>(SpawnedProjectile);
 
-    Projectile->ShotDirection = SideScrollerCharacter->AimDirection;
-    float Angle = FMath::Atan2(SideScrollerCharacter->AimDirection.Y, SideScrollerCharacter->AimDirection.Z);
+    if (!SideScrollerCharacter->AimDirection.IsNearlyZero())
+    {
+        Projectile->ShotDirection = SideScrollerCharacter->AimDirection.GetSafeNormal();
+    }
+    else
+    {
+        Projectile->ShotDirection =
+            SideScrollerCharacter->GetActorRotation().Yaw > 0 ? FVector::RightVector : -FVector::RightVector;
+    }
+
+    float Angle = FMath::Atan2(Projectile->ShotDirection.Y, Projectile->ShotDirection.Z);
 
     float NewYaw = FMath::RadiansToDegrees(Angle);
     FRotator NewRotator = Projectile->GetActorRotation();
