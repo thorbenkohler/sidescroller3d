@@ -9,6 +9,8 @@ UWallJump::UWallJump()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	PrimaryComponentTick.bStartWithTickEnabled = false;
+
+    USideScrollerDelegates::OnCharacterLanded.AddUObject(this, &UWallJump::ReceiveOnCharacterLanded);
 }
 
 // Called when the game starts
@@ -63,26 +65,39 @@ void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	FVector CurrentInputVector = Character->GetLastMovementInputVector();
 
+    UE_LOG(SideScrollerLog, Log, TEXT("%s last input %f current input %f"), *LOG_STACK, LastControlInputVector.Y, CurrentInputVector.Y);
+
 	// If the input changes to the opposite direction or is 0 the character loses the grip
     if (LastControlInputVector.Y > 0 && CurrentInputVector.Y < 0 ||
-        LastControlInputVector.Y < 0 && CurrentInputVector.Y > 0 || CurrentInputVector.Y == 0)
+        LastControlInputVector.Y < 0 && CurrentInputVector.Y > 0 ||
+        LastControlInputVector.Y == 0 && CurrentInputVector.Y != 0 ||
+        CurrentInputVector.Y == 0)
     {
-
         if (CurrentInputVector.Y == 0)
         {
-            SetWallSlidingState();
+            if (!bIsSliding)
+            {
+                UE_LOG(SideScrollerLog, Log, TEXT("%s SLIDE"), *LOG_STACK);
+                bJumpedFromWall = false;
+                SetWallSlidingState();
+            }
         }
         else 
         { 
-            SideScrollerCharacter->bBlockMovement = false;
-            ResetWallState(); 
-            return;
+            if (!bJumpedFromWall)
+            {
+                UE_LOG(SideScrollerLog, Log, TEXT("%s RESET"), *LOG_STACK);
+                SideScrollerCharacter->bBlockMovement = false;
+                ResetWallState(); 
+                return;
+            }
         }
     }
 
 	// if the character hits the bottom (e.g. after sliding down)
     if (!CharacterMovementComponent->IsFalling())
 	{
+        bJumpedFromWall = false;
 		ResetWallState();
         return;
 	}
@@ -93,6 +108,7 @@ void UWallJump::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	if (Character->JumpCurrentCount >= 0)
 	{
         SideScrollerCharacter->bBlockMovement = true;
+        bJumpedFromWall = true;
 
         FRotator CurrentRotation = GetOwner()->GetActorRotation();
         FVector AdjustedLaunchVelocity = WallLaunchVelocity;
@@ -245,4 +261,9 @@ void UWallJump::ResetWallState()
 
 	USkeletalMeshComponent* SkeletalMeshComponent = GetOwner()->FindComponentByClass<USkeletalMeshComponent>();
 	SkeletalMeshComponent->SetWorldScale3D(FVector::OneVector);
+}
+
+void UWallJump::ReceiveOnCharacterLanded(const FHitResult& Hit)
+{
+    bJumpedFromWall = false;
 }

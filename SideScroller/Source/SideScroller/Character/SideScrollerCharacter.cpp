@@ -70,11 +70,15 @@ ASideScrollerCharacter::ASideScrollerCharacter()
 
 void ASideScrollerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
+    Super::SetupPlayerInputComponent(PlayerInputComponent);
+
     // set up gameplay key bindings
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
     PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
     PlayerInputComponent->BindAction("OpenMenu", IE_Pressed, this, &ASideScrollerCharacter::OpenIngameMenu);
     InputComponent->BindAxis("MoveRight", this, &ASideScrollerCharacter::MoveRight);
+    InputComponent->BindAxis("AimHorizontal", this, &ASideScrollerCharacter::AimHorizontal);
+    InputComponent->BindAxis("AimVertical", this, &ASideScrollerCharacter::AimVertical);
 
     AbilitySystem->BindAbilityActivationToInputComponent(
         PlayerInputComponent, FGameplayAbiliyInputBinds("ConfirmInput", "CancelInput", "EAbilityInput"));
@@ -94,6 +98,16 @@ void ASideScrollerCharacter::MoveRight(float Value)
 
     // Add movement in that direction
     AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
+}
+
+void ASideScrollerCharacter::AimHorizontal(float Value)
+{
+    AimDirection.Y = -1.f * Value;
+}
+
+void ASideScrollerCharacter::AimVertical(float Value)
+{
+    AimDirection.Z = -1.f * Value;
 }
 
 void ASideScrollerCharacter::Landed(const FHitResult& Hit)
@@ -141,5 +155,5 @@ void ASideScrollerCharacter::OnRevive_Implementation()
 
 void ASideScrollerCharacter::NotifyResetCombo(const FHitResult& Hit)
 {
-    USideScrollerDelegates::OnResetCombo.Broadcast(Hit);
+    USideScrollerDelegates::OnCharacterLanded.Broadcast(Hit);
 }

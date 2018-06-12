@@ -30,6 +30,10 @@ protected:
     // Called for side to side input
     void MoveRight(float Val);
 
+    // Sets the AimDirection
+    void AimHorizontal(float Value);
+    void AimVertical(float Value);
+
     // Opens the ingame menu
     void OpenIngameMenu();
 
@@ -126,6 +130,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
 	FTransform RespawnPosition;
 
+    // Used to prevent character from walking
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
     bool bBlockMovement;
+
+    // Used for the Shotdirection
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SideScrollerCharacter")
+    FVector AimDirection;
 };

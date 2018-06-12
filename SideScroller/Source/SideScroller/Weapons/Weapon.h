@@ -3,7 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Utilities/InputEnums.h"
+#include "Utilities/AbilityInput.h"
 #include "Weapon.generated.h"
 
 UCLASS()
